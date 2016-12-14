@@ -48,6 +48,7 @@
 					<select class="form-control" name="unit_jenis" id="unit_jenis" style="font-family:'FontAwesome', Arial;">
 						<option value="">Pilih</option>
 						<?php
+						$i=0;
 						for ($i=1;$i<=2;$i++)
 							{
 								echo '<option value="'.$i.'">'.$JenisUnit[$i].'</option>';
@@ -59,12 +60,13 @@
 		</div>
 		<div class="form-group">
 			<label for="unit_eselon" class="col-sm-2 control-label">Eselon</label>
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<div class="input-group margin-bottom-sm">
 				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
 					<select class="form-control" name="unit_eselon" id="unit_eselon" style="font-family:'FontAwesome', Arial;">
 						<option value="">Pilih Unit Eselon</option>
 						<?php
+						$i=0;
 						for ($i=1;$i<=4;$i++)
 							{
 								echo '<option value="'.$i.'">'.$unit_eselon[$i].'</option>';

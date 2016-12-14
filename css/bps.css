@@ -156,3 +156,17 @@ body {
 	padding: 3px;
 	line-height:100%;
 }
+.table tbody tr > td.bpsbad
+{
+  background-color: #FF3835;
+}
+
+.table tbody tr > td.bpsmedium
+{
+  background-color: #FFF138;
+}
+
+.table tbody tr > td.bpsgood
+{
+  background-color: #4CFF00;
+}

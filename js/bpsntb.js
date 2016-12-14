@@ -420,3 +420,92 @@ $(document).ready(function() {
         }
     });
 });
+$(document).ready(function() {
+    $('#formKegBaru').bootstrapValidator({
+        message: 'Nilai tidak valid',
+       feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+          keg_nama: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Silakan isikan kegiatan lengkap'
+                        },
+                        stringLength: {
+                            min: 10,
+                            max: 254,
+                            message: 'minimal 10 huruf'
+                        }
+                    }
+                },
+                keg_unitkerja: {
+                          validators: {
+                              notEmpty: {
+                                  message: 'Silakan pilih unit kerja kegiatan'
+                              }
+                          }
+                      },
+                      keg_jenis: {
+                                validators: {
+                                    notEmpty: {
+                                        message: 'Silakan pilih jenis kegiatan'
+                                    }
+                                }
+                            },
+                            keg_tglmulai: {
+                                      validators: {
+                                          notEmpty: {
+                                              message: 'Silakan isi tgl mulai'
+                                            },
+                                            date: {
+                                             format: 'YYYY-MM-DD',
+                                             message: 'format YYYY-MM-DD'
+                                         }
+                                            }
+                                      },
+                                      keg_tglakhir: {
+                                                validators: {
+                                                    notEmpty: {
+                                                        message: 'Silakan isi tgl berakhir'
+                                                      },
+                                                      date: {
+                                                       format: 'YYYY-MM-DD',
+                                                       message: 'format YYYY-MM-DD'
+                                                   }
+                                                      }
+                                                },
+                                                keg_satuan: {
+                                                          validators: {
+                                                              notEmpty: {
+                                                                  message: 'Silakan isi satuan kegiatan'
+                                                              }
+                                                          }
+                                                      },
+            keg_target: {
+                validators: {
+                    notEmpty: {
+                        message: 'Silakan isikan total target'
+                    },
+					numeric: {
+						message: 'isian harus berupa angka'
+					},
+                    stringLength: {
+                        min: 1,
+                        max: 10,
+                        message: 'minimal 1 digit angka'
+                    }
+                }
+            },
+            'keg_kabkota[]' : {
+                      validators: {
+                          notEmpty: {
+                              message: 'Silakan isi target kabkota'
+                          }
+                      }
+                  }
+        }
+    });
+});

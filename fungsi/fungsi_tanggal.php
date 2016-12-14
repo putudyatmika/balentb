@@ -23,6 +23,21 @@ function tgl_convert($bahasa,$tgl) {
 	}
 	return $tanggalan;
 }
+function tgl_convert_bln($bahasa,$tgl) {
+	//format tahun-bulan-tgl
+	global $tanggalan,$nama_hari_eng_indo_pendek,$nama_bulan_pendek;
+	if ($bahasa==1) {
+	$tahun=date("Y",strtotime($tgl));
+	$hari=date("l",strtotime($tgl));
+	$tgl_=date("j",strtotime($tgl));
+	$bulan=date("n",strtotime($tgl));
+	$tanggalan="$nama_hari_eng_indo_pendek[$hari], $tgl_ $nama_bulan_pendek[$bulan] $tahun";
+	}
+	else {
+		$tanggalan=date("l, j F Y",strtotime($tgl));
+	}
+	return $tanggalan;
+}
 function tgl_convert_waktu($bahasa,$tgl) {
 	//format tahun-bulan-tgl hh:mm:ss
 	global $tanggalan,$nama_hari_eng_indo,$nama_bulan_panjang;

@@ -45,7 +45,7 @@ require ('header.php');
 require ('main.php');
 require ('footer.php');
 //untuk melihat url nya
-/*
+
 echo '
 	Segmen1 : '. $segmen1.' <br />
 	Segmen2 : '. $segmen2.' <br />
@@ -58,16 +58,17 @@ echo '
 	';
 if (isset($_SESSION['sesi_user_id'])) {
 echo $_SESSION['sesi_user_id'] .'<br />'.
-$_SESSION['sesi_user_nip'] .'<br />'.
-$_SESSION['sesi_passwd'] .'<br />'.
+$_SESSION['sesi_user_no'] .'<br />'.
+$_SESSION['sesi_passwd_md5'] .'<br />'.
+$_SESSION['sesi_passwd_ori'] .'<br />'.
 $_SESSION['sesi_nama'] .'<br />'.
 $_SESSION['sesi_level'] .'<br />'.
-$_SESSION['sesi_unitkode'];
+$_SESSION['sesi_unitkerja'];
 echo '<br />';
 echo 'URL asli : '.$_SERVER["REQUEST_URI"];
 echo '<br />Url DB : '.$url_db[2].'<br />URL server : '.$_SERVER['HTTP_HOST'];
 }
-*/
+
 //$passwd_mika=gen_passwd('mika');
 //echo 'mika jadi md5 (mika) : ' . $passwd_mika;
 ?>

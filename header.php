@@ -15,8 +15,8 @@
 	<link href="<?php echo $url; ?>/addons/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="<?php echo $url; ?>/addons/validator/css/bootstrapValidator.min.css" rel="stylesheet">
     <!-- Add custom CSS here -->
-    <link href="<?php echo $url; ?>/addons/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-	<!---<link href="<?php echo $url; ?>/css/animate.css" rel="stylesheet" media="screen">--->
+  <link href="<?php echo $url; ?>/addons/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link href="<?php echo $url; ?>/css/animate.css" rel="stylesheet" media="screen">
 	<link href="<?php echo $url; ?>/css/bps.css" rel="stylesheet" media="screen">
 	<link href="<?php echo $url; ?>/addons/datepicker/css/datepicker3.css" rel="stylesheet">
 

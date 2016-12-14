@@ -165,7 +165,7 @@ h4 {
 					$_SESSION['sesi_user_id']=$user_id;
 					$_SESSION['sesi_user_no']=$r->user_no;
 					$_SESSION['sesi_passwd_md5']=$pass_md5;
-          $_SESSION['sesi_passwd_ori']=$pass_ori;
+					$_SESSION['sesi_passwd_ori']=$pass_ori;
 					$_SESSION['sesi_nama']=$r->user_nama;
 					$_SESSION['sesi_level']=$r->user_level;
 					$_SESSION['sesi_unitkerja']=$r->user_unitkerja;

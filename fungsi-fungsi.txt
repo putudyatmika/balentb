@@ -1,0 +1,10 @@
+Fungsi-fungsi balentb
+Kegiatan
+get_id_kegiatan($NamaKegiatan,$waktu_save,$pembuat) -> keg_id
+cek_kegiatan($NamaKegiatan,$unit_keg) -> 1/0
+cek_id_kegiatan($keg_id) -> 1/0
+
+
+User
+
+Unitkerja

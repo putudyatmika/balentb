@@ -23,6 +23,7 @@ if ($_POST['submit_unit']) {
 		echo 'ERROR : Kode Unit '.$unit_kode.' ('.$unit_nama.') sudah tersedia';
 	}
 	else {
+		$sql_unit_save='';
 		 if ($unit_parent==NULL) {
 		 	$sql_unit_save = $conn -> query("insert into unitkerja(unit_kode,unit_nama,unit_dibuat_oleh,unit_dibuat_waktu,unit_diupdate_oleh,unit_jenis,unit_eselon) values('$unit_kode','$unit_nama','$created','$waktu_lokal','$created','$unit_jenis','$unit_eselon')");
 		 }

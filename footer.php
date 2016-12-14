@@ -21,18 +21,33 @@
 	<script src="<?php echo $url; ?>/addons/validator/js/bootstrapValidator.min.js"></script>
 	<script src="<?php echo $url; ?>/js/bpsntb.js"></script>
 	<script src="<?php echo $url; ?>/addons/datepicker/js/bootstrap-datepicker.js"></script>
-	<!--<script src="<?php echo $url; ?>/addons/ckeditor/ckeditor.js"></script>-->
+	<script src="<?php echo $url; ?>/addons/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript">
+  $(document).ready(function() {
+   $('input[type="radio"]').click(function() {
+       if($(this).attr('id') == 'keg_klik') {
+            $('#menu_kabkota').show();
+       }
+
+       else {
+            $('#menu_kabkota').hide();
+       }
+   });
+});
 		 $(document).ready(function() {
-          $('#tanggal').datepicker({
+          $('#tgl_mulai_keg input').datepicker({
        format: "yyyy-mm-dd",
+       todayHighlight: true,
 	   autoclose: true
   });
 
-           $('#tanggal').datepicker()
-    .on("changeDate", function(e) {
-      $('#pegawai_tgl_lahir').val(e.format('yyyy-mm-dd'));
-  });
+});
+$(document).ready(function() {
+     $('#tgl_akhir_keg input').datepicker({
+  format: "yyyy-mm-dd",
+  todayHighlight: true,
+autoclose: true
+});
 
 });
 	$(document).ready(function() {
