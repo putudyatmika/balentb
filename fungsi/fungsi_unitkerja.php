@@ -69,16 +69,16 @@ function get_parent_unit($kode_unit) {
 	$conn_unit->close();
 	}
 
-	function get_parent_kode($kode_unit) {
+function get_parent_kode($kode_unit) {
 		//$kode_parent=substr($kode_unit,0,-1).'0';
 		$db_unit = new db();
 		$conn_unit = $db_unit->connect();
 		$sql_namaunit = $conn_unit -> query("select * from unitkerja where unit_kode='".$kode_unit."'");
 		$cek=$sql_namaunit->num_rows;
+		$kode_parent='';
 		if ($cek>0) {
-				$kode_parent='';
-			  $r=$sql_namaunit->fetch_object();
-				$kode_parent=$r->unit_parent;
+			$r=$sql_namaunit->fetch_object();
+			$kode_parent=$r->unit_parent;
 		}
 		else {
 		 $kode_parent='';

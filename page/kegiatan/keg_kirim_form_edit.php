@@ -8,7 +8,7 @@ if ($cek>0) {
    $kk=$sql_view->fetch_object();
    $keg_nama=get_nama_kegiatan($kk->keg_id);
    ?>
-   <legend>Konfirmasi Pengiriman</legend>
+   <legend>Edit Pengiriman</legend>
    		<form id="formKirimTarget" name="formKirimTarget" action="<?php echo $url.'/'.$page;?>/updatekirim/"  method="post" class="form-horizontal well" role="form">
    		<fieldset>
    		<div class="form-group">

@@ -5,7 +5,7 @@
 
 			<p class="text-left"> <?php echo date('Y') .' - <a href="'.$url.'"> BPS Provinsi NTB</a>'; ?></p>
 			  <p class="text-left"><i class="fa fa-home fa-fw" aria-hidden="true"></i> Jl. Gunung Rinjani No. 2 Mataram</p>
-        <p class="text-left"><?php if (isset($_SESSION['sesi_user_id'])) { echo $_SESSION['sesi_user_id'] .'/'. $_SESSION['sesi_nama']; } ?></p>
+        <p class="text-left">User : <?php if (isset($_SESSION['sesi_user_id'])) { echo $_SESSION['sesi_user_id'] .' ('. $_SESSION['sesi_nama'].')'; } ?> Level : <?php if (isset($_SESSION['sesi_level'])) { echo $lvl_user[$_SESSION['sesi_level']]; } ?></p>
 			 </div>
 
 		</div>

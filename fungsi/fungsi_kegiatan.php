@@ -46,6 +46,20 @@ function cek_kegiatan($NamaKegiatan,$unit_keg) {
 	return $cek_keg;
 	$conn_keg->close();
 }
+function jenis_detil_keg($keg_d_id) {
+	$db_keg = new db();
+	$conn_keg = $db_keg->connect();
+	$sql_id_keg = $conn_keg -> query("select * from keg_detil where keg_d_id='$keg_d_id'");
+	$cek=$sql_id_keg->num_rows;
+	if ($cek>0) {
+	   $jenis_keg=$r->keg_d_jenis;
+	}
+	else {
+	 $jenis_keg='';
+	}
+	return $jenis_keg;
+	$conn_keg->close();
+}
 function cek_id_kegiatan($keg_id) {
 	$db_keg = new db();
 	$conn_keg = $db_keg->connect();
@@ -64,7 +78,7 @@ function get_detil_kegiatan($keg_id,$keg_d_unitkerja,$jenis_keg) {
 	global $url, $page;
 	$db_keg = new db();
 	$conn_keg = $db_keg->connect();
-	$sql_d_keg = $conn_keg -> query("select * from keg_detil where keg_id='$keg_id' and keg_d_unitkerja='$keg_d_unitkerja' and keg_d_jenis='$jenis_keg'");
+	$sql_d_keg = $conn_keg -> query("select * from keg_detil where keg_id='$keg_id' and keg_d_unitkerja='$keg_d_unitkerja' and keg_d_jenis='$jenis_keg' order by keg_d_tgl asc");
 	$cek=$sql_d_keg->num_rows;
 	$d_keg='';
 	$d_jml='';
@@ -77,8 +91,26 @@ function get_detil_kegiatan($keg_id,$keg_d_unitkerja,$jenis_keg) {
 			$link="$r->keg_d_link_laci";
 			if ($r->keg_d_link_laci == null) $link_laci='';
 			else $link_laci='<a href="'.$link.'" target="_blank">File</a>';
-
-			$d_keg .= tgl_convert_bln(1,$r->keg_d_tgl) .' ('. $r->keg_d_jumlah .') '.$link_laci.' <a href="'.$url.'/'.$page.'/'.$edit_d.'/'.$r->keg_d_id.'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r->keg_d_id.'" data-confirm="Apakah data ('.$r->keg_d_id.') ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a><br />';
+			
+			if ($_SESSION['sesi_level'] > 1) {
+				if ($_SESSION['sesi_level'] > 2) {
+					$link_crud='<a href="'.$url.'/'.$page.'/'.$edit_d.'/'.$r->keg_d_id.'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r->keg_d_id.'" data-confirm="Apakah data ('.$r->keg_d_id.') ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a>';
+				}
+				else {
+					if ($_SESSION['sesi_unitkerja']==$r->keg_d_unitkerja) {
+						$link_crud='<a href="'.$url.'/'.$page.'/'.$edit_d.'/'.$r->keg_d_id.'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r->keg_d_id.'" data-confirm="Apakah data ('.$r->keg_d_id.') ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a>';
+					}
+					else {
+						$link_crud='';
+					}
+					$link_crud='';
+				}
+			}
+			else {
+				$link_crud='';
+			}
+			
+			$d_keg .= tgl_convert_bln(1,$r->keg_d_tgl) .' Jml '. $r->keg_d_jumlah .' ('.$r->keg_d_ket.') '.$link_laci.' '.$link_crud.'<br />';
 			$d_jml += $r->keg_d_jumlah;
 		}
 		$detil_keg=array($d_keg,$d_jml);

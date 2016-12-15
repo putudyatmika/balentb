@@ -104,17 +104,36 @@ while ($k=$sql_kabkota_target->fetch_object()) {
 	if ($d_persen_terima > 85) $rr_terima='class="text-right bpsgood"';
 	elseif ($d_persen_terima > 70) $rr_terima='class="text-right bpsmedium"';
 	else $rr_terima='class="text-right bpsbad"';
+	if ($_SESSION['sesi_level'] > 1) {
+		if ($_SESSION['sesi_level'] > 2) {
+			$kirim_data='<a href="'.$url.'/'.$page.'/kirim/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i>';
+			$terima_data='<a href="'.$url.'/'.$page.'/terima/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a>';
+		}
+		else {
+			if ($_SESSION['sesi_unitkerja']==$k->keg_t_unitkerja) {
+				$kirim_data='<a href="'.$url.'/'.$page.'/kirim/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i></a>';
+			}
+			else {
+				$kirim_data='';
+			}
+			$terima_data='';
+		}
+	}
+	else {
+		$kirim_data='';
+		$terima_data='';
+	}
 	echo '
 	<tr>
 		<td>'.$i.'</td>
 		<td>'.$k->unit_nama.'</td>
 		<td class="text-right">'.$k->keg_t_target.'</td>
-		<td>'.$d_keg_kirim[0].'</td>
+		<td class="text-right">'.$d_keg_kirim[0].'</td>
 		<td '.$rr_kirim.'>'.$d_persen_kirim.' %</td>
-		<td class="text-center"><a href="'.$url.'/'.$page.'/kirim/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i></td>
-		<td>'.$d_keg_terima[0].'</td>
+		<td class="text-center">'.$kirim_data.'</td>
+		<td class="text-right">'.$d_keg_terima[0].'</td>
 		<td '.$rr_terima.'>'.$d_persen_terima.' %</td>
-		<td class="text-center"><a href="'.$url.'/'.$page.'/terima/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></td>
+		<td class="text-center">'.$terima_data.'</td>
 		</tr>
 	';
 	$total_terima=$total_terima+$d_terima;

@@ -1,17 +1,15 @@
 <?php
-if ($_SESSION['sesi_level'] > 2) {
-$keg_id=$lvl3;
-$keg_nama=get_nama_kegiatan($keg_id);
-$keg_d_unitkerja=$lvl4;
+$keg_d_id=$lvl3;
 $db_view = new db();
 $conn_view = $db_view -> connect();
-$sql_view = $conn_view -> query("select * from keg_target,unitkerja where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_id='$keg_id'");
+$sql_view = $conn_view -> query("select * from keg_detil,unitkerja where keg_detil.keg_d_unitkerja=unitkerja.unit_kode and keg_d_id='$keg_d_id'");
 $cek=$sql_view->num_rows;
 if ($cek>0) {
-   $kt=$sql_view->fetch_object();
+   $kk=$sql_view->fetch_object();
+   $keg_nama=get_nama_kegiatan($kk->keg_id);
    ?>
-   <legend>Konfirmasi Penerimaan</legend>
-   		<form id="formKirimTarget" name="formKirimTarget" action="<?php echo $url.'/'.$page;?>/saveterima/"  method="post" class="form-horizontal well" role="form">
+   <legend>Edit Penerimaan</legend>
+   		<form id="formKirimTarget" name="formKirimTarget" action="<?php echo $url.'/'.$page;?>/updateterima/"  method="post" class="form-horizontal well" role="form">
    		<fieldset>
    		<div class="form-group">
    			<label for="keg_nama" class="col-sm-2 control-label">Nama Kegiatan</label>
@@ -22,15 +20,15 @@ if ($cek>0) {
    		<div class="form-group">
    			<label for="keg_unitkerja" class="col-sm-2 control-label">Unit Kerja</label>
    				<div class="col-sm-6">
-   					<?php echo $kt->unit_nama; ?>
+   					<?php echo $kk->unit_nama; ?>
    				</div>
    		</div>
    		<div class="form-group">
-   			<label for="keg_d_tgl" class="col-sm-2 control-label">Tanggal Penerimaan</label>
+   			<label for="keg_d_tgl" class="col-sm-2 control-label">Tanggal pengiriman</label>
    				<div class="col-sm-3" id="tgl_mulai_keg">
    					<div class="input-group margin-bottom-sm">
    				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-   				<input type="text" name="keg_d_tgl" id="keg_tglmulai" class="form-control" placeholder="Format : YYYY-MM-DD" />
+   				<input type="text" name="keg_d_tgl" id="keg_tglmulai" class="form-control" value="<?php echo $kk->keg_d_tgl;?>" placeholder="Format : YYYY-MM-DD" />
    				</div>
    				</div>
    		</div>
@@ -39,7 +37,7 @@ if ($cek>0) {
    				<div class="col-sm-3">
    					<div class="input-group margin-bottom-sm">
    				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-   				<input type="text" name="keg_d_jumlah" class="form-control" placeholder="Satuan Kegiatan" />
+   				<input type="text" name="keg_d_jumlah" class="form-control" value="<?php echo $kk->keg_d_jumlah; ?>" placeholder="Satuan Kegiatan" />
    				</div>
    				</div>
    		</div>
@@ -58,20 +56,15 @@ if ($cek>0) {
    		</div>-->
    		<div class="form-group">
    			<div class="col-sm-offset-2 col-sm-8">
-   			  <button type="submit" id="submit_keg" name="submit_keg" value="kirim" class="btn btn-primary">KIRIM</button>
+   			  <button type="submit" id="submit_keg" name="submit_keg" value="update" class="btn btn-primary">UPDATE TERIMA</button>
    			</div>
    		</div>
    </fieldset>
-   <input type="hidden" name="keg_id" value="<?php echo $keg_id;?>" />
-   <input type="hidden" name="keg_d_unitkerja" value="<?php echo $keg_d_unitkerja;?>" />
+   <input type="hidden" name="keg_d_id" value="<?php echo $keg_d_id;?>" />
    </form>
 <?php
 }
 else {
   echo 'Data kegiatan tidak tersedia';
-}
-}
-else {
-	echo 'Level user tidak bisa mengakses menu ini';
 }
 ?>

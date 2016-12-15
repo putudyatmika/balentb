@@ -9,7 +9,10 @@
 		<th>Jenis</th>
 		<th>Tgl Mulai</th>
 		<th>Tgl Berakhir</th>
+		<?php
+		if ($_SESSION['sesi_level']>2) { ?>
 		<th colspan="2">Aksi</th>
+		<?php } ?>
 	</tr>
 	<?php
 	$db = new db();
@@ -27,9 +30,13 @@
 				<td>'.$r->keg_total_target.' '.$r->keg_target_satuan.'</td>
 				<td>'.$JenisKegiatan[$r->keg_jenis].'</td>
 				<td>'.$r->keg_start.'</td>
-				<td>'.$r->keg_end.'</td>
+				<td>'.$r->keg_end.'</td>';
+				if ($_SESSION['sesi_level'] > 2) {
+					echo '
 				<td><a href="'.$url.'/'.$page.'/edit/'.$r->keg_id.'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a></td>
-				<td><a href="'.$url.'/'.$page.'/delete/'.$r->keg_id.'" data-confirm="Apakah data ('.$r->keg_id.') '.$r->keg_nama.' ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></td>
+				<td><a href="'.$url.'/'.$page.'/delete/'.$r->keg_id.'" data-confirm="Apakah data ('.$r->keg_id.') '.$r->keg_nama.' ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></td>';
+				}
+			echo '
 			</tr>
 			';
 			$i++;
