@@ -1,4 +1,5 @@
 <?php
+if ($_SESSION['sesi_level'] > 2) {
 $keg_id=$lvl3;
 $db_edit = new db();
 $conn_edit = $db_edit -> connect();
@@ -6,6 +7,24 @@ $sql_edit = $conn_edit -> query("select * from kegiatan where keg_id='$keg_id'")
 $cek=$sql_edit->num_rows;
 if ($cek>0) {
  $e=$sql_edit -> fetch_object();
+ $es_unit=get_eselon_unit($_SESSION['sesi_unitkerja']);
+ $parent_unit=get_parent_unit($e->keg_unitkerja);
+ if ($_SESSION['sesi_level'] > 3 ) {
+	 $edit=1;
+ }
+ else {
+	 if (($es_unit==4) and ($_SESSION['sesi_unitkerja']==$e->keg_unitkerja)) {
+		 $edit=1;
+	 }
+	 elseif (($es_unit==3) and ($_SESSION['sesi_unitkerja']==$parent_unit)) {
+		 $edit=1;
+	 }
+	 else {
+		$edit=2;
+	 }
+ }
+ 
+ if ($edit==1) {
 ?>
 <legend>Edit Kegiatan</legend>
 		<form id="formKegBaru" name="formKegBaru" action="<?php echo $url.'/'.$page;?>/update/"  method="post" class="form-horizontal well" role="form">
@@ -138,7 +157,15 @@ if ($cek>0) {
 <input type="hidden" name="keg_id" value="<?php echo $keg_id;?>" />
 </form>
 <?php }
+	else {
+		echo 'Level user tidak bisa mengedit';
+	}
+}
 else {
 	echo 'Data kegiatan masih kosong';
+}
+}
+else {
+	echo 'Level user tidak bisa mengakses menu ini';
 }
 ?>

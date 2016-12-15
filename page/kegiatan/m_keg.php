@@ -43,6 +43,18 @@
 	elseif ($act=="updatekirim") {
 		include 'page/kegiatan/keg_kirim_update.php';
 	}
+	elseif ($act=="editterima") {
+			include 'page/kegiatan/keg_terima_form_edit.php';
+	}
+	elseif ($act=="updateterima") {
+		include 'page/kegiatan/keg_terima_update.php';
+	}
+	elseif ($act=="deletedetil" and $_SESSION['sesi_level'] > 1) {
+		include 'page/kegiatan/keg_delete_detil.php';
+	}
+	elseif ($act=="delete" and $_SESSION['sesi_level'] > 2) {
+		include 'page/kegiatan/keg_delete.php';
+	}
 	else {
 		 include 'page/kegiatan/keg_list.php';
 	}

@@ -1,10 +1,16 @@
 <?php
+if ($_SESSION['sesi_level'] > 1) {
 $keg_id=$lvl3;
 $keg_nama=get_nama_kegiatan($keg_id);
-$keg_d_unitkerja=$lvl4;
+if ($_SESSION['sesi_level']==2) {
+	$keg_d_unitkerja=$_SESSION['sesi_unitkerja'];
+}
+else {
+	$keg_d_unitkerja=$lvl4; 
+}
 $db_view = new db();
 $conn_view = $db_view -> connect();
-$sql_view = $conn_view -> query("select * from keg_target,unitkerja where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_id='$keg_id'");
+$sql_view = $conn_view -> query("select * from keg_target,unitkerja where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_id='$keg_id' and keg_t_unitkerja='$keg_d_unitkerja'");
 $cek=$sql_view->num_rows;
 if ($cek>0) {
    $kk=$sql_view->fetch_object();
@@ -77,5 +83,9 @@ if ($cek>0) {
 }
 else {
   echo 'Data kegiatan tidak tersedia';
+}
+}
+else {
+	echo 'Level user tidak bisa mengakses menu ini';
 }
 ?>
