@@ -70,19 +70,19 @@ echo '
  echo '
  <div class="table-responsive">
 <table class="table table-hover table-bordered table-condensed">
-<tr>
-	<th rowspan="2">No</th>
-	<th rowspan="2">Unit Kerja</th>
-	<th rowspan="2">Target</th>
+<tr class="success">
+	<th rowspan="2" class="text-center">No</th>
+	<th rowspan="2" class="text-center">Unit Kerja</th>
+	<th rowspan="2" class="text-center">Target</th>
 	<th colspan="3" class="text-center">Pengiriman</th>
 	<th colspan="3" class="text-center">Penerimaan</th>
 	</tr>
-	<tr>
-	<th>Rincian</th>
-	<th>RR (%)</th>
+	<tr class="success">
+	<th class="text-center">Rincian</th>
+	<th class="text-center">RR (%)</th>
 	<th></th>
-	<th>Rincian</th>
-	<th>RR (%)</th>
+	<th class="text-center">Rincian</th>
+	<th class="text-center">RR (%)</th>
 	<th></th>
 	</tr>
 	';
@@ -129,10 +129,10 @@ while ($k=$sql_kabkota_target->fetch_object()) {
 		<td>'.$k->unit_nama.'</td>
 		<td class="text-right">'.$k->keg_t_target.'</td>
 		<td class="text-right">'.$d_keg_kirim[0].'</td>
-		<td '.$rr_kirim.'>'.$d_persen_kirim.' %</td>
+		<td '.$rr_kirim.'>'.number_format($d_persen_kirim,2,",",".").' %</td>
 		<td class="text-center">'.$kirim_data.'</td>
 		<td class="text-right">'.$d_keg_terima[0].'</td>
-		<td '.$rr_terima.'>'.$d_persen_terima.' %</td>
+		<td '.$rr_terima.'>'.number_format($d_persen_terima,2,",",".").' %</td>
 		<td class="text-center">'.$terima_data.'</td>
 		</tr>
 	';

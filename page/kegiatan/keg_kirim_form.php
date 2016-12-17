@@ -6,7 +6,7 @@ if ($_SESSION['sesi_level']==2) {
 	$keg_d_unitkerja=$_SESSION['sesi_unitkerja'];
 }
 else {
-	$keg_d_unitkerja=$lvl4; 
+	$keg_d_unitkerja=$lvl4;
 }
 $db_view = new db();
 $conn_view = $db_view -> connect();
@@ -28,6 +28,12 @@ if ($cek>0) {
    			<label for="keg_unitkerja" class="col-sm-2 control-label">Unit Kerja</label>
    				<div class="col-sm-6">
    					<?php echo $kk->unit_nama; ?>
+   				</div>
+   		</div>
+			<div class="form-group">
+   			<label for="keg_t_target" class="col-sm-2 control-label">Target</label>
+   				<div class="col-sm-6">
+   					<?php echo $kk->keg_t_target; ?>
    				</div>
    		</div>
    		<div class="form-group">

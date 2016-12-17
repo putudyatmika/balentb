@@ -25,6 +25,12 @@ if ($cek>0) {
    					<?php echo $kt->unit_nama; ?>
    				</div>
    		</div>
+      <div class="form-group">
+        <label for="keg_unitkerja" class="col-sm-2 control-label">Target</label>
+          <div class="col-sm-6">
+            <?php echo $kt->keg_t_target; ?>
+          </div>
+      </div>
    		<div class="form-group">
    			<label for="keg_d_tgl" class="col-sm-2 control-label">Tanggal Penerimaan</label>
    				<div class="col-sm-3" id="tgl_mulai_keg">
