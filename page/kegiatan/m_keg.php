@@ -5,7 +5,7 @@
 					<div class="btn-group">
 						<?php if ($_SESSION['sesi_level'] > 2) { ?><a href="<?php echo $url; ?>/kegiatan/add/" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Tambah</a> <?php } ?>
 							<a href="<?php echo $url; ?>/kegiatan/" class="btn btn-danger"><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp; Semua</a>
-							<a href="<?php echo $url; ?>/kegiatan/provinsi/" class="btn btn-success"><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp; Bidang/Bagian</a>
+							<a href="<?php echo $url; ?>/kegiatan/bidang/" class="btn btn-success"><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp; Bidang/Bagian</a>
 						</div>
 				</div>
 
@@ -24,6 +24,9 @@
 		}
 	elseif ($act=="view") {
 			include 'page/kegiatan/keg_view.php';
+	}
+	elseif ($act=="bidang") {
+			include 'page/kegiatan/keg_list_bidang.php';
 	}
 	elseif ($act=="kirim") {
 			include 'page/kegiatan/keg_kirim_form.php';
