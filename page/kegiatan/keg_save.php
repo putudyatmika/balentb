@@ -36,10 +36,15 @@ foreach ($kabkota_target as $key => $value) {
     //echo $key2 ." => ". $value2 ."<br/ >" ;
     //echo $i.' Isi target kabkota : '.$value2 .'<br />';
 	$target_kabkota=$value2;
-	}
+   }
+    if ($target_kabkota > 0) {
    $sql_keg_kabkota = $conn -> query("insert into keg_target(keg_id, keg_t_unitkerja, keg_t_target, keg_t_dibuat_oleh, keg_t_dibuat_waktu, keg_t_diupdate_oleh) values('$keg_id', '$kabkota_id', '$target_kabkota', '$created', '$waktu_lokal', '$created')") or die(mysqli_error($conn));
    //echo $kabkota_id .' '. $target_kabkota .' '. $keg_id .'<br />';
    }
+   else {
+	   $sql_keg_kabkota='';
+   }
+}
 	if ($sql_keg_kabkota) echo '<br />(BERHASIL) Target kegiatan masing-masing kabupaten/kota berhasil disimpan';
 	else echo '<br />(ERROR) target kegiatan masing-masing kabupaten/kota tidak berhasil di simpan';
   echo '<br /><a href="'.$url.'/'.$page.'">Kembali</a>';

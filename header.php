@@ -42,7 +42,15 @@
         <li><a href="<?php echo $url; ?>/kegiatan/">KEGIATAN</a></li>
 		<li><a href="<?php echo $url; ?>/laporan/">LAPORAN</a></li>
     <?php if ($_SESSION['sesi_level']>=4) { ?><li><a href="<?php echo $url; ?>/master/">MASTER</a></li><?php } ?>
-		<li><a href="<?php echo $url; ?>/logout/"><i class="fa fa-power-off" aria-hidden="true"></i> </a></li>
+		<li class="dropdown">
+              <a href="<?php echo $url; ?>/users/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">USERS (<?php echo $_SESSION['sesi_user_id']; ?>) <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+			  <li><a href="<?php echo $url; ?>/users/">Profil</a></li>
+                <li><a href="<?php echo $url; ?>/users/gantipasswd/">Ganti Password</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="<?php echo $url; ?>/logout/"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</a></li>
+              </ul>
+            </li>
       </ul>
     </div>
   </div>

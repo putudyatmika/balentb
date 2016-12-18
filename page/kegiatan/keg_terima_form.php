@@ -5,7 +5,7 @@ $keg_nama=get_nama_kegiatan($keg_id);
 $keg_d_unitkerja=$lvl4;
 $db_view = new db();
 $conn_view = $db_view -> connect();
-$sql_view = $conn_view -> query("select * from keg_target,unitkerja where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_id='$keg_id'");
+$sql_view = $conn_view -> query("select * from keg_target,unitkerja where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_id='$keg_id' and keg_t_unitkerja='$keg_d_unitkerja'");
 $cek=$sql_view->num_rows;
 if ($cek>0) {
    $kt=$sql_view->fetch_object();
@@ -45,7 +45,7 @@ if ($cek>0) {
    				<div class="col-sm-3">
    					<div class="input-group margin-bottom-sm">
    				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-   				<input type="text" name="keg_d_jumlah" class="form-control" placeholder="Satuan Kegiatan" />
+   				<input type="text" name="keg_d_jumlah" class="form-control" placeholder="Jumlah Diterima" />
    				</div>
    				</div>
    		</div>
