@@ -1,7 +1,7 @@
 <?php
 /*
-SI-BPSNTB
-Sistem Informasi BPS Provinsi NTB
+BaleNTB
+Monitoring Kegiatan BPS Provinsi NTB
 Created by I Putu Dyatmika
 */
 session_start();
@@ -10,6 +10,7 @@ require('fungsi/vars.php');
 require('fungsi/class.php');
 require('fungsi/fungsi.php');
 
+$tanggal_hari_ini=date("Y-m-d");
 //require('page/settings/settings.php'); //setting web
 //untuk mengetahui ip address pengakses
 if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -45,7 +46,7 @@ require ('header.php');
 require ('main.php');
 require ('footer.php');
 //untuk melihat url nya
-
+if (isset($_SESSION['sesi_user_id']) and $_SESSION['sesi_user_id']=='mika') {
 echo '
 	Segmen1 : '. $segmen1.' <br />
 	Segmen2 : '. $segmen2.' <br />
@@ -56,7 +57,7 @@ echo '
 	lvl5 : '.$lvl5.' <br />
 	<br />
 	';
-if (isset($_SESSION['sesi_user_id'])) {
+
 echo $_SESSION['sesi_user_id'] .'<br />'.
 $_SESSION['sesi_user_no'] .'<br />'.
 $_SESSION['sesi_passwd_md5'] .'<br />'.

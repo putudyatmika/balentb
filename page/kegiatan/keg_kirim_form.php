@@ -50,7 +50,7 @@ if ($cek>0) {
    				<div class="col-sm-3">
    					<div class="input-group margin-bottom-sm">
    				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-   				<input type="text" name="keg_d_jumlah" class="form-control" placeholder="Satuan Kegiatan" />
+   				<input type="text" name="keg_d_jumlah" class="form-control" placeholder="Jumlah Kirim" />
    				</div>
    				</div>
    		</div>
@@ -59,7 +59,7 @@ if ($cek>0) {
    				<div class="col-sm-3">
    					<div class="input-group margin-bottom-sm">
    				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-   				<input type="text" name="keg_d_ket" class="form-control" placeholder="Total Target" />
+   				<input type="text" name="keg_d_ket" class="form-control" placeholder="Dikirim via apa?" />
    				</div>
    				</div>
    		</div>

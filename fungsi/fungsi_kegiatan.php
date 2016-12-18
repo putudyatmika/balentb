@@ -15,22 +15,22 @@ function get_id_kegiatan($NamaKegiatan,$waktu_save,$pembuat) {
 	return $id_keg;
 	$conn_keg->close();
 	}
-	function get_nama_kegiatan($keg_id) {
-		$db_keg = new db();
-		$conn_keg = $db_keg->connect();
-		$sql_id_keg = $conn_keg -> query("select keg_nama from kegiatan where keg_id='$keg_id'");
-		$cek=$sql_id_keg->num_rows;
-		if ($cek>0) {
-		   $keg_nama='';
-		   $r=$sql_id_keg->fetch_object();
-		   $keg_nama=$r->keg_nama;
-		}
-		else {
-		 $keg_nama='';
-		}
-		return $keg_nama;
-		$conn_keg->close();
-		}
+function get_nama_kegiatan($keg_id) {
+	$db_keg = new db();
+	$conn_keg = $db_keg->connect();
+	$sql_id_keg = $conn_keg -> query("select keg_nama from kegiatan where keg_id='$keg_id'");
+	$cek=$sql_id_keg->num_rows;
+	if ($cek>0) {
+	   $keg_nama='';
+	   $r=$sql_id_keg->fetch_object();
+	   $keg_nama=$r->keg_nama;
+	}
+	else {
+	 $keg_nama='';
+	}
+	return $keg_nama;
+	$conn_keg->close();
+	}
 
 function cek_kegiatan($NamaKegiatan,$unit_keg) {
 	$db_keg = new db();
@@ -119,6 +119,26 @@ function get_detil_kegiatan($keg_id,$keg_d_unitkerja,$jenis_keg) {
 		$detil_keg=array('',0);
 	}
 	return $detil_keg;
+	$conn_keg->close();
+}
+function get_keg_realisasi($keg_id, $keg_jenis) {
+	$keg_jml='';
+	$db_keg = new db();
+	$conn_keg = $db_keg->connect();
+	$sql_d_keg = $conn_keg -> query("select sum(keg_d_jumlah) as jumlah from keg_detil where keg_id='$keg_id' and keg_d_jenis='$keg_jenis'");
+	$r=$sql_d_keg->fetch_object();
+	$keg_jml=$r->jumlah;
+	return $keg_jml;
+	$conn_keg->close();
+}
+function get_keg_kabkota_realisasi($keg_id,$unit_kabkota, $keg_jenis) {
+	$keg_jml='';
+	$db_keg = new db();
+	$conn_keg = $db_keg->connect();
+	$sql_d_keg = $conn_keg -> query("select sum(keg_d_jumlah) as jumlah from keg_detil where keg_id='$keg_id' and keg_d_unitkerja='$unit_kabkota' and keg_d_jenis='$keg_jenis'");
+	$r=$sql_d_keg->fetch_object();
+	$keg_jml=$r->jumlah;
+	return $keg_jml;
 	$conn_keg->close();
 }
 ?>

@@ -6,6 +6,7 @@ $sql_view = $conn_view -> query("select * from kegiatan,unitkerja where kegiatan
 $cek=$sql_view->num_rows;
 if ($cek>0) {
  $r=$sql_view -> fetch_object();
+ $tgl_mulai=$r->keg_start;
  echo '
  <legend>'.$r->keg_nama.'</legend>
 <div class="table-responsive">
@@ -66,7 +67,7 @@ echo '
 </table>
 </div>
  ';
- $sql_kabkota_target=$conn_view -> query("select * from keg_target,unitkerja where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_target.keg_id='$keg_id'");
+ $sql_kabkota_target=$conn_view -> query("select * from keg_target,unitkerja where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_target.keg_id='$keg_id' and keg_t_target>0");
  echo '
  <div class="table-responsive">
 <table class="table table-hover table-bordered table-condensed">
@@ -104,7 +105,7 @@ while ($k=$sql_kabkota_target->fetch_object()) {
 	if ($d_persen_terima > 85) $rr_terima='class="text-right bpsgood"';
 	elseif ($d_persen_terima > 70) $rr_terima='class="text-right bpsmedium"';
 	else $rr_terima='class="text-right bpsbad"';
-	if ($_SESSION['sesi_level'] > 1) {
+	if (($_SESSION['sesi_level'] > 1) and ($tgl_mulai <= $tanggal_hari_ini)) {
 		if ($_SESSION['sesi_level'] > 2) {
 			$kirim_data='<a href="'.$url.'/'.$page.'/kirim/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i>';
 			$terima_data='<a href="'.$url.'/'.$page.'/terima/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a>';

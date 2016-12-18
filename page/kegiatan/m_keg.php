@@ -1,13 +1,13 @@
 <div class="container">
 <div class="row konten">
 	<div class="col-lg-12 col-sm-12">
-					<div class="btn-toolbar" role="toolbar">
-					<div class="btn-group">
-						<?php if ($_SESSION['sesi_level'] > 2) { ?><a href="<?php echo $url; ?>/kegiatan/add/" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Tambah</a> <?php } ?>
-							<a href="<?php echo $url; ?>/kegiatan/" class="btn btn-danger"><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp; Semua</a>
-							<a href="<?php echo $url; ?>/kegiatan/bidang/" class="btn btn-success"><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp; Bidang/Bagian</a>
-						</div>
-				</div>
+		<div class="btn-toolbar" role="toolbar">
+		<div class="btn-group">
+			<?php if ($_SESSION['sesi_level'] > 2) { ?><a href="<?php echo $url; ?>/kegiatan/add/" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Tambah</a> <?php } ?>
+				<a href="<?php echo $url; ?>/kegiatan/" class="btn btn-danger"><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp; Semua</a>
+				<a href="<?php echo $url; ?>/kegiatan/bidang/" class="btn btn-success"><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp; Bidang/Bagian</a>
+			</div>
+	</div>
 
 <?php
 	if ($act=="add" and $_SESSION['sesi_level'] > 2) {

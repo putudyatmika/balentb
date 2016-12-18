@@ -56,6 +56,9 @@ body {
 .konten {
 	margin-top:50px;
 }
+.margin10px {
+	margin-top:10px;
+}
 .navbar li a, .navbar .navbar-brand {
     color: #fff !important;
 }
@@ -77,6 +80,14 @@ body {
    object-fit: contain;
 
 }
+.navbar li > .dropdown-menu {
+ background-color: #494542 !important;
+}
+.navbar li > .dropdown-menu > li > a:hover,
+   .dropdown-menu > li > a:focus {
+    color: #262626;
+	background-color: #fff !important;  /*change color of links in drop down here*/
+   }
 .jumbotron {
     background-color: #494542; /* Orange */
     color: #ffffff;

@@ -89,7 +89,7 @@
 				<div class="col-sm-3">
 					<div class="input-group margin-bottom-sm">
 				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-				<input type="text" name="keg_target" class="form-control" placeholder="Total Target" />
+				<input type="text" name="keg_target" class="form-control target_total" placeholder="Total Target" />
 				</div>
 				</div>
 		</div>
@@ -110,7 +110,7 @@
 					<div class="col-sm-3">
 						<div class="input-group margin-bottom-sm">
 					<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<input type="text" name="keg_kabkota['.$k->unit_kode.'][]" class="form-control" placeholder="Target Kegiatan" />
+					<input type="text" name="keg_kabkota['.$k->unit_kode.'][]" class="form-control target_kabkota" placeholder="Target Kegiatan" />
 					</div>
 					</div>
 			</div>
