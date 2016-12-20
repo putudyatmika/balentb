@@ -170,6 +170,7 @@ body {
 .table tbody tr > td.bpsbad
 {
   background-color: #FF3835;
+  color: #fff;
 }
 
 .table tbody tr > td.bpsmedium

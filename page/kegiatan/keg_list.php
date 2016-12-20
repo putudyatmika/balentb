@@ -1,4 +1,36 @@
+<?php
+$tahun_kegiatan='';
+if (isset($_POST['submit_unitkerja'])) {
+	$tahun_kegiatan=$_POST['tahun_kegiatan'];
+}
+if ($tahun_kegiatan=='') $tahun_kegiatan=date('Y');
+?>
 <legend>Daftar Kegiatan</legend>
+<form class="form-inline" action="<?php echo $url.'/'.$page.'/'.$act;?>" method="post">
+  <div class="form-group">
+    <label for="email">Tahun Kegiatan</label>
+		<select class="form-control" name="tahun_kegiatan" id="tahun_kegiatan" style="font-family:'FontAwesome', Arial;">
+		<option value="">Pilih Tahun</option>
+		<?php
+		$db = new db();
+		$conn = $db -> connect();
+		$sql_unitkerja = $conn -> query("select year(keg_start) as tahun from kegiatan group by year(keg_start) order by tahun asc");
+		$cek= $sql_unitkerja -> num_rows;
+		if ($cek > 0) {
+			while ($r=$sql_unitkerja->fetch_object()) {
+				if ($tahun_kegiatan==$r->tahun) $pilih='selected="selected"';
+				else $pilih='';
+				echo '<option value="'.$r->tahun.'" '.$pilih.'>'.$r->tahun.'</option>';
+			}
+		}
+		else {
+			echo '<option value="">data kosong</option>';
+		}
+		?>
+		</select>
+  </div>
+  <button type="submit" name="submit_unitkerja" class="btn btn-default">Get Data</button>
+</form>
 <div class="table-responsive">
 <table class="table table-hover table-striped table-condensed">
 	<tr class="success">

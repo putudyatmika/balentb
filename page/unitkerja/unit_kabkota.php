@@ -60,24 +60,24 @@ if (isset($_POST['submit_unitkerja'])) {
 					$total_terima=get_keg_kabkota_realisasi($k->keg_id,$k->keg_t_unitkerja,2);
 					$persen_kirim=($total_kirim/$target_total)*100;
 					$persen_terima=($total_terima/$target_total)*100;
-					
+
 					if ($persen_kirim > 85) $rr_kirim='class="text-right bpsgood"';
 					elseif ($persen_kirim > 70) $rr_kirim='class="text-right bpsmedium"';
 					else $rr_kirim='class="text-right bpsbad"';
-					
+
 					if ($persen_terima > 85) $rr_terima='class="text-right bpsgood"';
 					elseif ($persen_terima > 70) $rr_terima='class="text-right bpsmedium"';
 					else $rr_terima='class="text-right bpsbad"';
-					
-					
+
+
 					echo '
 					<tr>
 						<td class="text-center">'.$i.'.</td>
 						<td><a href="'.$url.'/kegiatan/view/'.$k->keg_id.'">'.$k->keg_nama.'</a> ('.$k->keg_target_satuan.')</td>
 						<td>'.tgl_convert(1,$k->keg_end).'</td>
 						<td class="text-right">'.$k->keg_t_target.'</td>
-						<td '.$rr_kirim.'>'.$total_kirim.' ('.$persen_kirim.' %)</td>
-						<td '.$rr_terima.'>'.$total_terima.' ('.$persen_terima.' %)</td>
+						<td '.$rr_kirim.'>'.$total_kirim.' ('.number_format($persen_kirim,2,",",".").' %)</td>
+						<td '.$rr_terima.'>'.$total_terima.' ('.number_format($persen_terima,2,",",".").' %)</td>
 					</tr>
 					';
 					$i++;
@@ -99,24 +99,24 @@ if (isset($_POST['submit_unitkerja'])) {
 					$total_terima=get_keg_kabkota_realisasi($k->keg_id,$k->keg_t_unitkerja,2);
 					$persen_kirim=($total_kirim/$target_total)*100;
 					$persen_terima=($total_terima/$target_total)*100;
-					
+
 					if ($persen_kirim > 85) $rr_kirim='class="text-right bpsgood"';
 					elseif ($persen_kirim > 70) $rr_kirim='class="text-right bpsmedium"';
 					else $rr_kirim='class="text-right bpsbad"';
-					
+
 					if ($persen_terima > 85) $rr_terima='class="text-right bpsgood"';
 					elseif ($persen_terima > 70) $rr_terima='class="text-right bpsmedium"';
 					else $rr_terima='class="text-right bpsbad"';
-					
-					
+
+
 					echo '
 					<tr>
 						<td class="text-center">'.$i.'.</td>
 						<td><a href="'.$url.'/kegiatan/view/'.$k->keg_id.'">'.$k->keg_nama.'</a> ('.$k->keg_target_satuan.')</td>
 						<td>'.tgl_convert(1,$k->keg_end).'</td>
 						<td class="text-right">'.$k->keg_t_target.'</td>
-						<td '.$rr_kirim.'>'.$total_kirim.' ('.$persen_kirim.' %)</td>
-						<td '.$rr_terima.'>'.$total_terima.' ('.$persen_terima.' %)</td>
+						<td '.$rr_kirim.'>'.$total_kirim.' ('.number_format($persen_kirim,2,",",".").' %)</td>
+						<td '.$rr_terima.'>'.$total_terima.' ('.number_format($persen_terima,2,",",".").' %)</td>
 					</tr>
 					';
 					$i++;
