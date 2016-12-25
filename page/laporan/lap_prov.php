@@ -6,6 +6,7 @@ if (isset($_POST['submit_unitkerja'])) {
 	$tahun_kegiatan=$_POST['tahun_kegiatan'];
 }
 if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
+
 ?>
 <form class="form-inline" action="<?php echo $url.'/'.$page;?>/provinsi/" method="post">
   <div class="form-group">
@@ -54,7 +55,8 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 	</div>
   <button type="submit" name="submit_unitkerja" class="btn btn-default">Get Data</button>
 </form>
-<legend>Daftar Kegiatan <?php echo get_nama_unit($unit_kode); ?></legend>
+<legend>Laporan Kegiatan <?php echo get_nama_unit($unit_kode); ?> Tahun <?php echo $tahun_kegiatan; ?></legend>
+<p class="text-right">Keadaan : <strong><?php echo tgl_hari_ini(); ?></strong></p>
 <div class="table-responsive">
 <table class="table table-hover table-bordered table-condensed">
 	<tr class="success">

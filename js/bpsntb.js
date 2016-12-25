@@ -509,3 +509,56 @@ $(document).ready(function() {
         }
     });
 });
+$(document).ready(function() {
+    $('#formGantiPasswd').bootstrapValidator({
+        message: 'Nilai tidak valid',
+       feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+          user_pass_lama: {
+              validators: {
+                  notEmpty: {
+                      message: 'Silakan isikan password'
+                  },
+                  stringLength: {
+                      min: 4,
+                      message: 'minimal 4 huruf'
+                  }
+              }
+          },
+              user_pass_baru: {
+                  validators: {
+                      notEmpty: {
+                          message: 'Silakan isikan password'
+                      },
+                      stringLength: {
+                          min: 4,
+                          message: 'minimal 4 huruf'
+                      },
+                      identical: {
+                        field: 'user_pass_baru2',
+                        message: 'password tidak sama dengan konfirmasi password baru'
+                    }
+                  }
+              },
+              user_pass_baru2: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Silakan isikan konfirmasi password'
+                        },
+                        stringLength: {
+                            min: 4,
+                            message: 'minimal 4 huruf'
+                        },
+                        identical: {
+                          field: 'user_pass_baru',
+                          message: 'konfirmasi password tidak sama dengan password baru'
+                      }
+                    }
+                }
+        }
+    });
+});

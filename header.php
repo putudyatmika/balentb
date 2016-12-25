@@ -37,7 +37,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="<?php echo $url; ?>">DEPAN</a></li>
-        <li><a href="<?php echo $url; ?>/ranking/">RANKING</a></li>
+        <!--<li><a href="<?php echo $url; ?>/ranking/">RANKING</a></li>-->
         <li><a href="<?php echo $url; ?>/unitkerja/">UNITKERJA</a></li>
         <li><a href="<?php echo $url; ?>/kegiatan/">KEGIATAN</a></li>
 		<li><a href="<?php echo $url; ?>/laporan/">LAPORAN</a></li>

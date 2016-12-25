@@ -25,4 +25,5 @@ $JenisUnit=array(1=>'Provinsi',2=>'Kabupaten');
 $unit_eselon=array(1=>'I',2=>'II',3=>'III',4=>'IV');
 $JenisKegiatan=array(1=>'Bulanan',2=>'Triwulanan',3=>'Semesteran',4=>'Tahunan',5=>'Subround',6=>'AdHoc');
 $JenisDetilKegiatan=array(1=>'Pengiriman',2=>'Penerimaan');
+$TahunDefault=date('Y');
 ?>

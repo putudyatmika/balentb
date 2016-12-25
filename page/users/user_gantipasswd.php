@@ -20,11 +20,11 @@
    				</div>
    		</div>
 		<div class="form-group">
-   			<label for="user_pass_baru_2" class="col-sm-2 control-label">Konfirmasi Password</label>
+   			<label for="user_pass_baru2" class="col-sm-2 control-label">Konfirmasi Password</label>
    				<div class="col-sm-3">
    					<div class="input-group margin-bottom-sm">
    				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-   				<input type="password" name="user_pass_baru_2" class="form-control" />
+   				<input type="password" name="user_pass_baru2" class="form-control" />
    				</div>
    				</div>
    		</div>

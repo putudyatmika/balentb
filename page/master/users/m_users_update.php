@@ -25,13 +25,15 @@ if ($_POST['submit_update']) {
 	else {
 		$ganti_passwd=2;
 	}
-
+	$my_userlevel=$_SESSION['sesi_level'];
 	$created=$_SESSION['sesi_user_id'];
 	$db = new db();
 	$conn = $db -> connect();
-	$sql_unit= $conn -> query("select * from users where user_no='$user_no'");
-	$cek=$sql_unit -> num_rows;
+	$sql_user_update= $conn -> query("select * from users where user_no='$user_no'");
+	$cek=$sql_user_update -> num_rows;
 	if ($cek>0) {
+		$r=$sql_user_update->fetch_object();
+		if ($r->user_level <= $my_userlevel) {
 		 if ($ganti_passwd==1) {
 			$sql_users_save = $conn -> query("update users set user_id='$user_id',user_nama='$user_nama',user_email='$user_email', user_diupdate_oleh='$created',user_unitkerja='$user_unitkerja',user_status='$user_status',user_diupdate_waktu='$waktu_lokal',user_level='$user_level' where user_no='$user_no'");
 		 }
@@ -40,6 +42,10 @@ if ($_POST['submit_update']) {
 		 }
 		 if ($sql_users_save) echo 'SUCCESS : data user berhasil diupdate';
 		 else echo 'ERROR : data tidak bisa diupdate';
+	 }
+	 else {
+		 echo '(ERROR) User ID : '.$_SESSION['sesi_user_id'].' level '.$lvl_user[$my_userlevel].' tidak bisa mengedit '.$user_id.' level '.$lvl_user[$r->user_level];
+	 }
 	}
 	else {
 
