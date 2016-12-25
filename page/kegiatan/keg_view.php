@@ -8,9 +8,11 @@ if ($cek>0) {
  $r=$sql_view -> fetch_object();
  $tgl_mulai=$r->keg_start;
  echo '
- <legend>'.$r->keg_nama.'</legend>
-<div class="table-responsive">
+<div class="table-responsive margin10px">
 <table class="table table-hover table-striped table-condensed">
+<tr>
+  <th colspan="2" class="success text-danger"><h3>'.$r->keg_nama.'</h3></td>
+  </tr>
 	<tr>
 		<td class="text-right"><strong>Kegiatan</strong></td>
 		<td>: '.$r->keg_nama.'</td>
@@ -144,7 +146,7 @@ while ($k=$sql_kabkota_target->fetch_object()) {
 }
 $total_persen_kirim=($total_kirim/$total)*100;
 $total_persen_terima=($total_terima/$total)*100;
-echo '<tr>
+echo '<tr class="success">
 		<td colspan="2" class="text-center">TOTAL</td>
 		<td class="text-right">'.number_format($total,0,",",".").'</td>
 		<td class="text-right">'.number_format($total_kirim,0,",",".").'</td>

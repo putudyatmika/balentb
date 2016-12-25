@@ -1,11 +1,11 @@
 <?php
 $db = new db();
 $conn = $db -> connect();
-$sql_users = $conn -> query("select * from users order by user_no,user_id asc");
+$sql_users = $conn -> query("select * from users where user_level='3' order by user_no,user_id asc");
 $cek= $sql_users -> num_rows;
 if ($cek > 0) {
 ?>
-<legend>Daftar <?php echo $cek;?> user</legend>
+<legend>Daftar <?php echo $cek;?> user Level Operator Provinsi</legend>
 <div class="table-responsive">
 <table class="table table-hover table-striped table-condensed">
 	<tr class="active">

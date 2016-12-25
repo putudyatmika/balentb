@@ -47,6 +47,13 @@ $r=$sql_user->fetch_object();
 	<td>Dari IP</td>
 	<td>: <?php echo $r->user_lastip; ?></td>
 </tr>
+<?php
+echo '
+<tr>
+	<td>&nbsp;</td>
+	<td><a href="'.$url.'/'.$page.'/edit/"><i class="fa fa-2x fa-pencil-square text-info" aria-hidden="true"></i></a></td>
+</tr>';
+?>
 </table>
 </div>
 </div>
