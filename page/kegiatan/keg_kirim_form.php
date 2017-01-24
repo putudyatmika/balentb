@@ -27,7 +27,7 @@ if ($cek>0) {
    		<div class="form-group">
    			<label for="keg_unitkerja" class="col-sm-2 control-label">Unit Kerja</label>
    				<div class="col-sm-6">
-   					<?php echo $kk->unit_nama; ?>
+   					<?php echo '['.$kk->keg_t_unitkerja.'] '.$kk->unit_nama; ?>
    				</div>
    		</div>
 			<div class="form-group">

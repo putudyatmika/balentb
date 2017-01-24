@@ -2,10 +2,10 @@
         <div class="container">
 		<div class="row">
 			<div class="col-lg-12 col-xs-12">
-
-			<p class="text-left"> <?php echo date('Y') .' - <a href="'.$url.'"> BPS Provinsi NTB</a>'; ?></p>
-			  <p class="text-left"><i class="fa fa-home fa-fw" aria-hidden="true"></i> Jl. Gunung Rinjani No. 2 Mataram</p>
+			<p class="text-left"> copyright &copy; <?php echo date('Y').' - <a href="'.$url.'"> Bidang IPDS BPS Provinsi NTB</a> '; ?></p>
+			  <p class="text-left">Jl. Gunung Rinjani No. 2 Mataram</p>
         <p class="text-left">User : <?php if (isset($_SESSION['sesi_user_id'])) { echo $_SESSION['sesi_user_id'] .' ('. $_SESSION['sesi_nama'].')'; } ?> Level : <?php if (isset($_SESSION['sesi_level'])) { echo $lvl_user[$_SESSION['sesi_level']]; } ?></p>
+         <p class="text-left">Unit Kerja : <?php if (isset($_SESSION['sesi_unitkerja'])) { echo '('.$_SESSION['sesi_unitkerja'] .') '. get_nama_unit($_SESSION['sesi_unitkerja']); } ?></p>
 			 </div>
 
 		</div>

@@ -1,5 +1,6 @@
 <?php
 $tahun_kegiatan='';
+$bulan_kegiatan='';
 if (isset($_POST['submit_unitkerja'])) {
 	$tahun_kegiatan=$_POST['tahun_kegiatan'];
 	$bulan_kegiatan=$_POST['bulan_kegiatan'];
@@ -84,7 +85,7 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 			}
 			echo '
 			<tr>
-				<td colspan="'.$kol_span.'"><strong>['.$r->unit_kode.'] '.$r->unit_nama.'</strong></td>
+				<td colspan="'.$kol_span.'"><strong>'.$r->unit_nama.'</strong></td>
 			</tr>
 			';
 			$unit_es3=$r->unit_kode;
@@ -96,11 +97,16 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 							$es4_prov=$s->unit_kode;
 							echo '
 							<tr>
-								<td colspan="'.$kol_span_es4.'">['.$s->unit_kode.'] '.$s->unit_nama.'</td>
+								<td colspan="'.$kol_span_es4.'">'.$s->unit_nama.'</td>
 							</tr>
 							';
 							$i=1;
-							$sql_keg_es4= $conn->query("select * from kegiatan where keg_unitkerja='$es4_prov' and year(keg_start)='$tahun_kegiatan'");
+							if ($bulan_kegiatan=='') {
+							$sql_keg_es4= $conn->query("select * from kegiatan where keg_unitkerja='$es4_prov' and year(keg_end)='$tahun_kegiatan'");
+							}
+							else {
+								$sql_keg_es4= $conn->query("select * from kegiatan where keg_unitkerja='$es4_prov' and month(keg_end)='$bulan_kegiatan' and year(keg_end)='$tahun_kegiatan'");
+							}
 							while ($k=$sql_keg_es4->fetch_object()) {
 								echo '
 								<tr>

@@ -151,7 +151,7 @@ h4 {
 		if (isset($_POST['submit'])) {
 				$user_id=$_POST['user_id'];
 				$pass_ori=$_POST['passwd'];
-        $pass_md5=gen_passwd($pass_ori);
+                $pass_md5=gen_passwd($pass_ori);
 				$db = new db();
 				$conn = $db->connect();
 				$sql_cek = $conn -> query("select * from users where user_id='$user_id' and user_passwd='$pass_md5'");
@@ -162,6 +162,7 @@ h4 {
 				if ($cek>0) {
 					$waktu_lokal=date("Y-m-d H:i:s");
 					$r=$sql_cek->fetch_object();
+                    if ($r->user_status==1) {
 					$_SESSION['sesi_user_id']=$user_id;
 					$_SESSION['sesi_user_no']=$r->user_no;
 					$_SESSION['sesi_passwd_md5']=$pass_md5;
@@ -172,7 +173,12 @@ h4 {
 					$login_ku="sukses";
 					$sql_update_login=$conn -> query("update users set user_lastip='$ip', user_lastlogin='$waktu_lokal' where user_id='$user_id'");
 					$text_alert="Selamat Datang <b>".$r->user_nama."</b>";
-					print "<meta http-equiv=\"refresh\" content=\"3; URL=".$url."\">";
+					print "<meta http-equiv=\"refresh\" content=\"2; URL=".$url."\">";
+                    }
+                    else {
+                        $text_alert= 'User ID <strong>'.$user_id.'</strong> belum aktif.<br /> Hubungi Admin Provinsi';
+                        $login_ku="";
+                    }
 				}
 				else {
 					$text_alert= "username / password masih ada yang salah";
