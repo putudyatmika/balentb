@@ -106,7 +106,7 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 							<tr>
 								<td class="text-center">'.$i.'.</td>
 								<td><a href="'.$url.'/kegiatan/view/'.$k->keg_id.'">'.$k->keg_nama.'</a></td>
-								<td>'.tgl_convert(1,$k->keg_end).'</td>
+								<td>'.tgl_convert_bln(1,$k->keg_end).'</td>
 								<td>'.$k->keg_target_satuan.'</td>
 								<td class="text-right">'.$k->keg_total_target.'</td>
 								<td '.$rr_kirim.'>'.$total_kirim.' ('.number_format($persen_kirim,2,",",".").' %)</td>

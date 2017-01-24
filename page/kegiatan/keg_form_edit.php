@@ -8,7 +8,7 @@ $cek=$sql_edit->num_rows;
 if ($cek>0) {
  $e=$sql_edit -> fetch_object();
  $es_unit=get_eselon_unit($_SESSION['sesi_unitkerja']);
- $parent_unit=get_parent_unit($e->keg_unitkerja);
+ $parent_unit=get_parent_kode($e->keg_unitkerja);
  if ($_SESSION['sesi_level'] > 3 ) {
 	 $edit=1;
  }
@@ -158,7 +158,8 @@ if ($cek>0) {
 </form>
 <?php }
 	else {
-		echo 'Level user tidak bisa mengedit';
+		echo '(ERROR) Level user tidak bisa mengedit master kegiatan <strong>'. get_nama_kegiatan($keg_id).'</strong>';
+
 	}
 }
 else {
