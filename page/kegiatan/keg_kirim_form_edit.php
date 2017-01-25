@@ -23,6 +23,12 @@ if ($cek>0) {
    					<?php echo $kk->unit_nama; ?>
    				</div>
    		</div>
+         <div class="form-group">
+            <label for="keg_t_target" class="col-sm-2 control-label">Target</label>
+               <div class="col-sm-6">
+                  <?php echo get_keg_kabkota_target($kk->keg_id,$kk->keg_d_unitkerja); ?>
+               </div>
+         </div>
    		<div class="form-group">
    			<label for="keg_d_tgl" class="col-sm-2 control-label">Tanggal pengiriman</label>
    				<div class="col-sm-3" id="tgl_mulai_keg">
@@ -50,6 +56,15 @@ if ($cek>0) {
    				</div>
    				</div>
    		</div>
+         <div class="form-group">
+            <label for="keg_d_link" class="col-sm-2 control-label">Link Laci/Dropbox</label>
+               <div class="col-sm-5">
+                  <div class="input-group margin-bottom-sm">
+               <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+               <input type="text" name="keg_d_link" class="form-control" value="<?php echo $kk->keg_d_link_laci; ?>" placeholder="Link LACI / DROPBOX" />
+               </div>
+               </div>
+         </div>
       <!--<div class="form-group">
    			<label for="keg_d_file" class="col-sm-2 control-label">File Lampiran</label>
    				<div class="col-sm-3">

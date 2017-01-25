@@ -562,3 +562,39 @@ $(document).ready(function() {
         }
     });
 });
+$(document).ready(function() {
+    $('#formKirimTarget').bootstrapValidator({
+        message: 'Nilai tidak valid',
+       feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            keg_d_tgl: {
+                validators: {
+                    notEmpty: {
+                        message: 'Silakan isi tanggal'
+                    }
+                }
+            },
+            keg_d_jumlah: {
+                validators: {
+                    notEmpty: {
+                        message: 'Silakan isikan jumlah'
+                    },
+                    numeric: {
+                        message: 'isian harus berupa angka'
+                    }
+                }
+            },
+      keg_d_ket: {
+                validators: {
+                    notEmpty: {
+                        message: 'Silakan isi dikirim melalui apa'
+                    }
+                }
+            }
+        }
+    });
+});

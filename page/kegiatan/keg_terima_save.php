@@ -18,7 +18,7 @@ if ($cek==0) {
 else {
 $db = new db();
 $conn = $db -> connect();
-$sql_keg = $conn->query("insert into keg_detil(keg_id, keg_d_unitkerja, keg_d_tgl, keg_d_jumlah, keg_d_jenis, keg_d_dibuat_oleh, keg_d_dibuat_waktu, keg_d_diupdate_oleh) value('$keg_id', '$keg_d_unitkerja', '$keg_d_tgl', '$keg_d_jumlah', '$keg_d_jenis', '$created', '$waktu_lokal', '$created')");
+$sql_keg = $conn->query("insert into keg_detil(keg_id, keg_d_unitkerja, keg_d_tgl, keg_d_jumlah, keg_d_jenis, keg_d_dibuat_oleh, keg_d_dibuat_waktu, keg_d_diupdate_oleh, keg_d_ket) value('$keg_id', '$keg_d_unitkerja', '$keg_d_tgl', '$keg_d_jumlah', '$keg_d_jenis', '$created', '$waktu_lokal', '$created','$created')");
 if ($sql_keg) echo '(BERHASIL) data berhasil di simpan';
 else echo '(ERROR) data tidak berhasil disimpan' ;
 echo '<br /><a href="'.$url.'/'.$page.'/view/'.$keg_id.'">Kembali</a>';
