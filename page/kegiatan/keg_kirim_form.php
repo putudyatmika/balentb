@@ -63,6 +63,15 @@ if ($cek>0) {
    				</div>
    				</div>
    		</div>
+         <div class="form-group">
+            <label for="keg_d_link" class="col-sm-2 control-label">Link Laci/Dropbox</label>
+               <div class="col-sm-5">
+                  <div class="input-group margin-bottom-sm">
+               <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+               <input type="text" name="keg_d_link" class="form-control" placeholder="Link LACI / DROPBOX" />
+               </div>
+               </div>
+         </div>
       <!--<div class="form-group">
    			<label for="keg_d_file" class="col-sm-2 control-label">File Lampiran</label>
    				<div class="col-sm-3">

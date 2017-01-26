@@ -1,5 +1,5 @@
 <?php
-function tgl_hari_ini() {
+function tgl_hari_ini() { //Hari, 12 Maret 2016
 	global $hari_ini,$nama_hari_eng_indo,$nama_bulan_panjang;
 	$hari=date('l');
 	$bln=date('n');
@@ -8,7 +8,7 @@ function tgl_hari_ini() {
 	$hari_ini="$nama_hari_eng_indo[$hari], $tgl $nama_bulan_panjang[$bln] $tahun";
 	return $hari_ini;
 }
-function tgl_convert($bahasa,$tgl) {
+function tgl_convert($bahasa,$tgl) { //Selasa, 12 Januari 2016
 	//format tahun-bulan-tgl
 	global $tanggalan,$nama_hari_eng_indo,$nama_bulan_panjang;
 	if ($bahasa==1) {
@@ -23,7 +23,7 @@ function tgl_convert($bahasa,$tgl) {
 	}
 	return $tanggalan;
 }
-function tgl_convert_bln($bahasa,$tgl) {
+function tgl_convert_bln($bahasa,$tgl) { //Sel, 12 Jan 2016
 	//format tahun-bulan-tgl
 	global $tanggalan,$nama_hari_eng_indo_pendek,$nama_bulan_pendek;
 	if ($bahasa==1) {
@@ -63,6 +63,21 @@ function tgl_convert_pendek($bahasa,$tgl) {
 	$tgl_=date("j",strtotime($tgl));
 	$bulan=date("n",strtotime($tgl));
 	$tanggalan="$tgl_ $nama_bulan_panjang[$bulan] $tahun";
+	}
+	else {
+		$tanggalan=date("F jS, Y",strtotime($tgl));
+	}
+	return $tanggalan;
+}
+function tgl_convert_pendek_bulan($bahasa,$tgl) {
+	//format tahun-bulan-tgl
+	global $tanggalan,$nama_bulan_pendek;
+	if ($bahasa==1) {
+	$tahun=date("Y",strtotime($tgl));
+	$hari=date("l",strtotime($tgl));
+	$tgl_=date("j",strtotime($tgl));
+	$bulan=date("n",strtotime($tgl));
+	$tanggalan="$tgl_ $nama_bulan_pendek[$bulan] $tahun";
 	}
 	else {
 		$tanggalan=date("F jS, Y",strtotime($tgl));

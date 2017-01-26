@@ -110,7 +110,7 @@ function get_detil_kegiatan($keg_id,$keg_d_unitkerja,$jenis_keg) {
 				$link_crud='';
 			}
 			
-			$d_keg .= tgl_convert_bln(1,$r->keg_d_tgl) .' Jml '. $r->keg_d_jumlah .' ('.$r->keg_d_ket.') '.$link_laci.' '.$link_crud.'<br />';
+			$d_keg .= tgl_convert_pendek_bulan(1,$r->keg_d_tgl) .' Jml '. $r->keg_d_jumlah .' ('.$r->keg_d_ket.') '.$link_laci.' '.$link_crud.'<br />';
 			$d_jml += $r->keg_d_jumlah;
 		}
 		$detil_keg=array($d_keg,$d_jml);
@@ -139,6 +139,16 @@ function get_keg_kabkota_realisasi($keg_id,$unit_kabkota, $keg_jenis) {
 	$r=$sql_d_keg->fetch_object();
 	$keg_jml=$r->jumlah;
 	return $keg_jml;
+	$conn_keg->close();
+}
+function get_keg_kabkota_target($keg_id,$unit_kabkota) {
+	$keg_t_target='';
+	$db_keg = new db();
+	$conn_keg = $db_keg->connect();
+	$sql_d_keg = $conn_keg -> query("select * from keg_target where keg_id='$keg_id' and keg_t_unitkerja='$unit_kabkota'");
+	$r=$sql_d_keg->fetch_object();
+	$keg_t_target=$r->keg_t_target;
+	return $keg_t_target;
 	$conn_keg->close();
 }
 ?>

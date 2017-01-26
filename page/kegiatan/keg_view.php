@@ -36,6 +36,10 @@ if ($cek>0) {
 	<tr>
 		<td class="text-right"><strong>Tanggal Berakhir</strong></td>
 		<td>: '.tgl_convert(1,$r->keg_end).'</td>
+	</tr>
+	<tr>
+		<td class="text-right"><strong>SPJ</strong></td>
+		<td>: '.$StatusSPJ[$r->keg_spj].'</td>
 	</tr>';
 if ($_SESSION['sesi_level'] > 3) {
   echo '
@@ -128,7 +132,7 @@ while ($k=$sql_kabkota_target->fetch_object()) {
 	}
 	echo '
 	<tr>
-		<td>'.$i.'</td>
+		<td class="text-center">'.$i.'</td>
 		<td>'.$k->unit_nama.'</td>
 		<td class="text-right">'.$k->keg_t_target.'</td>
 		<td class="text-right">'.$d_keg_kirim[0].'</td>
