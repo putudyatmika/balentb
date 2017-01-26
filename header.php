@@ -37,10 +37,10 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="<?php echo $url; ?>">DEPAN</a></li>
+         <li><a href="<?php echo $url; ?>/kegiatan/">KEGIATAN</a></li>
         <!--<li><a href="<?php echo $url; ?>/ranking/">RANKING</a></li>-->
         <li><a href="<?php echo $url; ?>/unitkerja/">UNITKERJA</a></li>
-        <li><a href="<?php echo $url; ?>/kegiatan/">KEGIATAN</a></li>
-		<li><a href="<?php echo $url; ?>/laporan/">LAPORAN</a></li>
+       	<li><a href="<?php echo $url; ?>/laporan/">LAPORAN</a></li>
     <?php if ($_SESSION['sesi_level']>=4) { ?><li><a href="<?php echo $url; ?>/master/">MASTER</a></li><?php } ?>
 		<li class="dropdown">
               <a href="<?php echo $url; ?>/users/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">USERS (<?php echo $_SESSION['sesi_user_id']; ?>) <span class="caret"></span></a>
