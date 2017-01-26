@@ -45,10 +45,34 @@ foreach ($kabkota_target as $key => $value) {
    else {
 	   $sql_keg_kabkota='';
    }
-}
+  }
+
+
+  if ($keg_spj==1) {
+      $spj_target=$_POST['keg_target_spj'];
+      foreach ($spj_target as $key => $value) {
+        $kabkota_id='';
+        $target_spj='';
+        $sql_keg_spj='';
+        $kabkota_id=$key;
+        foreach ($value as $key2 => $value2) {
+           $target_spj=$value2;
+        }
+        if ($target_spj > 0) {
+          $sql_keg_spj = $conn -> query("insert into keg_spj(keg_id, keg_s_unitkerja, keg_s_target, keg_s_dibuat_oleh, keg_s_dibuat_waktu, keg_s_diupdate_oleh) values('$keg_id', '$kabkota_id', '$target_spj', '$created', '$waktu_lokal', '$created')") or die(mysqli_error($conn));
+        }
+        else {
+          $sql_keg_spj='';
+        }
+
+      }
+
+  }
+
 	if ($sql_keg_kabkota) echo '<br />(BERHASIL) Target kegiatan masing-masing kabupaten/kota berhasil disimpan';
 	else echo '<br />(ERROR) target kegiatan masing-masing kabupaten/kota tidak berhasil di simpan';
   echo '<br /><p><a href="'.$url.'/'.$page.'">Kembali</a></p>';
+
 }
 }
 ?>

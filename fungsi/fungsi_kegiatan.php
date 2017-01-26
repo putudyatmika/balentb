@@ -74,6 +74,21 @@ function cek_id_kegiatan($keg_id) {
 	return $cek_keg;
 	$conn_keg->close();
 }
+function get_tgl_kegiatan($keg_id) {
+	$db_keg = new db();
+	$conn_keg = $db_keg->connect();
+	$sql_id_keg = $conn_keg -> query("select * from kegiatan where keg_id='$keg_id'");
+	$cek=$sql_id_keg->num_rows;
+	if ($cek>0) {
+	   $r=$sql_id_keg->fetch_object();
+	   $tgl_kegiatan=$r->keg_end;
+	}
+	else {
+		$tgl_kegiatan='';
+	}
+	return $tgl_kegiatan;
+	$conn_keg->close();
+}
 function get_detil_kegiatan($keg_id,$keg_d_unitkerja,$jenis_keg) {
 	global $url, $page;
 	$db_keg = new db();
@@ -149,6 +164,49 @@ function get_keg_kabkota_target($keg_id,$unit_kabkota) {
 	$r=$sql_d_keg->fetch_object();
 	$keg_t_target=$r->keg_t_target;
 	return $keg_t_target;
+	$conn_keg->close();
+}
+function get_nilai_kegiatan($keg_id,$keg_unitkerja) {
+	$db_keg = new db();
+	$conn_keg = $db_keg->connect();
+	$sql_d_keg = $conn_keg -> query("select * from keg_detil where keg_id='$keg_id' and keg_d_unitkerja='$keg_unitkerja' and keg_d_jenis='2' order by keg_d_tgl asc");
+	$cek=$sql_d_keg->num_rows;
+	if ($cek>0) {
+		$keg_nilai='';
+		$nilai_waktu='';
+		$nilai_volume='';
+		$nilai_vol='';
+		$batas_waktu=get_tgl_kegiatan($keg_id);
+		$kabkota_target=get_keg_kabkota_target($keg_id,$keg_unitkerja);
+		
+		while ($r=$sql_d_keg->fetch_object()) {
+			$nilai_vol+=$r->keg_d_jumlah;
+			$target_waktu = new DateTime($batas_waktu);
+			$pengiriman = new DateTime($r->keg_d_tgl);
+			$interval = $pengiriman->diff($target_waktu);
+			$int=$interval->format('%r%a');
+
+			if ($int>4) $nilai_wkt=5;
+			elseif ($int>1) $nilai_wkt=3;
+			elseif ($int>=0) $nilai_wkt=1;
+			else $nilai_wkt=0;
+
+			$nilai_waktu+=$nilai_wkt;
+		}
+		$nilai_waktu=($nilai_waktu/$cek);
+		$persen_vol=($nilai_vol/$kabkota_target)*100;
+		if ($persen_vol>99) $nilai_volume=5;
+		elseif ($persen_vol>89) $nilai_volume=3;
+		elseif ($persen_vol>79) $nilai_volume=1;
+		else $nilai_volume=0;
+		$nilai_total=($nilai_volume*0.70)+($nilai_waktu*0.30);
+		$keg_nilai=array($nilai_waktu,$nilai_volume,$nilai_total);
+		
+	}
+	else {
+		$keg_nilai='';
+	}
+	return $keg_nilai;
 	$conn_keg->close();
 }
 ?>
