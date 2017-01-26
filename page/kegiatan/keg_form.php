@@ -94,6 +94,24 @@
 				</div>
 		</div>
 		<div class="form-group">
+			<label for="keg_spj" class="col-sm-2 control-label">Laporan SPJ Provinsi</label>
+				<div class="col-sm-2">
+					<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+				<select class="form-control" name="keg_spj" id="keg_spj">
+						<option value="">Pilih</option>
+						<?php
+						$i=0;
+						for ($i=1;$i<=2;$i++)
+							{
+								echo '<option value="'.$i.'">'.$StatusSPJ[$i].'</option>';
+							}
+						?>
+						</select>
+				</div>
+				</div>
+		</div>
+		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-8">
 			  Target BPS Kabupaten/Kota
 			</div>
@@ -106,7 +124,7 @@
 		while ($k = $sql_kabkota ->fetch_object()) {
 			echo '
 			<div class="form-group">
-				<label for="keg_target_lobar" class="col-sm-3 control-label">'.$k->unit_nama.'</label>
+				<label for="keg_target_lobar" class="col-sm-4 control-label">['.$k->unit_kode.'] '.$k->unit_nama.'</label>
 					<div class="col-sm-3">
 						<div class="input-group margin-bottom-sm">
 					<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>

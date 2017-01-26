@@ -10,6 +10,7 @@ $keg_t=trim($_POST['keg_target']);
 $waktu_lokal=date("Y-m-d H:i:s");
 $created=$_SESSION['sesi_user_id'];
 $kabkota_target=$_POST['keg_kabkota'];
+$keg_spj=$_POST['keg_spj'];
 //print_r($_POST['keg_kabkota']);
 //var_dump($_POST['keg_kabkota']);
 //echo '<br />';
@@ -20,7 +21,7 @@ if ($cek==1) {
 else {
 $db = new db();
 $conn = $db -> connect();
-$sql_keg = $conn->query("insert into kegiatan(keg_nama, keg_unitkerja, keg_start, keg_end, keg_dibuat_oleh, keg_dibuat_waktu, keg_diupdate_oleh, keg_jenis, keg_total_target, keg_target_satuan) values('$nama_kegiatan', '$keg_unitkerja', '$keg_tglmulai', '$keg_tglakhir', '$created', '$waktu_lokal', '$created', '$keg_jenis', '$keg_t', '$keg_satuan')");
+$sql_keg = $conn->query("insert into kegiatan(keg_nama, keg_unitkerja, keg_start, keg_end, keg_dibuat_oleh, keg_dibuat_waktu, keg_diupdate_oleh, keg_jenis, keg_total_target, keg_target_satuan, keg_spj) values('$nama_kegiatan', '$keg_unitkerja', '$keg_tglmulai', '$keg_tglakhir', '$created', '$waktu_lokal', '$created', '$keg_jenis', '$keg_t', '$keg_satuan','$keg_spj')");
 $keg_id=get_id_kegiatan($nama_kegiatan,$waktu_lokal,$created);
 if ($sql_keg) echo '(BERHASIL) Target kegiatan berhasil disimpan';
 else echo '(ERROR) target kegiatan tidak berhasil di simpan';
@@ -47,7 +48,7 @@ foreach ($kabkota_target as $key => $value) {
 }
 	if ($sql_keg_kabkota) echo '<br />(BERHASIL) Target kegiatan masing-masing kabupaten/kota berhasil disimpan';
 	else echo '<br />(ERROR) target kegiatan masing-masing kabupaten/kota tidak berhasil di simpan';
-  echo '<br /><a href="'.$url.'/'.$page.'">Kembali</a>';
+  echo '<br /><p><a href="'.$url.'/'.$page.'">Kembali</a></p>';
 }
 }
 ?>
