@@ -1,9 +1,11 @@
 <?php
 $unit_kode='';
 $tahun_kegiatan='';
+$bulan_kegiatan='';
 if (isset($_POST['submit_unitkerja'])) {
 	$unit_kode=$_POST['unit_kode'];
 	$tahun_kegiatan=$_POST['tahun_kegiatan'];
+	$bulan_kegiatan=$_POST['bulan_kegiatan'];
 }
 if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 
@@ -33,6 +35,16 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
   </div>
 	<div class="form-group">
 		<label for="email">Tahun Kegiatan</label>
+		<select class="form-control" name="bulan_kegiatan" id="bulan_kegiatan" style="font-family:'FontAwesome', Arial;">
+		<option value="">Pilih Bulan</option>
+		<?php
+		for ($i=1;$i<=12;$i++) {
+			if ($bulan_kegiatan==$i) $pilih='selected="selected"';
+			else $pilih='';
+			echo '<option value="'.$i.'" '.$pilih.'>'.$nama_bulan_panjang[$i].'</option>';
+		}
+		 ?>
+	</select>
 		<select class="form-control" name="tahun_kegiatan" id="tahun_kegiatan" style="font-family:'FontAwesome', Arial;">
 		<option value="">Pilih Tahun</option>
 		<?php
@@ -55,13 +67,21 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 	</div>
   <button type="submit" name="submit_unitkerja" class="btn btn-default">Get Data</button>
 </form>
-<legend>Laporan Kegiatan <?php echo get_nama_unit($unit_kode); ?> Tahun <?php echo $tahun_kegiatan; ?></legend>
+<?php
+if ($bulan_kegiatan=='') {
+	echo '<legend>Laporan Kegiatan '.get_nama_unit($unit_kode).' Tahun '.$tahun_kegiatan.'</legend>';
+}
+else {
+	echo '<legend>Laporan Kegiatan '.get_nama_unit($unit_kode).' Bulan '. $nama_bulan_panjang[$bulan_kegiatan].' '.$tahun_kegiatan.'</legend>';
+}
+?>
+
 <p class="text-right">Keadaan : <strong><?php echo tgl_hari_ini(); ?></strong></p>
 <div class="table-responsive">
 <table class="table table-hover table-bordered table-condensed">
 	<tr class="success">
-		<th>No</th>
-		<th>Kegiatan</th>
+		<th>Bulan</th>
+		<th>Kegiatan <?php echo get_nama_unit($unit_kode);?></th>
 		<th>Tanggal Berakhir</th>
 		<th>Satuan</th>
 		<th>Target</th>
@@ -69,79 +89,23 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 		<th>Penerimaan</th>
 	</tr>
 	<?php
-	if ($unit_kode=='') {
-		$sql_list_bidang= $conn -> query("select * from unitkerja where unit_jenis=1 and unit_eselon=3 order by unit_kode asc");
-		$cek_bid=$sql_list_bidang->num_rows;
-		$i_bid=1;
-		if ($cek_bid > 0) {
-			while ($b=$sql_list_bidang->fetch_object()) {
-				if ($i_bid>1)  echo '<tr class="success"><td colspan="7"></td></tr>';
-				$sql_unit_es4='';
-				$unit_es3=$b->unit_kode;
-				echo '<tr><td colspan="7"><strong>'.$b->unit_nama .'</strong></td></tr>';
-				$sql_unit_es4=$conn -> query("select * from unitkerja where unit_parent='$unit_es3' and unit_eselon=4 order by unit_kode asc");
-				$cek_unit_es4=$sql_unit_es4->num_rows;
-				if ($cek_unit_es4>0) {
-					while ($s=$sql_unit_es4->fetch_object()) {
-						$es4_prov=$s->unit_kode;
-						$sql_keg_es4='';
-						echo '<tr><td colspan="7">'.$s->unit_nama .'</td></tr>';
-						$i=1;
-						$sql_keg_es4= $conn->query("select * from kegiatan where keg_unitkerja='$es4_prov' and year(keg_start)='$tahun_kegiatan'");
-						while ($k=$sql_keg_es4->fetch_object()) {
-							$total_kirim=get_keg_realisasi($k->keg_id,1);
-							$total_terima=get_keg_realisasi($k->keg_id,2);
-							$target_total=$k->keg_total_target;
-							$total_kirim=get_keg_realisasi($k->keg_id,1);
-							$total_terima=get_keg_realisasi($k->keg_id,2);
-							$persen_kirim=($total_kirim/$target_total)*100;
-							$persen_terima=($total_terima/$target_total)*100;
-
-							if ($persen_kirim > 85) $rr_kirim='class="text-right bpsgood"';
-							elseif ($persen_kirim > 70) $rr_kirim='class="text-right bpsmedium"';
-							else $rr_kirim='class="text-right bpsbad"';
-
-							if ($persen_terima > 85) $rr_terima='class="text-right bpsgood"';
-							elseif ($persen_terima > 70) $rr_terima='class="text-right bpsmedium"';
-							else $rr_terima='class="text-right bpsbad"';
-							echo '
-							<tr>
-								<td class="text-center">'.$i.'.</td>
-								<td><a href="'.$url.'/kegiatan/view/'.$k->keg_id.'">'.$k->keg_nama.'</a></td>
-								<td>'.tgl_convert(1,$k->keg_end).'</td>
-								<td>'.$k->keg_target_satuan.'</td>
-								<td class="text-right">'.$k->keg_total_target.'</td>
-								<td '.$rr_kirim.'>'.$total_kirim.' ('.number_format($persen_kirim,2,",",".").' %)</td>
-								<td '.$rr_terima.'>'.$total_terima.' ('.number_format($persen_terima,2,",",".").' %)</td>
-							</tr>
-							';
-							$i++;
-						}
-					}
-				}
-				else {
-					echo '<tr><td colspan="6">Data Eselon IV kosong</td></tr>';
-				}
-				$i_bid++;
+	if ($bulan_kegiatan=='') {
+		for ($i=1;$i<=12;$i++) {
+			if ($unit_kode=='') {
+				$sql_keg= $conn->query("select * from kegiatan where year(keg_end)='$tahun_kegiatan' and month(keg_end)='$i' order by keg_end,keg_unitkerja asc");
 			}
-		}
-		else {
-			echo 'Data bagian/bidang kosong';
-		}
-	}
-	else {
-		$sql_unit_es4=$conn -> query("select * from unitkerja where unit_parent='$unit_kode' and unit_eselon=4 order by unit_kode asc");
-		$cek_unit_es4=$sql_unit_es4->num_rows;
-		if ($cek_unit_es4>0) {
-			$i_es4=1;
-			while ($s=$sql_unit_es4->fetch_object()) {
-				$es4_prov=$s->unit_kode;
-				$sql_keg_es4='';
-				if ($i_es4>1) echo '<tr class="success"><td colspan="7"></td></tr>';
-				echo '<tr><td colspan="7"><strong>'.$s->unit_nama .'</strong></td></tr>';
-				$i=1;
-				$sql_keg_es4= $conn->query("select * from kegiatan where keg_unitkerja='$es4_prov' and year(keg_start)='$tahun_kegiatan'");
-				while ($k=$sql_keg_es4->fetch_object()) {
+			else {
+				$sql_keg= $conn->query("select * from kegiatan, unitkerja where year(keg_end)='$tahun_kegiatan' and month(keg_end)='$i' and kegiatan.keg_unitkerja=unitkerja.unit_kode and unitkerja.unit_parent='$unit_kode' order by keg_end asc");
+			}
+			$cek_keg=$sql_keg->num_rows;
+			if ($cek_keg>0) {
+				$j=1;
+				echo '
+				<tr>
+					<td rowspan="'.$cek_keg.'">'.$nama_bulan_panjang[$i].'</td>';
+				while ($k=$sql_keg->fetch_object()) {
+					$total_kirim=get_keg_realisasi($k->keg_id,1);
+					$total_terima=get_keg_realisasi($k->keg_id,2);
 					$target_total=$k->keg_total_target;
 					$total_kirim=get_keg_realisasi($k->keg_id,1);
 					$total_terima=get_keg_realisasi($k->keg_id,2);
@@ -155,24 +119,85 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 					if ($persen_terima > 85) $rr_terima='class="text-right bpsgood"';
 					elseif ($persen_terima > 70) $rr_terima='class="text-right bpsmedium"';
 					else $rr_terima='class="text-right bpsbad"';
-
-
 					echo '
-					<tr>
-						<td class="text-center">'.$i.'.</td>
-						<td><a href="'.$url.'/kegiatan/view/'.$k->keg_id.'">'.$k->keg_nama.'</a> ('.$k->keg_target_satuan.')</td>
-						<td>'.tgl_convert(1,$k->keg_end).'</td>
-							<td>'.$k->keg_target_satuan.'</td>
-						<td class="text-right">'.$k->keg_total_target.'</td>
-						<td '.$rr_kirim.'>'.$total_kirim.' ('.number_format($persen_kirim,2,",",".").' %)</td>
-						<td '.$rr_terima.'>'.$total_terima.' ('.number_format($persen_terima,2,",",".").' %)</td>
+					<td><a href="'.$url.'/kegiatan/view/'.$k->keg_id.'">'.$j.'. '.$k->keg_nama.'</a></td>
+					<td>'.tgl_convert_bln(1,$k->keg_end).'</td>
+					<td>'.$k->keg_target_satuan.'</td>
+					<td class="text-right">'.$k->keg_total_target.'</td>
+					<td '.$rr_kirim.'>'.$total_kirim.' ('.number_format($persen_kirim,2,",",".").' %)</td>
+					<td '.$rr_terima.'>'.$total_terima.' ('.number_format($persen_terima,2,",",".").' %)</td>
 					</tr>
+					<tr>
 					';
-					$i++;
+					$j++;
 				}
-				$i_es4++;
+				echo '<td class="success" colspan="7"></td></tr>
+				';
+			}
+			else {
+				echo '
+				<tr>
+					<td>'.$nama_bulan_panjang[$i].'</td>
+					<td colspan="6" class="text-center">Belum ada kegiatan dibulan ini</td>
+				</tr>
+				';
 			}
 		}
 	}
+	else { //bulan_kegiatan ada nilai
+			if ($unit_kode=='') {
+				$sql_keg= $conn->query("select * from kegiatan where year(keg_end)='$tahun_kegiatan' and month(keg_end)='$bulan_kegiatan' order by keg_end,keg_unitkerja asc");
+			}
+			else {
+				$sql_keg= $conn->query("select * from kegiatan, unitkerja where year(keg_end)='$tahun_kegiatan' and month(keg_end)='$bulan_kegiatan' and kegiatan.keg_unitkerja=unitkerja.unit_kode and unitkerja.unit_parent='$unit_kode' order by keg_end asc");
+			}
+			
+			$cek_keg=$sql_keg->num_rows;
+			if ($cek_keg>0) {
+				$j=1;
+				echo '
+				<tr>
+					<td rowspan="'.$cek_keg.'">'.$nama_bulan_panjang[$bulan_kegiatan].'</td>';
+				while ($k=$sql_keg->fetch_object()) {
+					$total_kirim=get_keg_realisasi($k->keg_id,1);
+					$total_terima=get_keg_realisasi($k->keg_id,2);
+					$target_total=$k->keg_total_target;
+					$total_kirim=get_keg_realisasi($k->keg_id,1);
+					$total_terima=get_keg_realisasi($k->keg_id,2);
+					$persen_kirim=($total_kirim/$target_total)*100;
+					$persen_terima=($total_terima/$target_total)*100;
+
+					if ($persen_kirim > 85) $rr_kirim='class="text-right bpsgood"';
+					elseif ($persen_kirim > 70) $rr_kirim='class="text-right bpsmedium"';
+					else $rr_kirim='class="text-right bpsbad"';
+
+					if ($persen_terima > 85) $rr_terima='class="text-right bpsgood"';
+					elseif ($persen_terima > 70) $rr_terima='class="text-right bpsmedium"';
+					else $rr_terima='class="text-right bpsbad"';
+					echo '
+					<td><a href="'.$url.'/kegiatan/view/'.$k->keg_id.'">'.$j.'. '.$k->keg_nama.'</a></td>
+					<td>'.tgl_convert_bln(1,$k->keg_end).'</td>
+					<td>'.$k->keg_target_satuan.'</td>
+					<td class="text-right">'.$k->keg_total_target.'</td>
+					<td '.$rr_kirim.'>'.$total_kirim.' ('.number_format($persen_kirim,2,",",".").' %)</td>
+					<td '.$rr_terima.'>'.$total_terima.' ('.number_format($persen_terima,2,",",".").' %)</td>
+					</tr>
+					<tr>
+					';
+					$j++;
+				}
+				echo '<td class="success" colspan="7"></td></tr>
+				';
+			}
+			else {
+				echo '
+				<tr>
+					<td>'.$nama_bulan_panjang[$bulan_kegiatan].'</td>
+					<td colspan="6" class="text-center">Belum ada kegiatan dibulan ini</td>
+				</tr>
+				';
+			}
+	}	
 	?>
 </table>
+</div>

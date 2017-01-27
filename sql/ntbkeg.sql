@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 26, 2017 at 06:30 PM
--- Server version: 5.6.21
--- PHP Version: 5.6.3
+-- Generation Time: Jan 27, 2017 at 09:47 AM
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 5.6.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `ntbkeg`
@@ -26,8 +26,8 @@ SET time_zone = "+00:00";
 -- Table structure for table `kegiatan`
 --
 
-CREATE TABLE IF NOT EXISTS `kegiatan` (
-`keg_id` int(11) NOT NULL,
+CREATE TABLE `kegiatan` (
+  `keg_id` int(11) NOT NULL,
   `keg_nama` varchar(254) NOT NULL,
   `keg_unitkerja` int(5) NOT NULL,
   `keg_start` date NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `kegiatan` (
   `keg_total_target` int(11) NOT NULL,
   `keg_target_satuan` varchar(254) NOT NULL,
   `keg_spj` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `kegiatan`
@@ -75,8 +75,8 @@ INSERT INTO `kegiatan` (`keg_id`, `keg_nama`, `keg_unitkerja`, `keg_start`, `keg
 -- Table structure for table `keg_detil`
 --
 
-CREATE TABLE IF NOT EXISTS `keg_detil` (
-`keg_d_id` int(11) NOT NULL,
+CREATE TABLE `keg_detil` (
+  `keg_d_id` int(11) NOT NULL,
   `keg_id` int(11) NOT NULL,
   `keg_d_unitkerja` int(5) NOT NULL,
   `keg_d_tgl` date NOT NULL,
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `keg_detil` (
   `keg_d_jenis` int(1) NOT NULL,
   `keg_d_link_laci` varchar(254) DEFAULT NULL,
   `keg_d_ket` varchar(254) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `keg_detil`
@@ -101,17 +101,16 @@ INSERT INTO `keg_detil` (`keg_d_id`, `keg_id`, `keg_d_unitkerja`, `keg_d_tgl`, `
 (5, 21, 52710, '2017-01-10', 4, 'fathi', '2017-01-26 23:19:54', 'fathi', '2017-01-26 15:19:54', 1, '', 'email'),
 (6, 21, 52710, '2017-01-17', 2, 'fathi', '2017-01-26 23:20:14', 'fathi', '2017-01-26 15:20:14', 1, '', 'email'),
 (7, 21, 52710, '2017-01-24', 1, 'fathi', '2017-01-26 23:20:31', 'fathi', '2017-01-26 15:20:31', 1, '', 'email'),
-(8, 21, 52710, '2017-01-03', 3, 'fathi', '2017-01-26 23:20:56', 'fathi', '2017-01-26 15:21:15', 2, NULL, 'fathi'),
-(9, 21, 52710, '2017-01-10', 4, 'fathi', '2017-01-26 23:21:26', 'fathi', '2017-01-26 15:21:26', 2, NULL, 'fathi'),
+(8, 21, 52710, '2017-01-03', 3, 'fathi', '2017-01-26 23:20:56', 'mika', '2017-01-27 02:30:52', 2, NULL, 'mika'),
+(9, 21, 52710, '2017-01-10', 4, 'fathi', '2017-01-26 23:21:26', 'mika', '2017-01-27 02:30:56', 2, NULL, 'mika'),
 (10, 21, 52720, '2017-01-03', 2, 'fathi', '2017-01-26 23:28:52', 'fathi', '2017-01-26 15:28:52', 1, '', 'email'),
-(11, 21, 52720, '2017-01-03', 2, 'fathi', '2017-01-26 23:37:54', 'fathi', '2017-01-26 15:37:54', 2, NULL, 'fathi'),
+(11, 21, 52720, '2017-01-03', 2, 'fathi', '2017-01-26 23:37:54', 'mika', '2017-01-27 02:31:11', 2, NULL, 'mika'),
 (12, 21, 52720, '2017-01-10', 3, 'fathi', '2017-01-26 23:38:11', 'fathi', '2017-01-26 15:47:34', 1, '', 'email'),
-(13, 21, 52720, '2017-01-10', 3, 'fathi', '2017-01-26 23:38:21', 'fathi', '2017-01-26 15:38:21', 2, NULL, 'fathi'),
+(13, 21, 52720, '2017-01-10', 3, 'fathi', '2017-01-26 23:38:21', 'mika', '2017-01-27 02:31:17', 2, NULL, 'mika'),
 (15, 21, 52720, '2017-01-17', 4, 'fathi', '2017-01-26 23:46:50', 'fathi', '2017-01-26 15:46:50', 1, '', 'email'),
-(16, 21, 52720, '2017-01-17', 4, 'fathi', '2017-01-26 23:47:08', 'fathi', '2017-01-26 15:47:08', 2, NULL, 'fathi'),
 (17, 21, 52720, '2017-01-11', 1, 'fathi', '2017-01-26 23:47:48', 'fathi', '2017-01-26 15:47:48', 1, '', 'email'),
-(18, 21, 52710, '2017-02-01', 2, 'fathi', '2017-01-27 00:57:35', 'fathi', '2017-01-26 16:57:35', 2, NULL, 'fathi'),
-(19, 21, 52710, '2017-01-31', 1, 'fathi', '2017-01-27 00:58:15', 'fathi', '2017-01-26 16:58:34', 2, NULL, 'fathi'),
+(18, 21, 52710, '2017-02-01', 2, 'fathi', '2017-01-27 00:57:35', 'mika', '2017-01-27 02:31:06', 2, NULL, 'mika'),
+(19, 21, 52710, '2017-01-31', 1, 'fathi', '2017-01-27 00:58:15', 'mika', '2017-01-27 02:31:02', 2, NULL, 'mika'),
 (20, 7, 52020, '2017-01-05', 1, 'fathi', '2017-01-27 01:02:30', 'fathi', '2017-01-26 17:15:17', 2, NULL, 'fathi'),
 (21, 7, 52030, '2017-01-03', 1, 'fathi', '2017-01-27 01:14:23', 'fathi', '2017-01-26 17:14:23', 2, NULL, 'fathi'),
 (22, 7, 52030, '2017-01-02', 1, 'fathi', '2017-01-27 01:15:06', 'fathi', '2017-01-26 17:15:06', 1, '', 'email'),
@@ -119,7 +118,38 @@ INSERT INTO `keg_detil` (`keg_d_id`, `keg_id`, `keg_d_unitkerja`, `keg_d_tgl`, `
 (24, 7, 52040, '2017-01-03', 1, 'fathi', '2017-01-27 01:17:11', 'fathi', '2017-01-26 17:17:11', 1, '', 'email'),
 (25, 7, 52040, '2017-01-03', 1, 'fathi', '2017-01-27 01:17:27', 'fathi', '2017-01-26 17:17:27', 2, NULL, 'fathi'),
 (26, 11, 52010, '2017-01-24', 6, 'fathi', '2017-01-27 01:26:22', 'fathi', '2017-01-26 17:26:22', 1, '', 'email'),
-(27, 11, 52010, '2017-01-24', 6, 'fathi', '2017-01-27 01:26:40', 'fathi', '2017-01-26 17:26:40', 2, NULL, 'fathi');
+(27, 11, 52010, '2017-01-24', 6, 'fathi', '2017-01-27 01:26:40', 'fathi', '2017-01-26 17:26:40', 2, NULL, 'fathi'),
+(28, 18, 52710, '2017-01-10', 4, 'mika', '2017-01-27 10:29:03', 'mika', '2017-01-27 02:29:03', 2, NULL, 'mika'),
+(29, 21, 52720, '2017-01-11', 1, 'mika', '2017-01-27 10:31:38', 'mika', '2017-01-27 02:31:38', 2, NULL, 'mika'),
+(32, 21, 52720, '2017-01-17', 3, 'mika', '2017-01-27 10:41:13', 'mika', '2017-01-27 02:41:13', 2, NULL, 'mika'),
+(33, 21, 52720, '2017-02-01', 1, 'mika', '2017-01-27 10:41:39', 'mika', '2017-01-27 02:41:48', 2, NULL, 'mika'),
+(34, 1, 52010, '2017-01-10', 1, 'mika', '2017-01-27 10:45:10', 'mika', '2017-01-27 02:45:25', 2, NULL, 'mika'),
+(35, 1, 52010, '2017-01-10', 1, 'mika', '2017-01-27 11:57:16', 'mika', '2017-01-27 03:57:28', 1, '', 'email'),
+(36, 18, 52710, '2017-01-10', 10, 'mika', '2017-01-27 15:29:16', 'mika', '2017-01-27 07:29:16', 1, '', 'email'),
+(37, 18, 52720, '2017-01-10', 10, 'mika', '2017-01-27 15:29:31', 'mika', '2017-01-27 07:29:31', 1, '', 'email'),
+(38, 18, 52710, '2017-01-17', 6, 'mika', '2017-01-27 15:29:43', 'mika', '2017-01-27 07:29:43', 2, NULL, 'mika'),
+(39, 18, 52720, '2017-01-25', 10, 'mika', '2017-01-27 15:29:54', 'mika', '2017-01-27 07:29:54', 2, NULL, 'mika'),
+(40, 7, 52050, '2017-01-03', 1, 'mika', '2017-01-27 15:30:49', 'mika', '2017-01-27 07:30:49', 1, '', 'email'),
+(41, 7, 52050, '2017-01-03', 1, 'mika', '2017-01-27 15:31:00', 'mika', '2017-01-27 07:31:00', 2, NULL, 'mika'),
+(42, 7, 52060, '2017-01-03', 1, 'mika', '2017-01-27 15:31:10', 'mika', '2017-01-27 07:31:10', 2, NULL, 'mika'),
+(43, 7, 52070, '2017-01-02', 1, 'mika', '2017-01-27 15:31:23', 'mika', '2017-01-27 07:31:23', 2, NULL, 'mika'),
+(44, 7, 52080, '2017-01-06', 1, 'mika', '2017-01-27 15:31:36', 'mika', '2017-01-27 07:31:36', 2, NULL, 'mika'),
+(45, 5, 52010, '2017-01-10', 1, 'mika', '2017-01-27 15:33:25', 'mika', '2017-01-27 07:33:25', 2, NULL, 'mika'),
+(46, 10, 52050, '2017-01-10', 1, 'mika', '2017-01-27 16:15:50', 'mika', '2017-01-27 08:15:50', 1, '', 'email'),
+(47, 10, 52050, '2017-01-10', 1, 'mika', '2017-01-27 16:16:02', 'mika', '2017-01-27 08:16:02', 2, NULL, 'mika'),
+(48, 10, 52060, '2017-01-11', 1, 'mika', '2017-01-27 16:16:11', 'mika', '2017-01-27 08:16:11', 2, NULL, 'mika'),
+(49, 15, 52040, '2017-01-11', 10, 'mika', '2017-01-27 16:16:59', 'mika', '2017-01-27 08:16:59', 2, NULL, 'mika'),
+(50, 15, 52030, '2017-01-13', 10, 'mika', '2017-01-27 16:17:09', 'mika', '2017-01-27 08:17:09', 2, NULL, 'mika'),
+(51, 15, 52020, '2017-01-12', 10, 'mika', '2017-01-27 16:17:23', 'mika', '2017-01-27 08:17:23', 2, NULL, 'mika'),
+(52, 15, 52010, '2017-01-20', 5, 'mika', '2017-01-27 16:17:34', 'mika', '2017-01-27 08:17:34', 2, NULL, 'mika'),
+(53, 5, 52040, '2017-01-05', 1, 'mika', '2017-01-27 16:18:05', 'mika', '2017-01-27 08:18:05', 2, NULL, 'mika'),
+(54, 5, 52720, '2017-01-03', 1, 'mika', '2017-01-27 16:18:14', 'mika', '2017-01-27 08:18:14', 2, NULL, 'mika'),
+(55, 5, 52030, '2017-01-04', 1, 'mika', '2017-01-27 16:18:22', 'mika', '2017-01-27 08:18:22', 2, NULL, 'mika'),
+(56, 4, 52040, '2017-01-03', 1, 'mika', '2017-01-27 16:18:38', 'mika', '2017-01-27 08:18:38', 2, NULL, 'mika'),
+(57, 4, 52050, '2017-01-03', 1, 'mika', '2017-01-27 16:18:47', 'mika', '2017-01-27 08:18:47', 2, NULL, 'mika'),
+(58, 17, 52030, '2017-01-11', 20, 'mika', '2017-01-27 16:20:05', 'mika', '2017-01-27 08:20:05', 2, NULL, 'mika'),
+(59, 17, 52040, '2017-01-11', 10, 'mika', '2017-01-27 16:20:15', 'mika', '2017-01-27 08:20:15', 2, NULL, 'mika'),
+(60, 17, 52060, '2017-01-11', 10, 'mika', '2017-01-27 16:20:28', 'mika', '2017-01-27 08:20:28', 2, NULL, 'mika');
 
 -- --------------------------------------------------------
 
@@ -127,8 +157,8 @@ INSERT INTO `keg_detil` (`keg_d_id`, `keg_id`, `keg_d_unitkerja`, `keg_d_tgl`, `
 -- Table structure for table `keg_d_file`
 --
 
-CREATE TABLE IF NOT EXISTS `keg_d_file` (
-`file_id` bigint(12) NOT NULL,
+CREATE TABLE `keg_d_file` (
+  `file_id` bigint(12) NOT NULL,
   `keg_d_id` int(11) NOT NULL,
   `file_nama` varchar(255) NOT NULL,
   `file_tipe` int(1) NOT NULL,
@@ -142,8 +172,8 @@ CREATE TABLE IF NOT EXISTS `keg_d_file` (
 -- Table structure for table `keg_spj`
 --
 
-CREATE TABLE IF NOT EXISTS `keg_spj` (
-`keg_s_id` int(11) NOT NULL,
+CREATE TABLE `keg_spj` (
+  `keg_s_id` int(11) NOT NULL,
   `keg_id` int(11) NOT NULL,
   `keg_s_unitkerja` int(5) NOT NULL,
   `keg_s_target` int(11) NOT NULL,
@@ -154,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `keg_spj` (
   `keg_s_point_waktu` float(6,4) NOT NULL,
   `keg_s_point_jumlah` float(6,4) NOT NULL,
   `keg_s_point` float(6,4) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `keg_spj`
@@ -170,8 +200,8 @@ INSERT INTO `keg_spj` (`keg_s_id`, `keg_id`, `keg_s_unitkerja`, `keg_s_target`, 
 -- Table structure for table `keg_target`
 --
 
-CREATE TABLE IF NOT EXISTS `keg_target` (
-`keg_t_id` int(11) NOT NULL,
+CREATE TABLE `keg_target` (
+  `keg_t_id` int(11) NOT NULL,
   `keg_id` int(11) NOT NULL,
   `keg_t_unitkerja` int(5) NOT NULL,
   `keg_t_target` int(11) NOT NULL,
@@ -182,14 +212,14 @@ CREATE TABLE IF NOT EXISTS `keg_target` (
   `keg_t_point_waktu` float(6,4) NOT NULL,
   `keg_t_point_jumlah` float(6,4) NOT NULL,
   `keg_t_point` float(6,4) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=195 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `keg_target`
 --
 
 INSERT INTO `keg_target` (`keg_t_id`, `keg_id`, `keg_t_unitkerja`, `keg_t_target`, `keg_t_dibuat_oleh`, `keg_t_dibuat_waktu`, `keg_t_diupdate_oleh`, `keg_t_diupdate_waktu`, `keg_t_point_waktu`, `keg_t_point_jumlah`, `keg_t_point`) VALUES
-(1, 1, 52010, 1, 'mika', '2017-01-26 14:13:56', 'mika', '2017-01-26 06:13:56', 0.0000, 0.0000, 0.0000),
+(1, 1, 52010, 1, 'mika', '2017-01-26 14:13:56', 'mika', '2017-01-27 02:45:25', 1.0000, 5.0000, 3.8000),
 (2, 1, 52020, 1, 'mika', '2017-01-26 14:13:56', 'mika', '2017-01-26 06:13:56', 0.0000, 0.0000, 0.0000),
 (3, 1, 52030, 1, 'mika', '2017-01-26 14:13:56', 'mika', '2017-01-26 06:13:57', 0.0000, 0.0000, 0.0000),
 (4, 1, 52040, 1, 'mika', '2017-01-26 14:13:56', 'mika', '2017-01-26 06:13:57', 0.0000, 0.0000, 0.0000),
@@ -222,23 +252,23 @@ INSERT INTO `keg_target` (`keg_t_id`, `keg_id`, `keg_t_unitkerja`, `keg_t_target
 (31, 4, 52010, 1, 'mika', '2017-01-26 14:19:10', 'mika', '2017-01-26 06:19:10', 0.0000, 0.0000, 0.0000),
 (32, 4, 52020, 1, 'mika', '2017-01-26 14:19:10', 'mika', '2017-01-26 06:19:10', 0.0000, 0.0000, 0.0000),
 (33, 4, 52030, 1, 'mika', '2017-01-26 14:19:10', 'mika', '2017-01-26 06:19:10', 0.0000, 0.0000, 0.0000),
-(34, 4, 52040, 1, 'mika', '2017-01-26 14:19:10', 'mika', '2017-01-26 06:19:11', 0.0000, 0.0000, 0.0000),
-(35, 4, 52050, 1, 'mika', '2017-01-26 14:19:10', 'mika', '2017-01-26 06:19:11', 0.0000, 0.0000, 0.0000),
+(34, 4, 52040, 1, 'mika', '2017-01-26 14:19:10', 'mika', '2017-01-27 08:18:38', 5.0000, 5.0000, 5.0000),
+(35, 4, 52050, 1, 'mika', '2017-01-26 14:19:10', 'mika', '2017-01-27 08:18:47', 5.0000, 5.0000, 5.0000),
 (36, 4, 52060, 1, 'mika', '2017-01-26 14:19:10', 'mika', '2017-01-26 06:19:11', 0.0000, 0.0000, 0.0000),
 (37, 4, 52070, 1, 'mika', '2017-01-26 14:19:10', 'mika', '2017-01-26 06:19:11', 0.0000, 0.0000, 0.0000),
 (38, 4, 52080, 1, 'mika', '2017-01-26 14:19:10', 'mika', '2017-01-26 06:19:11', 0.0000, 0.0000, 0.0000),
 (39, 4, 52710, 1, 'mika', '2017-01-26 14:19:10', 'mika', '2017-01-26 06:19:11', 0.0000, 0.0000, 0.0000),
 (40, 4, 52720, 1, 'mika', '2017-01-26 14:19:10', 'mika', '2017-01-26 06:19:11', 0.0000, 0.0000, 0.0000),
-(41, 5, 52010, 1, 'mika', '2017-01-26 14:19:41', 'mika', '2017-01-26 06:19:41', 0.0000, 0.0000, 0.0000),
+(41, 5, 52010, 1, 'mika', '2017-01-26 14:19:41', 'mika', '2017-01-27 07:33:25', 1.0000, 5.0000, 3.8000),
 (42, 5, 52020, 1, 'mika', '2017-01-26 14:19:41', 'mika', '2017-01-26 06:19:41', 0.0000, 0.0000, 0.0000),
-(43, 5, 52030, 1, 'mika', '2017-01-26 14:19:41', 'mika', '2017-01-26 06:19:42', 0.0000, 0.0000, 0.0000),
-(44, 5, 52040, 1, 'mika', '2017-01-26 14:19:41', 'mika', '2017-01-26 06:19:42', 0.0000, 0.0000, 0.0000),
+(43, 5, 52030, 1, 'mika', '2017-01-26 14:19:41', 'mika', '2017-01-27 08:18:22', 5.0000, 5.0000, 5.0000),
+(44, 5, 52040, 1, 'mika', '2017-01-26 14:19:41', 'mika', '2017-01-27 08:18:05', 5.0000, 5.0000, 5.0000),
 (45, 5, 52050, 1, 'mika', '2017-01-26 14:19:41', 'mika', '2017-01-26 06:19:42', 0.0000, 0.0000, 0.0000),
 (46, 5, 52060, 1, 'mika', '2017-01-26 14:19:41', 'mika', '2017-01-26 06:19:42', 0.0000, 0.0000, 0.0000),
 (47, 5, 52070, 1, 'mika', '2017-01-26 14:19:41', 'mika', '2017-01-26 06:19:42', 0.0000, 0.0000, 0.0000),
 (48, 5, 52080, 1, 'mika', '2017-01-26 14:19:41', 'mika', '2017-01-26 06:19:42', 0.0000, 0.0000, 0.0000),
 (49, 5, 52710, 1, 'mika', '2017-01-26 14:19:41', 'mika', '2017-01-26 06:19:42', 0.0000, 0.0000, 0.0000),
-(50, 5, 52720, 1, 'mika', '2017-01-26 14:19:41', 'mika', '2017-01-26 06:19:42', 0.0000, 0.0000, 0.0000),
+(50, 5, 52720, 1, 'mika', '2017-01-26 14:19:41', 'mika', '2017-01-27 08:18:14', 5.0000, 5.0000, 5.0000),
 (51, 6, 52010, 1, 'mika', '2017-01-26 14:21:25', 'mika', '2017-01-26 06:21:25', 0.0000, 0.0000, 0.0000),
 (52, 6, 52020, 1, 'mika', '2017-01-26 14:21:25', 'mika', '2017-01-26 06:21:26', 0.0000, 0.0000, 0.0000),
 (53, 6, 52030, 1, 'mika', '2017-01-26 14:21:25', 'mika', '2017-01-26 06:21:26', 0.0000, 0.0000, 0.0000),
@@ -253,10 +283,10 @@ INSERT INTO `keg_target` (`keg_t_id`, `keg_id`, `keg_t_unitkerja`, `keg_t_target
 (62, 7, 52020, 1, 'mika', '2017-01-26 14:22:39', 'fathi', '2017-01-26 17:16:18', 1.0000, 5.0000, 3.8000),
 (63, 7, 52030, 1, 'mika', '2017-01-26 14:22:39', 'fathi', '2017-01-26 17:14:23', 3.0000, 5.0000, 4.4000),
 (64, 7, 52040, 1, 'mika', '2017-01-26 14:22:39', 'fathi', '2017-01-26 17:17:27', 3.0000, 5.0000, 4.4000),
-(65, 7, 52050, 1, 'mika', '2017-01-26 14:22:39', 'fathi', '2017-01-26 15:16:31', 0.0000, 0.0000, 0.0000),
-(66, 7, 52060, 1, 'mika', '2017-01-26 14:22:39', 'fathi', '2017-01-26 15:16:31', 0.0000, 0.0000, 0.0000),
-(67, 7, 52070, 1, 'mika', '2017-01-26 14:22:39', 'fathi', '2017-01-26 15:16:31', 0.0000, 0.0000, 0.0000),
-(68, 7, 52080, 1, 'mika', '2017-01-26 14:22:39', 'fathi', '2017-01-26 15:16:31', 0.0000, 0.0000, 0.0000),
+(65, 7, 52050, 1, 'mika', '2017-01-26 14:22:39', 'fathi', '2017-01-27 07:31:01', 3.0000, 5.0000, 4.4000),
+(66, 7, 52060, 1, 'mika', '2017-01-26 14:22:39', 'fathi', '2017-01-27 07:31:11', 3.0000, 5.0000, 4.4000),
+(67, 7, 52070, 1, 'mika', '2017-01-26 14:22:39', 'fathi', '2017-01-27 07:31:23', 3.0000, 5.0000, 4.4000),
+(68, 7, 52080, 1, 'mika', '2017-01-26 14:22:39', 'fathi', '2017-01-27 07:31:36', 0.0000, 5.0000, 3.5000),
 (69, 7, 52710, 1, 'mika', '2017-01-26 14:22:39', 'fathi', '2017-01-26 15:16:31', 0.0000, 0.0000, 0.0000),
 (70, 7, 52720, 1, 'mika', '2017-01-26 14:22:39', 'fathi', '2017-01-26 15:16:31', 0.0000, 0.0000, 0.0000),
 (71, 8, 52010, 1, 'mika', '2017-01-26 14:23:11', 'mika', '2017-01-26 06:23:11', 0.0000, 0.0000, 0.0000),
@@ -283,8 +313,8 @@ INSERT INTO `keg_target` (`keg_t_id`, `keg_id`, `keg_t_unitkerja`, `keg_t_target
 (92, 10, 52020, 1, 'mika', '2017-01-26 14:27:09', 'mika', '2017-01-26 06:27:09', 0.0000, 0.0000, 0.0000),
 (93, 10, 52030, 1, 'mika', '2017-01-26 14:27:09', 'mika', '2017-01-26 06:27:09', 0.0000, 0.0000, 0.0000),
 (94, 10, 52040, 1, 'mika', '2017-01-26 14:27:09', 'mika', '2017-01-26 06:27:10', 0.0000, 0.0000, 0.0000),
-(95, 10, 52050, 1, 'mika', '2017-01-26 14:27:09', 'mika', '2017-01-26 06:27:10', 0.0000, 0.0000, 0.0000),
-(96, 10, 52060, 1, 'mika', '2017-01-26 14:27:09', 'mika', '2017-01-26 06:27:10', 0.0000, 0.0000, 0.0000),
+(95, 10, 52050, 1, 'mika', '2017-01-26 14:27:09', 'mika', '2017-01-27 08:16:03', 5.0000, 5.0000, 5.0000),
+(96, 10, 52060, 1, 'mika', '2017-01-26 14:27:09', 'mika', '2017-01-27 08:16:11', 5.0000, 5.0000, 5.0000),
 (97, 10, 52070, 1, 'mika', '2017-01-26 14:27:09', 'mika', '2017-01-26 06:27:10', 0.0000, 0.0000, 0.0000),
 (98, 10, 52080, 1, 'mika', '2017-01-26 14:27:09', 'mika', '2017-01-26 06:27:10', 0.0000, 0.0000, 0.0000),
 (99, 10, 52710, 1, 'mika', '2017-01-26 14:27:09', 'mika', '2017-01-26 06:27:10', 0.0000, 0.0000, 0.0000),
@@ -330,9 +360,9 @@ INSERT INTO `keg_target` (`keg_t_id`, `keg_id`, `keg_t_unitkerja`, `keg_t_target
 (139, 14, 52710, 110, 'mika', '2017-01-26 14:37:32', 'mika', '2017-01-26 06:37:33', 0.0000, 0.0000, 0.0000),
 (140, 14, 52720, 50, 'mika', '2017-01-26 14:37:32', 'mika', '2017-01-26 06:37:34', 0.0000, 0.0000, 0.0000),
 (141, 15, 52010, 10, 'mika', '2017-01-26 14:40:02', 'mika', '2017-01-26 06:40:02', 0.0000, 0.0000, 0.0000),
-(142, 15, 52020, 10, 'mika', '2017-01-26 14:40:02', 'mika', '2017-01-26 06:40:03', 0.0000, 0.0000, 0.0000),
-(143, 15, 52030, 10, 'mika', '2017-01-26 14:40:02', 'mika', '2017-01-26 06:40:03', 0.0000, 0.0000, 0.0000),
-(144, 15, 52040, 10, 'mika', '2017-01-26 14:40:02', 'mika', '2017-01-26 06:40:03', 0.0000, 0.0000, 0.0000),
+(142, 15, 52020, 10, 'mika', '2017-01-26 14:40:02', 'mika', '2017-01-27 08:17:23', 3.0000, 5.0000, 4.4000),
+(143, 15, 52030, 10, 'mika', '2017-01-26 14:40:02', 'mika', '2017-01-27 08:17:09', 3.0000, 5.0000, 4.4000),
+(144, 15, 52040, 10, 'mika', '2017-01-26 14:40:02', 'mika', '2017-01-27 08:16:59', 5.0000, 5.0000, 5.0000),
 (145, 15, 52050, 10, 'mika', '2017-01-26 14:40:02', 'mika', '2017-01-26 06:40:03', 0.0000, 0.0000, 0.0000),
 (146, 15, 52060, 10, 'mika', '2017-01-26 14:40:02', 'mika', '2017-01-26 06:40:03', 0.0000, 0.0000, 0.0000),
 (147, 15, 52070, 10, 'mika', '2017-01-26 14:40:02', 'mika', '2017-01-26 06:40:03', 0.0000, 0.0000, 0.0000),
@@ -351,16 +381,16 @@ INSERT INTO `keg_target` (`keg_t_id`, `keg_id`, `keg_t_unitkerja`, `keg_t_target
 (160, 16, 52720, 10, 'mika', '2017-01-26 14:41:50', 'mika', '2017-01-26 06:41:52', 0.0000, 0.0000, 0.0000),
 (161, 17, 52010, 10, 'mika', '2017-01-26 14:43:04', 'mika', '2017-01-26 06:43:04', 0.0000, 0.0000, 0.0000),
 (162, 17, 52020, 20, 'mika', '2017-01-26 14:43:04', 'mika', '2017-01-26 06:43:04', 0.0000, 0.0000, 0.0000),
-(163, 17, 52030, 20, 'mika', '2017-01-26 14:43:04', 'mika', '2017-01-26 06:43:04', 0.0000, 0.0000, 0.0000),
-(164, 17, 52040, 10, 'mika', '2017-01-26 14:43:04', 'mika', '2017-01-26 06:43:04', 0.0000, 0.0000, 0.0000),
+(163, 17, 52030, 20, 'mika', '2017-01-26 14:43:04', 'mika', '2017-01-27 08:20:05', 5.0000, 5.0000, 5.0000),
+(164, 17, 52040, 10, 'mika', '2017-01-26 14:43:04', 'mika', '2017-01-27 08:20:16', 5.0000, 5.0000, 5.0000),
 (165, 17, 52050, 10, 'mika', '2017-01-26 14:43:04', 'mika', '2017-01-26 06:43:05', 0.0000, 0.0000, 0.0000),
-(166, 17, 52060, 10, 'mika', '2017-01-26 14:43:04', 'mika', '2017-01-26 06:43:05', 0.0000, 0.0000, 0.0000),
+(166, 17, 52060, 10, 'mika', '2017-01-26 14:43:04', 'mika', '2017-01-27 08:20:29', 5.0000, 5.0000, 5.0000),
 (167, 17, 52070, 10, 'mika', '2017-01-26 14:43:04', 'mika', '2017-01-26 06:43:05', 0.0000, 0.0000, 0.0000),
 (168, 17, 52080, 10, 'mika', '2017-01-26 14:43:04', 'mika', '2017-01-26 06:43:05', 0.0000, 0.0000, 0.0000),
 (169, 17, 52710, 10, 'mika', '2017-01-26 14:43:04', 'mika', '2017-01-26 06:43:05', 0.0000, 0.0000, 0.0000),
 (170, 17, 52720, 10, 'mika', '2017-01-26 14:43:04', 'mika', '2017-01-26 06:43:05', 0.0000, 0.0000, 0.0000),
-(171, 18, 52710, 10, 'mika', '2017-01-26 14:44:20', 'mika', '2017-01-26 06:44:20', 0.0000, 0.0000, 0.0000),
-(172, 18, 52720, 10, 'mika', '2017-01-26 14:44:20', 'mika', '2017-01-26 06:44:20', 0.0000, 0.0000, 0.0000),
+(171, 18, 52710, 10, 'mika', '2017-01-26 14:44:20', 'mika', '2017-01-27 07:29:43', 5.0000, 5.0000, 5.0000),
+(172, 18, 52720, 10, 'mika', '2017-01-26 14:44:20', 'mika', '2017-01-27 07:29:54', 5.0000, 5.0000, 5.0000),
 (173, 19, 52010, 1, 'mika', '2017-01-26 14:45:17', 'mika', '2017-01-26 06:45:17', 0.0000, 0.0000, 0.0000),
 (174, 19, 52020, 1, 'mika', '2017-01-26 14:45:17', 'mika', '2017-01-26 06:45:18', 0.0000, 0.0000, 0.0000),
 (175, 19, 52030, 1, 'mika', '2017-01-26 14:45:17', 'mika', '2017-01-26 06:45:18', 0.0000, 0.0000, 0.0000),
@@ -381,8 +411,8 @@ INSERT INTO `keg_target` (`keg_t_id`, `keg_id`, `keg_t_unitkerja`, `keg_t_target
 (190, 20, 52080, 1, 'mika', '2017-01-26 14:46:03', 'mika', '2017-01-26 06:46:04', 0.0000, 0.0000, 0.0000),
 (191, 20, 52710, 1, 'mika', '2017-01-26 14:46:03', 'mika', '2017-01-26 06:46:04', 0.0000, 0.0000, 0.0000),
 (192, 20, 52720, 1, 'mika', '2017-01-26 14:46:03', 'mika', '2017-01-26 06:46:04', 0.0000, 0.0000, 0.0000),
-(193, 21, 52710, 10, 'fathi', '2017-01-26 22:45:22', 'fathi', '2017-01-26 14:45:23', 0.0000, 0.0000, 0.0000),
-(194, 21, 52720, 10, 'fathi', '2017-01-26 22:45:22', 'fathi', '2017-01-26 14:45:23', 0.0000, 0.0000, 0.0000);
+(193, 21, 52710, 10, 'fathi', '2017-01-26 22:45:22', 'fathi', '2017-01-27 02:30:52', 2.7500, 5.0000, 4.3250),
+(194, 21, 52720, 10, 'fathi', '2017-01-26 22:45:22', 'fathi', '2017-01-27 02:41:48', 4.0000, 5.0000, 4.7000);
 
 -- --------------------------------------------------------
 
@@ -390,7 +420,7 @@ INSERT INTO `keg_target` (`keg_t_id`, `keg_id`, `keg_t_unitkerja`, `keg_t_target
 -- Table structure for table `unitkerja`
 --
 
-CREATE TABLE IF NOT EXISTS `unitkerja` (
+CREATE TABLE `unitkerja` (
   `unit_kode` int(5) NOT NULL,
   `unit_nama` varchar(254) NOT NULL,
   `unit_parent` int(5) DEFAULT NULL,
@@ -451,8 +481,8 @@ INSERT INTO `unitkerja` (`unit_kode`, `unit_nama`, `unit_parent`, `unit_jenis`, 
 -- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
-`user_no` int(9) NOT NULL,
+CREATE TABLE `users` (
+  `user_no` int(9) NOT NULL,
   `user_id` varchar(20) NOT NULL,
   `user_nama` varchar(254) NOT NULL,
   `user_passwd` varchar(32) NOT NULL,
@@ -466,14 +496,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_diupdate_waktu` datetime NOT NULL,
   `user_diupdate_oleh` varchar(20) NOT NULL,
   `user_level` int(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_no`, `user_id`, `user_nama`, `user_passwd`, `user_email`, `user_unitkerja`, `user_dibuat_waktu`, `user_lastlogin`, `user_lastip`, `user_dibuat_oleh`, `user_status`, `user_diupdate_waktu`, `user_diupdate_oleh`, `user_level`) VALUES
-(1, 'mika', 'I Putu Dyatmika', 'f3e602226149ae540e7a9fba728931c4', 'dyatmika@bps.go.id', 52563, '2016-12-06 08:02:45', '2017-01-26 21:13:53', '192.168.1.9', 'mika', 1, '2016-12-21 15:25:42', 'admin', 5),
+(1, 'mika', 'I Putu Dyatmika', 'f3e602226149ae540e7a9fba728931c4', 'dyatmika@bps.go.id', 52563, '2016-12-06 08:02:45', '2017-01-27 14:47:25', '10.52.6.31', 'mika', 1, '2016-12-21 15:25:42', 'admin', 5),
 (6, 'zam', 'Akhmad Zammiluny', 'af86ac1129b1c68cee5c200259d8e11d', 'zammiluny@bps.go.id', 52540, '2016-12-07 16:45:06', '2016-12-13 16:14:18', '10.52.6.31', 'mika', 1, '2016-12-13 16:14:18', 'mika', 3),
 (7, 'endang', 'Endang Tri Wahyuningsih', '715e8efadb0019bf7e885934fef9460d', 'endang_t@bps.go.id', 52000, '2016-12-07 16:45:36', '2017-01-25 10:29:29', '10.52.6.31', 'mika', 1, '2016-12-13 15:54:44', 'mika', 1),
 (8, 'supratna', 'Lalu Supratna', 'b57fd1497a390d03389db5c2d2ceb7c9', 'supratna@bps.go.id', 52020, '2016-12-07 16:46:12', '0000-00-00 00:00:00', '', 'mika', 1, '2016-12-13 15:54:55', 'mika', 1),
@@ -483,7 +513,7 @@ INSERT INTO `users` (`user_no`, `user_id`, `user_nama`, `user_passwd`, `user_ema
 (12, 'agus', 'Agus Sudibyo', 'a6c343878b521fa0b4d96b261417a7aa', 'agus_sudibyo@bps.go.id', 52560, '2016-12-13 15:48:38', '2017-01-26 21:19:18', '192.168.1.9', 'mika', 1, '2017-01-26 21:18:07', 'mika', 1),
 (13, 'lina', 'Lina Winarni', 'e09bd07477bf7953be894bef8074623c', 'lina@bps.go.id', 52512, '2016-12-14 14:53:47', '2017-01-24 14:13:02', '10.52.6.31', 'mika', 1, '2016-12-14 14:53:57', 'mika', 3),
 (14, 'cassli', 'Casslirais Surawan', 'c0c2be89659678fffe142b9475a32d81', 'casslirais@bps.go.id', 52560, '2016-12-16 08:57:47', '2016-12-21 09:44:41', '10.52.6.34', 'mika', 1, '2016-12-16 08:58:21', 'mika', 3),
-(15, 'fathi', 'M. Fathi', '608c18749a87198c9bfeb55cec1d66d3', 'fathi@bps.go.id', 52560, '2016-12-16 08:58:11', '2017-01-26 22:51:45', '192.168.1.8', 'mika', 1, '2016-12-16 11:04:14', 'mika', 4),
+(15, 'fathi', 'M. Fathi', '608c18749a87198c9bfeb55cec1d66d3', 'fathi@bps.go.id', 52560, '2016-12-16 08:58:11', '2017-01-27 16:32:26', '10.52.6.31', 'mika', 1, '2016-12-16 11:04:14', 'mika', 4),
 (16, 'bps5201', 'BPS Kabupaten Lombok Barat', '8dac61b870997b5d8c707d7f03cd0a03', 'bps5201@bps.go.id', 52010, '2016-12-16 11:19:42', '2017-01-26 23:06:22', '192.168.1.6', 'mika', 1, '2017-01-26 14:49:25', 'mika', 2),
 (17, 'isna', 'Isna Zuriatina', '238b2b7c02d936921098267a025774c8', 'isna@bps.go.id', 52520, '2016-12-16 16:58:08', '2016-12-21 10:52:59', '10.52.6.31', 'mika', 1, '2016-12-21 10:52:45', 'isna', 3),
 (18, 'admin', 'Admin Sistem', '09dc140248a067f821a5743906af9fdc', 'admin@bpsntb.web.id', 52000, '2016-12-21 15:24:48', '2017-01-25 10:31:08', '10.52.6.31', 'mika', 1, '2016-12-21 15:24:48', 'mika', 5),
@@ -500,43 +530,43 @@ INSERT INTO `users` (`user_no`, `user_id`, `user_nama`, `user_passwd`, `user_ema
 -- Indexes for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
- ADD PRIMARY KEY (`keg_id`);
+  ADD PRIMARY KEY (`keg_id`);
 
 --
 -- Indexes for table `keg_detil`
 --
 ALTER TABLE `keg_detil`
- ADD PRIMARY KEY (`keg_d_id`);
+  ADD PRIMARY KEY (`keg_d_id`);
 
 --
 -- Indexes for table `keg_d_file`
 --
 ALTER TABLE `keg_d_file`
- ADD PRIMARY KEY (`file_id`);
+  ADD PRIMARY KEY (`file_id`);
 
 --
 -- Indexes for table `keg_spj`
 --
 ALTER TABLE `keg_spj`
- ADD PRIMARY KEY (`keg_s_id`);
+  ADD PRIMARY KEY (`keg_s_id`);
 
 --
 -- Indexes for table `keg_target`
 --
 ALTER TABLE `keg_target`
- ADD PRIMARY KEY (`keg_t_id`);
+  ADD PRIMARY KEY (`keg_t_id`);
 
 --
 -- Indexes for table `unitkerja`
 --
 ALTER TABLE `unitkerja`
- ADD PRIMARY KEY (`unit_kode`);
+  ADD PRIMARY KEY (`unit_kode`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
- ADD PRIMARY KEY (`user_no`);
+  ADD PRIMARY KEY (`user_no`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -546,32 +576,32 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `kegiatan`
 --
 ALTER TABLE `kegiatan`
-MODIFY `keg_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
+  MODIFY `keg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `keg_detil`
 --
 ALTER TABLE `keg_detil`
-MODIFY `keg_d_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
+  MODIFY `keg_d_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 --
 -- AUTO_INCREMENT for table `keg_d_file`
 --
 ALTER TABLE `keg_d_file`
-MODIFY `file_id` bigint(12) NOT NULL AUTO_INCREMENT;
+  MODIFY `file_id` bigint(12) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `keg_spj`
 --
 ALTER TABLE `keg_spj`
-MODIFY `keg_s_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `keg_s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `keg_target`
 --
 ALTER TABLE `keg_target`
-MODIFY `keg_t_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=195;
+  MODIFY `keg_t_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=195;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `user_no` int(9) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+  MODIFY `user_no` int(9) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
