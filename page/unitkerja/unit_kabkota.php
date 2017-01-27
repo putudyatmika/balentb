@@ -79,7 +79,7 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 				$unit_es3=$b->unit_kode;
 				echo '<tr><td colspan="8"><strong>'.$b->unit_nama .'</strong></td></tr>';
 				$i=1;
-				$sql_keg_es4= $conn->query("select * from kegiatan,keg_target where kegiatan.keg_id=keg_target.keg_id and keg_t_unitkerja='$unit_es3' and keg_t_target>0 and year(keg_start)='$tahun_kegiatan'");
+				$sql_keg_es4= $conn->query("select * from kegiatan,keg_target where kegiatan.keg_id=keg_target.keg_id and keg_t_unitkerja='$unit_es3' and keg_t_target>0 and year(keg_start)='$tahun_kegiatan' order by keg_end asc");
 				while ($k=$sql_keg_es4->fetch_object()) {
 					$target_total=$k->keg_t_target;
 					//get_keg_kabkota_realisasi($keg_id,$unit_kabkota, $keg_jenis)

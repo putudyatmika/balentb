@@ -30,7 +30,7 @@ function get_nama_kegiatan($keg_id) {
 	}
 	return $keg_nama;
 	$conn_keg->close();
-	}
+}
 
 function cek_kegiatan($NamaKegiatan,$unit_keg) {
 	$db_keg = new db();
