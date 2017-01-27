@@ -98,7 +98,7 @@
 				<div class="col-sm-2">
 					<div class="input-group margin-bottom-sm">
 				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-				<select class="form-control" name="keg_spj" id="keg_spj">
+				<select class="form-control" name="keg_spj" id="keg_spj" onchange="DivTampil(this)">
 						<option value="">Pilih</option>
 						<?php
 						$i=0;
@@ -130,6 +130,17 @@
 					<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
 					<input type="text" name="keg_kabkota['.$k->unit_kode.'][]" class="form-control target_kabkota" placeholder="Target Kegiatan" />
 					</div>
+					</div>
+			</div>
+			';
+			echo '
+			<div class="form-group spjkabkota">
+				<label for="keg_target_spj" class="col-sm-4 control-label"> SPJ '.$k->unit_nama.'</label>
+					<div class="col-sm-3">
+						<div class="input-group margin-bottom-sm">
+							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+							<input type="text" name="keg_target_spj['.$k->unit_kode.'][]" class="form-control" placeholder="Target banyak SPJ" />
+						</div>
 					</div>
 			</div>
 			';

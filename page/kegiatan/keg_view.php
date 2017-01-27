@@ -83,6 +83,7 @@ echo '
 	<th rowspan="2" class="text-center">Target</th>
 	<th colspan="3" class="text-center">Pengiriman</th>
 	<th colspan="3" class="text-center">Penerimaan</th>
+	<th rowspan="2" class="text-center">Nilai</th>
 	</tr>
 	<tr class="success">
 	<th class="text-center">Rincian</th>
@@ -130,6 +131,7 @@ while ($k=$sql_kabkota_target->fetch_object()) {
 		$kirim_data='';
 		$terima_data='';
 	}
+
 	echo '
 	<tr>
 		<td class="text-center">'.$i.'</td>
@@ -141,7 +143,8 @@ while ($k=$sql_kabkota_target->fetch_object()) {
 		<td class="text-right">'.$d_keg_terima[0].'</td>
 		<td '.$rr_terima.'>'.number_format($d_persen_terima,2,",",".").' %</td>
 		<td class="text-center">'.$terima_data.'</td>
-		</tr>
+		<td class="text-center">'.$k->keg_t_point.'</td>
+	</tr>
 	';
 	$total_terima=$total_terima+$d_terima;
 	$total_kirim=$total_kirim+$d_kirim;
@@ -158,7 +161,7 @@ echo '<tr class="success">
 		<td></td>
 		<td class="text-right">'.number_format($total_terima,0,",",".").'</td>
 		<td class="text-right">'.number_format($total_persen_terima,2,",",".").'%</td>
-		<td></td>
+		<td colspan="2"></td>
 		</tr>';
 echo '</table>
 <div>

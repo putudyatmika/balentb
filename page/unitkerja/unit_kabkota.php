@@ -65,6 +65,7 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 		<th>Target</th>
 		<th>Pengiriman</th>
 		<th>Penerimaan</th>
+		<th>Nilai</th>
 	</tr>
 	<?php
 	if ($unit_kode=='') {
@@ -73,10 +74,10 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 		$i_bid=1;
 		if ($cek_bid > 0) {
 			while ($b=$sql_list_bidang->fetch_object()) {
-				if ($i_bid>1)  echo '<tr class="success"><td colspan="7"></td></tr>';
+				if ($i_bid>1)  echo '<tr class="success"><td colspan="8"></td></tr>';
 				$sql_unit_es4='';
 				$unit_es3=$b->unit_kode;
-				echo '<tr><td colspan="7"><strong>'.$b->unit_nama .'</strong></td></tr>';
+				echo '<tr><td colspan="8"><strong>'.$b->unit_nama .'</strong></td></tr>';
 				$i=1;
 				$sql_keg_es4= $conn->query("select * from kegiatan,keg_target where kegiatan.keg_id=keg_target.keg_id and keg_t_unitkerja='$unit_es3' and keg_t_target>0 and year(keg_start)='$tahun_kegiatan'");
 				while ($k=$sql_keg_es4->fetch_object()) {
@@ -105,6 +106,7 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 						<td class="text-right">'.$k->keg_t_target.'</td>
 						<td '.$rr_kirim.'>'.$total_kirim.' ('.number_format($persen_kirim,2,",",".").' %)</td>
 						<td '.$rr_terima.'>'.$total_terima.' ('.number_format($persen_terima,2,",",".").' %)</td>
+						<td>'.$k->keg_t_point.'</td>
 					</tr>
 					';
 					$i++;
@@ -145,6 +147,7 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 						<td class="text-right">'.$k->keg_t_target.'</td>
 						<td '.$rr_kirim.'>'.$total_kirim.' ('.number_format($persen_kirim,2,",",".").' %)</td>
 						<td '.$rr_terima.'>'.$total_terima.' ('.number_format($persen_terima,2,",",".").' %)</td>
+						<td>'.$k->keg_t_point.'</td>
 					</tr>
 					';
 					$i++;

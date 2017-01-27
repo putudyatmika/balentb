@@ -80,6 +80,13 @@ $(document).ready(function() {
   });
 
 });
+function DivTampil(elem){
+   if(elem.value==1){
+    $('.spjkabkota').show();
+   } else{
+     $('.spjkabkota').hide();
+   }
+} 
 	</script>
 
 

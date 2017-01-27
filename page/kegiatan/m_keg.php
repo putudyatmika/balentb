@@ -1,6 +1,7 @@
-<?php if ($act=="bidang") $btn_bid="active";
-elseif ($act=="add") $btn_add="active";
-elseif ($act=="") $btn_keg="active"; ?>
+<?php 
+if ($act=="bidang") { $btn_bid="active";$btn_keg='';$btn_add=''; }
+elseif ($act=="add") { $btn_add="active";$btn_bid='';$btn_keg=''; }
+elseif ($act=="") { $btn_keg="active";$btn_bid='';$btn_add=''; } ?>
 <div class="container">
 <div class="row konten">
 	<div class="col-lg-12 col-sm-12">
