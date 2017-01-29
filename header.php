@@ -19,7 +19,7 @@
 	<link href="<?php echo $url; ?>/css/animate.css" rel="stylesheet" media="screen">
 	<link href="<?php echo $url; ?>/css/bps.css" rel="stylesheet" media="screen">
 	<link href="<?php echo $url; ?>/addons/datepicker/css/datepicker3.css" rel="stylesheet">
-
+ <script src="<?php echo $url; ?>/js/jquery-1.11.1.min.js"></script>
 </head>
 
 <body>

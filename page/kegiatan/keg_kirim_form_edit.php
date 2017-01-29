@@ -89,6 +89,7 @@ if ($cek>0) {
 <?php
 }
 else {
-  echo 'Data kegiatan tidak tersedia';
+  echo 'Data kegiatan tidak tersedia<br />';
 }
+echo '<a href="'.$url.'/'.$page.'/view/'.$kk->keg_id.'">Kembali</a>';
 ?>

@@ -158,15 +158,17 @@ if ($cek>0) {
 </form>
 <?php }
 	else {
-		echo '(ERROR) Level user tidak bisa mengedit master kegiatan <strong>'. get_nama_kegiatan($keg_id).'</strong>';
-
+		echo '(ERROR) Level user tidak bisa mengedit master kegiatan <strong>'. get_nama_kegiatan($keg_id).'</strong> <br />';
+		
 	}
 }
 else {
-	echo 'Data kegiatan masih kosong';
+	echo 'Data kegiatan masih kosong <br />';
 }
 }
 else {
-	echo 'Level user tidak bisa mengakses menu ini';
+	echo 'Level user tidak bisa mengakses menu ini <br />';
+	
 }
+echo '<a href="'.$url.'/'.$page.'/view/'.$keg_id.'">Kembali</a>';
 ?>

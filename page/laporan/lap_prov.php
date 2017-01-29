@@ -104,8 +104,6 @@ else {
 				<tr>
 					<td rowspan="'.$cek_keg.'">'.$nama_bulan_panjang[$i].'</td>';
 				while ($k=$sql_keg->fetch_object()) {
-					$total_kirim=get_keg_realisasi($k->keg_id,1);
-					$total_terima=get_keg_realisasi($k->keg_id,2);
 					$target_total=$k->keg_total_target;
 					$total_kirim=get_keg_realisasi($k->keg_id,1);
 					$total_terima=get_keg_realisasi($k->keg_id,2);

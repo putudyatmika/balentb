@@ -31,7 +31,22 @@ function get_nama_kegiatan($keg_id) {
 	return $keg_nama;
 	$conn_keg->close();
 }
-
+function get_unitkerja_kegiatan($keg_id) {
+	$db_keg = new db();
+	$conn_keg = $db_keg->connect();
+	$sql_id_keg = $conn_keg -> query("select keg_unitkerja from kegiatan where keg_id='$keg_id'");
+	$cek=$sql_id_keg->num_rows;
+	if ($cek>0) {
+	   $keg_unitkerja='';
+	   $r=$sql_id_keg->fetch_object();
+	   $keg_unitkerja=$r->keg_unitkerja;
+	}
+	else {
+	 $keg_unitkerja='';
+	}
+	return $keg_unitkerja;
+	$conn_keg->close();
+}
 function cek_kegiatan($NamaKegiatan,$unit_keg) {
 	$db_keg = new db();
 	$conn_keg = $db_keg->connect();
@@ -112,13 +127,13 @@ function get_detil_kegiatan($keg_id,$keg_d_unitkerja,$jenis_keg) {
 					$link_crud='<a href="'.$url.'/'.$page.'/'.$edit_d.'/'.$r->keg_d_id.'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r->keg_d_id.'" data-confirm="Apakah data ('.$r->keg_d_id.') ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a>';
 				}
 				else {
-					if ($_SESSION['sesi_unitkerja']==$r->keg_d_unitkerja) {
+					if ($_SESSION['sesi_unitkerja']==$r->keg_d_unitkerja and $jenis_keg==1) {
 						$link_crud='<a href="'.$url.'/'.$page.'/'.$edit_d.'/'.$r->keg_d_id.'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r->keg_d_id.'" data-confirm="Apakah data ('.$r->keg_d_id.') ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a>';
 					}
 					else {
 						$link_crud='';
 					}
-					$link_crud='';
+					//$link_crud='';
 				}
 			}
 			else {

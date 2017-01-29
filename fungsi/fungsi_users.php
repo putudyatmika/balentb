@@ -40,4 +40,18 @@ function gen_passwd($passwd_ori) {
 	$passwd_md5=md5($pengacak.'('.$passwd_ori.')'.$pengacak);
   return $passwd_md5;
 }
+function cek_user_akses ($user_id,$user_level,$user_unitkerja,$target_unitkerja) {
+//function untuk edit,akses dan hapus
+	if ($user_level > 1) {
+		if ($user_level > 2) {
+
+		}
+		else {
+			
+		}
+	}
+	else {
+		$hak_akses=array(1,'user : '.$user_id.' tidak mempunyai akses');
+	}
+}
 ?>
