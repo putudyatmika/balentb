@@ -8,6 +8,16 @@ function tgl_hari_ini() { //Hari, 12 Maret 2016
 	$hari_ini="$nama_hari_eng_indo[$hari], $tgl $nama_bulan_panjang[$bln] $tahun";
 	return $hari_ini;
 }
+function tgljam_hari_ini() { //Hari, 12 Maret 2016
+	global $hari_ini,$nama_hari_eng_indo,$nama_bulan_panjang;
+	$hari=date('l');
+	$bln=date('n');
+	$tgl=date('j');
+	$tahun=date('Y');
+	$jam=date('H:i');
+	$hari_ini="$nama_hari_eng_indo[$hari], $tgl $nama_bulan_panjang[$bln] $tahun Pukul $jam";
+	return $hari_ini;
+}
 function tgl_convert($bahasa,$tgl) { //Selasa, 12 Januari 2016
 	//format tahun-bulan-tgl
 	global $tanggalan,$nama_hari_eng_indo,$nama_bulan_panjang;

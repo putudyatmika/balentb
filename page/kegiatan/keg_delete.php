@@ -34,7 +34,7 @@ if ($cek>0) {
 				else echo '(ERROR) Konfirmasi '.$r->keg_nama.' tidak bisa dihapus';
 			}
 			else {
-				echo 'Level user tidak bisa mengakses menu ini';
+				echo '(ERROR) Level user <strong>'.$_SESSION['sesi_user_id'].'</strong> tidak bisa menghapus master kegiatan <strong>'.$r->keg_nama.' </strong>ini';
 			}
 		}
 	}
@@ -44,7 +44,7 @@ else {
 	}
 }
 else {
-	echo 'Level user tidak bisa mengakses menu ini';
+	echo 'Level user tidak bisa mengakses master kegiatan ini';
 }
-
+echo '<br /><a href="'.$url.'/'.$page.'/view/'.$r->keg_id.'">Kembali</a>';
 ?>

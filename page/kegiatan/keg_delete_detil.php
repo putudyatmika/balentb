@@ -12,9 +12,30 @@ if ($cek>0) {
 	$keg_d_unitkerja=$r->keg_d_unitkerja;
   if ($_SESSION['sesi_level'] > 2) {
 	  //query delete langsung
-	  $sql_hapus=$conn_keg -> query("delete from keg_detil where keg_d_id='$keg_d_id'");
-	  if ($sql_hapus) { $update_nilai=1;echo '(BERHASIL) Konfirmasi '.$JenisDetilKegiatan[$r->keg_d_jenis].' berhasil di hapus'; }
-	  else { $update_nilai=0;echo '(ERROR) Konfirmasi '.$JenisDetilKegiatan[$r->keg_d_jenis].' tidak bisa dihapus'; }
+	  if ($_SESSION['sesi_level'] > 3) {
+	  	$sql_hapus=$conn_keg -> query("delete from keg_detil where keg_d_id='$keg_d_id'");
+		if ($sql_hapus) { $update_nilai=1;echo '(BERHASIL) Konfirmasi '.$JenisDetilKegiatan[$r->keg_d_jenis].' berhasil di hapus'; }
+		else { $update_nilai=0;echo '(ERROR) Konfirmasi '.$JenisDetilKegiatan[$r->keg_d_jenis].' tidak bisa dihapus'; }
+	  }
+	  else {
+	  	if ($_SESSION['sesi_unitkerja']==$keg_d_unitkerja) {
+	  		$sql_hapus=$conn_keg -> query("delete from keg_detil where keg_d_id='$keg_d_id'");
+			if ($sql_hapus) { $update_nilai=1;echo '(BERHASIL) Konfirmasi '.$JenisDetilKegiatan[$r->keg_d_jenis].' berhasil di hapus'; }
+			else { $update_nilai=0;echo '(ERROR) Konfirmasi '.$JenisDetilKegiatan[$r->keg_d_jenis].' tidak bisa dihapus'; }
+	  	}
+	  	else {
+	  		$parent_unit=get_parent_unit($keg_d_unitkerja);
+			if ($_SESSION['sesi_unitkerja']==$parent_unit) {
+				$sql_hapus=$conn_keg -> query("delete from keg_detil where keg_d_id='$keg_d_id'");
+				if ($sql_hapus) { $update_nilai=1;echo '(BERHASIL) Konfirmasi '.$JenisDetilKegiatan[$r->keg_d_jenis].' berhasil di hapus'; }
+				else { $update_nilai=0;echo '(ERROR) Konfirmasi '.$JenisDetilKegiatan[$r->keg_d_jenis].' tidak bisa dihapus'; }
+			}
+			else {
+				echo '(ERROR) Level user <strong>'.$_SESSION['sesi_user_id'].'</strong> tidak bisa menghapus '.$JenisDetilKegiatan[$r->keg_d_jenis].' ini';
+			}
+	  	}
+	  }
+	  
   }
   else {
 	if ($r->keg_d_jenis==1) {
