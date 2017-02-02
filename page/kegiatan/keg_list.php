@@ -44,10 +44,11 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
   <button type="submit" name="submit_unitkerja" class="btn btn-default">Get Data</button>
 </form>
 <div class="table-responsive">
-<table class="table table-hover table-striped table-condensed">
+<table class="table table-hover table-striped table-condensed" data-toggle="table">
 	<tr class="success">
 		<th>No</th>
-		<th>Kegiatan</th>
+		<th data-field="kegiatan" 
+            data-sortable="true">Kegiatan</th>
 		<th>Unit Kerja</th>
 		<th>Tanggal Berakhir</th>
 		<th>Satuan</th>

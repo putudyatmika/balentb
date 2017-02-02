@@ -74,6 +74,7 @@ echo '
 </div>
  ';
  $sql_kabkota_target=$conn_view -> query("select * from keg_target,unitkerja where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_target.keg_id='$keg_id' and keg_t_target>0");
+ 
  echo '
  <div class="table-responsive">
 <table class="table table-hover table-bordered table-condensed">
@@ -166,6 +167,102 @@ echo '<tr class="success">
 echo '</table>
 <div>
  ';
+ if ($r->keg_spj==1) {
+ $sql_kabkota_spj=$conn_view -> query("select * from keg_spj,unitkerja where keg_spj.keg_s_unitkerja=unitkerja.unit_kode and keg_spj.keg_id='$keg_id' and keg_s_target>0");
+ echo '
+ <p>Laporan pengiriman dan penerimaan SPJ</p>
+ <div class="table-responsive">
+<table class="table table-hover table-bordered table-condensed">
+<tr class="info">
+	<th rowspan="2" class="text-center">No</th>
+	<th rowspan="2" class="text-center">Unit Kerja</th>
+	<th rowspan="2" class="text-center">Target</th>
+	<th colspan="3" class="text-center">Pengiriman</th>
+	<th colspan="3" class="text-center">Penerimaan</th>
+	<th rowspan="2" class="text-center">Nilai</th>
+	</tr>
+	<tr class="info">
+	<th class="text-center">Rincian</th>
+	<th class="text-center">RR (%)</th>
+	<th></th>
+	<th class="text-center">Rincian</th>
+	<th class="text-center">RR (%)</th>
+	<th></th>
+	</tr>
+	';
+	$i=1;
+	$total=0;
+	$total_kirim=0;
+	$total_terima=0;
+while ($k=$sql_kabkota_spj->fetch_object()) {
+	$d_keg_kirim=get_detil_spj($k->keg_id,$k->keg_s_unitkerja,1);
+	$d_kirim=$d_keg_kirim[1];
+	$d_persen_kirim=($d_kirim/$k->keg_s_target)*100;
+	if ($d_persen_kirim > 85) $rr_kirim='class="text-right bpsgood"';
+	elseif ($d_persen_kirim > 70) $rr_kirim='class="text-right bpsmedium"';
+	else $rr_kirim='class="text-right bpsbad"';
+
+	$d_keg_terima=get_detil_spj($k->keg_id,$k->keg_s_unitkerja,2);
+	$d_terima=$d_keg_terima[1];
+	$d_persen_terima=($d_terima/$k->keg_s_target)*100;
+	if ($d_persen_terima > 85) $rr_terima='class="text-right bpsgood"';
+	elseif ($d_persen_terima > 70) $rr_terima='class="text-right bpsmedium"';
+	else $rr_terima='class="text-right bpsbad"';
+	if (($_SESSION['sesi_level'] > 1) and ($tgl_mulai <= $tanggal_hari_ini)) {
+		if ($_SESSION['sesi_level'] > 2) {
+			$kirim_data='<a href="'.$url.'/'.$page.'/kirimspj/'.$k->keg_id.'/'.$k->keg_s_unitkerja.'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i>';
+			$terima_data='<a href="'.$url.'/'.$page.'/terimaspj/'.$k->keg_id.'/'.$k->keg_s_unitkerja.'"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a>';
+		}
+		else {
+			if ($_SESSION['sesi_unitkerja']==$k->keg_s_unitkerja) {
+				$kirim_data='<a href="'.$url.'/'.$page.'/kirimspj/'.$k->keg_id.'/'.$k->keg_s_unitkerja.'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i></a>';
+			}
+			else {
+				$kirim_data='';
+			}
+			$terima_data='';
+		}
+	}
+	else {
+		$kirim_data='';
+		$terima_data='';
+	}
+
+	echo '
+	<tr>
+		<td class="text-center">'.$i.'</td>
+		<td>'.$k->unit_nama.'</td>
+		<td class="text-right">'.$k->keg_s_target.'</td>
+		<td class="text-right">'.$d_keg_kirim[0].'</td>
+		<td '.$rr_kirim.'>'.number_format($d_persen_kirim,2,",",".").' %</td>
+		<td class="text-center">'.$kirim_data.'</td>
+		<td class="text-right">'.$d_keg_terima[0].'</td>
+		<td '.$rr_terima.'>'.number_format($d_persen_terima,2,",",".").' %</td>
+		<td class="text-center">'.$terima_data.'</td>
+		<td class="text-center">'.$k->keg_s_point.'</td>
+	</tr>
+	';
+	$total_terima=$total_terima+$d_terima;
+	$total_kirim=$total_kirim+$d_kirim;
+	$total=$total+$k->keg_s_target;
+	$i++;
+}
+$total_persen_kirim=($total_kirim/$total)*100;
+$total_persen_terima=($total_terima/$total)*100;
+echo '<tr class="info">
+		<td colspan="2" class="text-center">TOTAL</td>
+		<td class="text-right">'.number_format($total,0,",",".").'</td>
+		<td class="text-right">'.number_format($total_kirim,0,",",".").'</td>
+		<td class="text-right">'.number_format($total_persen_kirim,2,",",".").'%</td>
+		<td></td>
+		<td class="text-right">'.number_format($total_terima,0,",",".").'</td>
+		<td class="text-right">'.number_format($total_persen_terima,2,",",".").'%</td>
+		<td colspan="2"></td>
+		</tr>';
+echo '</table>
+<div>
+ ';
+ }
 }
 else {
 	echo 'Data view kegiatan tidak tersedia';
