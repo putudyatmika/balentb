@@ -125,6 +125,26 @@ if ($cek>0) {
 				</div>
 		</div>
 		<div class="form-group">
+			<label for="keg_spj" class="col-sm-2 control-label">Laporan SPJ Provinsi</label>
+				<div class="col-sm-2">
+					<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+				<select class="form-control" name="keg_spj" id="keg_spj" onchange="DivTampil(this)">
+						<option value="">Pilih</option>
+						<?php
+						$i=0;
+						for ($i=1;$i<=2;$i++)
+							{
+								if ($e->keg_spj == $i) $pilih='selected="selected"';
+								else $pilih='';
+								echo '<option value="'.$i.'" '.$pilih.'>'.$StatusSPJ[$i].'</option>';
+							}
+						?>
+						</select>
+				</div>
+				</div>
+		</div>
+		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-8">
 			  Target BPS Kabupaten/Kota
 			</div>

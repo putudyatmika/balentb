@@ -62,6 +62,27 @@ elseif ($act=="") { $btn_keg="active";$btn_bid='';$btn_add=''; } ?>
 	elseif ($act=="delete" and $_SESSION['sesi_level'] > 2) {
 		include 'page/kegiatan/keg_delete.php';
 	}
+	elseif ($act=="kirimspj") {
+			include 'page/kegiatan/spj_kirim_form.php';
+	}
+	elseif ($act=="savekirimspj") {
+			include 'page/kegiatan/spj_kirim_save.php';
+	}
+	elseif ($act=="editkirimspj") {
+			include 'page/kegiatan/spj_kirim_form_edit.php';
+	}
+	elseif ($act=="updatekirimspj") {
+		include 'page/kegiatan/spj_kirim_update.php';
+	}
+	elseif ($act=="terimaspj") {
+			include 'page/kegiatan/spj_terima_form.php';
+	}
+	elseif ($act=="saveterimaspj") {
+			include 'page/kegiatan/spj_terima_save.php';
+	}
+	elseif ($act=="deletedetilspj" and $_SESSION['sesi_level'] > 1) {
+		include 'page/kegiatan/spj_delete_detil.php';
+	}
 	else {
 		 include 'page/kegiatan/keg_list.php';
 	}

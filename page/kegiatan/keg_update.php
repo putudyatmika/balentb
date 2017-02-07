@@ -11,6 +11,7 @@ $keg_target=trim($_POST['keg_target']);
 $waktu_lokal=date("Y-m-d H:i:s");
 $created=$_SESSION['sesi_user_id'];
 $kabkota_target=$_POST['keg_kabkota'];
+$keg_spj=$_POST['keg_spj'];
 //print_r($_POST['keg_kabkota']);
 //var_dump($_POST['keg_kabkota']);
 //echo '<br />';
@@ -21,7 +22,7 @@ if ($cek==0) {
 else {
 $db = new db();
 $conn = $db -> connect();
-$sql_keg = $conn->query("update kegiatan set keg_nama='$nama_kegiatan', keg_unitkerja='$keg_unitkerja', keg_start='$keg_tglmulai', keg_end='$keg_tglakhir', keg_jenis='$keg_jenis', keg_total_target='$keg_target', keg_target_satuan='$keg_satuan', keg_diupdate_oleh='$created' where keg_id='$keg_id'") or die(mysqli_error($conn));
+$sql_keg = $conn->query("update kegiatan set keg_nama='$nama_kegiatan', keg_unitkerja='$keg_unitkerja', keg_start='$keg_tglmulai', keg_end='$keg_tglakhir', keg_jenis='$keg_jenis', keg_total_target='$keg_target', keg_target_satuan='$keg_satuan', keg_diupdate_oleh='$created', keg_spj='$keg_spj' where keg_id='$keg_id'") or die(mysqli_error($conn));
 
 if ($sql_keg) echo '(BERHASIL) Target kegiatan berhasil diupdate';
 else echo '(ERROR) target kegiatan tidak berhasil diupdate';

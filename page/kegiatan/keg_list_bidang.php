@@ -52,6 +52,7 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 		<th class="text-center">Jenis</th>
 		<th class="text-center">Tgl Mulai</th>
 		<th class="text-center">Tgl Berakhir</th>
+		<th class="text-center">SPJ</th>
 		<?php
 		if ($_SESSION['sesi_level']>2) { ?>
 		<th colspan="2">Aksi</th>
@@ -64,9 +65,10 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 		<td class="text-center">(4)</td>
 		<td class="text-center">(5)</td>
 		<td class="text-center">(6)</td>
+		<td class="text-center">(7)</td>
 		<?php
 		if ($_SESSION['sesi_level']>2) { ?>
-		<td colspan="2">(7)</th>
+		<td colspan="2">(8)</th>
 		<?php } ?>
 	</tr>
 	<?php
@@ -115,7 +117,8 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 									<td>'.$k->keg_total_target.' '.$k->keg_target_satuan.'</td>
 									<td>'.$JenisKegiatan[$k->keg_jenis].'</td>
 									<td>'.tgl_convert_bln(1,$k->keg_start).'</td>
-									<td>'.tgl_convert_bln(1,$k->keg_end).'</td>';
+									<td>'.tgl_convert_bln(1,$k->keg_end).'</td>
+									<td>'.$StatusSPJ[$k->keg_spj].'</td>';
 									if ($_SESSION['sesi_level'] > 2) {
 										echo '
 									<td><a href="'.$url.'/'.$page.'/edit/'.$k->keg_id.'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a></td>

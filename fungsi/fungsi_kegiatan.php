@@ -224,4 +224,115 @@ function get_nilai_kegiatan($keg_id,$keg_unitkerja) {
 	return $keg_nilai;
 	$conn_keg->close();
 }
+function get_detil_spj($keg_id,$spj_d_unitkerja,$jenis_keg) {
+	global $url, $page;
+	$db_spj = new db();
+	$conn_spj = $db_spj->connect();
+	$sql_d_spj = $conn_spj -> query("select * from spj_detil where keg_id='$keg_id' and spj_d_unitkerja='$spj_d_unitkerja' and spj_d_jenis='$jenis_keg' order by spj_d_tgl asc");
+	$cek=$sql_d_spj->num_rows;
+	$d_keg='';
+	$d_jml='';
+	$link='';
+	$link_laci='';
+	if ($cek>0) {
+		if ($jenis_keg==1) $edit_d='editkirimspj';
+		else $edit_d='editterimaspj';
+		while ($r=$sql_d_spj->fetch_object()) {
+			$link="$r->spj_d_link_laci";
+			if ($r->spj_d_link_laci == null) $link_laci='';
+			else $link_laci='<a href="'.$link.'" target="_blank">File</a>';
+			
+			if ($_SESSION['sesi_level'] > 1) {
+				if ($_SESSION['sesi_level'] > 2) {
+					$link_crud='<a href="'.$url.'/'.$page.'/'.$edit_d.'/'.$r->spj_d_id.'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetilspj/'.$r->spj_d_id.'" data-confirm="Apakah data ('.$r->spj_d_id.') ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a>';
+				}
+				else {
+					if ($_SESSION['sesi_unitkerja']==$r->spj_d_unitkerja and $jenis_keg==1) {
+						$link_crud='<a href="'.$url.'/'.$page.'/'.$edit_d.'/'.$r->spj_d_id.'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetilspj/'.$r->spj_d_id.'" data-confirm="Apakah data ('.$r->spj_d_id.') ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a>';
+					}
+					else {
+						$link_crud='';
+					}
+					//$link_crud='';
+				}
+			}
+			else {
+				$link_crud='';
+			}
+			
+			$d_keg .= tgl_convert_pendek_bulan(1,$r->spj_d_tgl) .' Jml '. $r->spj_d_jumlah .' ('.$r->spj_d_ket.') '.$link_laci.' '.$link_crud.'<br />';
+			$d_jml += $r->spj_d_jumlah;
+		}
+		$detil_spj=array($d_keg,$d_jml);
+	}
+	else {
+		$detil_spj=array('',0);
+	}
+	return $detil_spj;
+	$conn_spj->close();
+}
+function get_spj_kabkota_target($keg_id,$unit_kabkota) {
+	$spj_t_target='';
+	$db_keg = new db();
+	$conn_keg = $db_keg->connect();
+	$sql_d_keg = $conn_keg -> query("select * from keg_spj where keg_id='$keg_id' and keg_s_unitkerja='$unit_kabkota'");
+	$r=$sql_d_keg->fetch_object();
+	$spj_t_target=$r->keg_s_target;
+	return $spj_t_target;
+	$conn_keg->close();
+}
+function get_spj_kabkota_realisasi($keg_id,$unit_kabkota, $keg_jenis) {
+	$spj_jml='';
+	$db_keg = new db();
+	$conn_keg = $db_keg->connect();
+	$sql_d_keg = $conn_keg -> query("select sum(spj_d_jumlah) as jumlah from spj_detil where keg_id='$keg_id' and spj_d_unitkerja='$unit_kabkota' and spj_d_jenis='$keg_jenis'");
+	$r=$sql_d_keg->fetch_object();
+	$spj_jml=$r->jumlah;
+	return $spj_jml;
+	$conn_keg->close();
+}
+function get_nilai_spj($keg_id,$keg_unitkerja) {
+	$db_keg = new db();
+	$conn_keg = $db_keg->connect();
+	$sql_d_keg = $conn_keg -> query("select * from spj_detil where keg_id='$keg_id' and spj_d_unitkerja='$keg_unitkerja' and spj_d_jenis='2' order by spj_d_tgl asc");
+	$cek=$sql_d_keg->num_rows;
+	if ($cek>0) {
+		$spj_nilai='';
+		$nilai_waktu='';
+		$nilai_volume='';
+		$nilai_vol='';
+		$batas_waktu=get_tgl_kegiatan($keg_id);
+		$kabkota_target=get_spj_kabkota_target($keg_id,$keg_unitkerja);
+		
+		while ($r=$sql_d_keg->fetch_object()) {
+			$nilai_vol+=$r->spj_d_jumlah;
+			$target_waktu = new DateTime($batas_waktu);
+			$pengiriman = new DateTime($r->spj_d_tgl);
+			$interval = $pengiriman->diff($target_waktu);
+			$int=$interval->format('%r%a');
+
+			if ($int>4) $nilai_wkt=5;
+			elseif ($int>1) $nilai_wkt=3;
+			elseif ($int>=0) $nilai_wkt=1;
+			else $nilai_wkt=0;
+
+			$nilai_waktu+=$nilai_wkt;
+		}
+		$nilai_waktu=($nilai_waktu/$cek);
+		$persen_vol=($nilai_vol/$kabkota_target)*100;
+		if ($persen_vol>99) $nilai_volume=5;
+		elseif ($persen_vol>89) $nilai_volume=3;
+		elseif ($persen_vol>79) $nilai_volume=1;
+		else $nilai_volume=0;
+		$nilai_total=($nilai_volume*0.70)+($nilai_waktu*0.30);
+		$spj_nilai=array($nilai_waktu,$nilai_volume,$nilai_total);
+		
+	}
+	else {
+		$spj_nilai='';
+	}
+	return $spj_nilai;
+	$conn_keg->close();
+}
+
 ?>

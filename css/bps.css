@@ -48,7 +48,11 @@
 }
 
 body {
+<<<<<<< HEAD
   font-family: GothamBook, Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
+=======
+  font-family: 'GothamBook', Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
+>>>>>>> refs/remotes/blimika/master
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
