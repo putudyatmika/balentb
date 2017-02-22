@@ -80,7 +80,9 @@ else {
 <?php
 if ($unit_kode=='') { //semua kabkotaa
 ?>
-<div class="table-responsive col-sm-6 col-lg-6">
+<div class="row">
+<div class="col-sm-12 col-lg-12">
+<div class="table-responsive">
 <table class="table table-hover table-bordered table-condensed">
 	<tr class="success">
 		<th>Bulan</th>
@@ -88,14 +90,18 @@ if ($unit_kode=='') { //semua kabkotaa
 		<th>Kegiatan</th>
 		<th>Target</th>
 		<th>Nilai</th>
+		<th>Grafik</th>
 	</tr>
 	<?php
 	if ($bulan_kegiatan=='') {
 	for ($i=1;$i<=12;$i++) {
 		$sql_list_kabkota= $conn -> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$i' and year(kegiatan.keg_end)='$tahun_kegiatan' group by keg_t_unitkerja order by point_total desc, keg_t_unitkerja asc");
 		$cek_kabkota=$sql_list_kabkota->num_rows;
-		if ($cek_kabkota>0) {
-			$j=1;
+		if ($cek_kabkota>0) {			
+			$j=1; //untuk buat kolom grafik
+			$nilai_grafik=get_ranking_kegiatan($i,$tahun_kegiatan);
+			$kabkota_grafik=get_ranking_kabkota($i,$tahun_kegiatan);
+			
 			echo '
 				<tr>
 					<td rowspan="'.$cek_kabkota.'">'.$nama_bulan_panjang[$i].'</td>';
@@ -108,23 +114,28 @@ if ($unit_kode=='') { //semua kabkotaa
 				<td>'.$j.'. '.$nama_unit.'</td>
 				<td>'.$k->keg_jml.'</td>
 				<td>'.$k->keg_jml_target.'</td>
-				<td>'.number_format($nilai,4,",",".").'</td>
-				</tr>
+				<td>'.number_format($nilai,4,",",".").'</td>';
+				if ($j==1) {
+					//include 'page/laporan/lap_grafik.php';
+					echo	'<td rowspan="'.$cek_kabkota.'">'. ltrim(implode (",",$nilai_grafik),',') .'<br /> \''.ltrim(implode("','",$kabkota_grafik),"',").'\'
+					</td>';
+				}
+				echo '</tr>
 				<tr>
 				';
 				$j++;
 			}
-			echo '<td colspan="5"></td></tr>';
+			echo '<td colspan="6" class="success"></td></tr>';
 		}
 		else {
 			echo '
 				<tr>
 					<td>'.$nama_bulan_panjang[$i].'</td>
-					<td colspan="6" class="text-center">Belum ada kegiatan dibulan ini</td>
+					<td colspan="5" class="text-center">Belum ada kegiatan dibulan ini</td>
 				</tr>
 				';
 		}		
-	}
+		}
 	}
 	else { //hanya 1 bulan saja
 		$sql_list_kabkota= $conn -> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$bulan_kegiatan' and year(kegiatan.keg_end)='$tahun_kegiatan' group by keg_t_unitkerja order by point_total desc, keg_t_unitkerja asc");
@@ -163,6 +174,8 @@ if ($unit_kode=='') { //semua kabkotaa
 	}
 	?>
 </table>
+</div>
+</div>
 </div>
 <?php } 
 else { //terpilih salah satu kabkota

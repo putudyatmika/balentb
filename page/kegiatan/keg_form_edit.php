@@ -48,7 +48,7 @@ if ($cek>0) {
 						<?php
 						$db = new db();
 						$conn = $db -> connect();
-            if ($_SESSION['sesi_level'] > 2) {
+            			if ($_SESSION['sesi_level'] > 2) {
 							  if ($_SESSION['sesi_level']==3) {
 										$es_op=get_eselon_unit($_SESSION['sesi_unitkerja']);
 										if ($es_op==4) $sql_unit = $conn->query("select * from unitkerja where unit_kode='".$_SESSION['sesi_unitkerja']."' order by unit_jenis,unit_kode asc");
@@ -145,27 +145,56 @@ if ($cek>0) {
 				</div>
 		</div>
 		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-8">
-			  Target BPS Kabupaten/Kota
+			<div class="text-right col-sm-8">
+			  <legend>Target BPS Kabupaten/Kota</legend>
 			</div>
 		</div>
 		<?php
+		//$ada_spj=$e->keg_spj;
 		$db_kabkota = new db();
 		$conn_kabkota = $db_kabkota -> connect();
-		$sql_kabkota = $conn_kabkota->query("select * from unitkerja,keg_target where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_target.keg_id='$keg_id' order by unitkerja.unit_kode asc");
+		if ($e->keg_spj==1) {
+			$sql_kabkota = $conn_kabkota->query("select * from unitkerja,keg_target,keg_spj where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_spj.keg_s_unitkerja=keg_target.keg_t_unitkerja and keg_spj.keg_id=keg_target.keg_id and keg_target.keg_id='$keg_id' order by unitkerja.unit_kode asc");
+		}
+		else {
+			$sql_kabkota = $conn_kabkota->query("select * from unitkerja,keg_target where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_target.keg_id='$keg_id' order by unitkerja.unit_kode asc");
+		}
 		$i=1;
 		while ($k = $sql_kabkota ->fetch_object()) {
 			echo '
 			<div class="form-group">
-				<label for="keg_target_lobar" class="col-sm-3 control-label">'.$k->unit_nama.'</label>
-					<div class="col-sm-3">
+				<label for="keg_target_lobar" class="col-sm-4 control-label">'.$k->unit_nama.'</label>
+					<div class="col-sm-2">
 						<div class="input-group margin-bottom-sm">
 					<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
 					<input type="text" name="keg_kabkota['.$k->unit_kode.'][]" class="form-control" value="'.$k->keg_t_target.'" placeholder="Target Kegiatan" />
 					</div>
 					</div>
-			</div>
-			';
+			</div>';
+			if ($e->keg_spj==1) {
+				echo '
+			<div class="form-group">
+				<label for="keg_target_spj" class="col-sm-4 control-label"> SPJ '.$k->unit_nama.'</label>
+					<div class="col-sm-2">
+						<div class="input-group margin-bottom-sm">
+							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+							<input type="text" name="keg_target_spj['.$k->unit_kode.'][]" class="form-control" value="'.$k->keg_s_target.'" placeholder="Target SPJ" />
+						</div>
+					</div>
+			</div>';
+			}
+			else {
+				echo '
+			<div class="form-group spjkabkota">
+				<label for="keg_target_spj" class="col-sm-4 control-label"> SPJ '.$k->unit_nama.'</label>
+					<div class="col-sm-2">
+						<div class="input-group margin-bottom-sm">
+							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+							<input type="text" name="keg_target_spj['.$k->unit_kode.'][]" class="form-control" placeholder="Target SPJ" />
+						</div>
+					</div>
+			</div>';
+			}
 			$i++;
 		}	?>
 		<div class="form-group">
