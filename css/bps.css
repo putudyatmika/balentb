@@ -1,5 +1,14 @@
 /*@import url(http://fonts.googleapis.com/css?family=Roboto:400,700);*/
-
+@font-face {
+    font-family: 'gotam';
+    src: url('../addons/fonts/Gotham-Light.otf');
+    font-weight: normal;
+}
+@font-face {
+    font-family: 'gotam';
+    src: url('../addons/fonts/Gotham-Bold.otf');
+    font-weight: bold;
+}
 @font-face {
     font-family: 'GothamBook';
     src: url('../addons/fonts/gotham-book.eot');
@@ -39,7 +48,7 @@
 }
 
 body {
-  font-family: 'GothamBook', Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: GothamBook, Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
