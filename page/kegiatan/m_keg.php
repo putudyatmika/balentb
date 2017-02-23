@@ -80,6 +80,12 @@ elseif ($act=="") { $btn_keg="active";$btn_bid='';$btn_add=''; } ?>
 	elseif ($act=="saveterimaspj") {
 			include 'page/kegiatan/spj_terima_save.php';
 	}
+	elseif ($act=="editterimaspj") {
+			include 'page/kegiatan/spj_terima_form_edit.php';
+	}
+	elseif ($act=="updateterimaspj") {
+			include 'page/kegiatan/spj_terima_update.php';
+	}
 	elseif ($act=="deletedetilspj" and $_SESSION['sesi_level'] > 1) {
 		include 'page/kegiatan/spj_delete_detil.php';
 	}

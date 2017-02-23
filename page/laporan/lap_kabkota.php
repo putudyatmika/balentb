@@ -84,21 +84,23 @@ if ($unit_kode=='') { //semua kabkotaa
 <div class="table-responsive">
 <table class="table table-hover table-bordered table-condensed">
 	<tr class="success">
-		<th>Bulan</th>
-		<th>Peringkat</th>
-		<th>Kegiatan</th>
-		<th>Target</th>
-		<th>Nilai</th>
-		<th>Grafik</th>
+		<th class="text-center">Bulan</th>
+		<th class="text-center">Peringkat</th>
+		<th class="text-center">Total Keg</th>
+		<th class="text-center">Nilai Total</th>
+		<th class="text-center">Grafik</th>
 	</tr>
 	<?php
 	if ($bulan_kegiatan=='') {
 	for ($i=1;$i<=12;$i++) {
-		$sql_list_kabkota= $conn -> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$i' and year(kegiatan.keg_end)='$tahun_kegiatan' group by keg_t_unitkerja order by point_total desc, keg_t_unitkerja asc");
+		//$sql_list_kabkota= $conn -> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$i' and year(kegiatan.keg_end)='$tahun_kegiatan' group by keg_t_unitkerja order by point_total desc, keg_t_unitkerja asc");
+		$sql_list_kabkota= $conn -> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$i' and year(kegiatan.keg_end)='$tahun_kegiatan' group by keg_t_unitkerja order by point_total desc, keg_t_unitkerja asc");
 		$cek_kabkota=$sql_list_kabkota->num_rows;
 		if ($cek_kabkota>0) {			
 			$j=1; //untuk buat kolom grafik
-			$nilai_grafik=get_ranking_kegiatan($i,$tahun_kegiatan);
+			$nilai_grafik_vol=get_ranking_kegiatan($i,$tahun_kegiatan,1);
+			$nilai_grafik_waktu=get_ranking_kegiatan($i,$tahun_kegiatan,2);
+			$nilai_grafik_total=get_ranking_kegiatan($i,$tahun_kegiatan,3);
 			$kabkota_grafik=get_ranking_kabkota($i,$tahun_kegiatan); ?>
 			<script type="text/javascript">
 $(function () {
@@ -144,8 +146,8 @@ $(function () {
              enabled: false
         },
         series: [{
-            name: 'Nilai',
-            data: [<?php echo ltrim(implode (",",$nilai_grafik),',');?>]
+            name: 'Point Total',
+            data: [<?php echo ltrim(implode (",",$nilai_grafik_total),',');?>]
         }]
     });
 });
@@ -162,11 +164,10 @@ $(function () {
 				echo '
 				<td>'.$j.'. '.$nama_unit.'</td>
 				<td>'.$k->keg_jml.'</td>
-				<td>'.$k->keg_jml_target.'</td>
-				<td>'.number_format($nilai,4,",",".").'</td>';
+				<td>'.number_format($k->point_total,2,",",".").'</td>';
 				if ($j==1) {
-					//include 'page/laporan/lap_grafik.php';
-					echo	'<td rowspan="'.$cek_kabkota.'"><div id="grafikkabkota_'.$i.'" style="min-width: 450px; height: 300px; margin: 0 auto"></div>
+					
+					echo	'<td rowspan="'.$cek_kabkota.'"><div id="grafikkabkota_'.$i.'" style="min-width: 450px; height: 300px; margin: 0 "></div>
 					</td>';
 				}
 				echo '</tr>

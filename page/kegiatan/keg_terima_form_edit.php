@@ -40,6 +40,12 @@ if ($cek>0) {
                   <?php echo $keg_nama; ?>
                </div>
          </div>
+          <div class="form-group">
+            <label for="keg_nama" class="col-sm-2 control-label">Batas waktu</label>
+               <div class="col-lg-7 col-sm-7">
+                  <?php echo tgl_convert(1,get_tgl_kegiatan($kk->keg_id)); ?>
+               </div>
+         </div>
          <div class="form-group">
             <label for="keg_unitkerja" class="col-sm-2 control-label">Unit Kerja</label>
                <div class="col-sm-6">

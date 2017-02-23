@@ -372,28 +372,29 @@ function get_nilai_spj($keg_id,$keg_unitkerja) {
 	return $spj_nilai;
 	$conn_keg->close();
 }
-function get_ranking_kegiatan($keg_bulan,$keg_tahun) {
+function get_ranking_kegiatan($keg_bulan,$keg_tahun,$jenis_nilai) {
+	//$jenis_nilai 1=vol, 2=waktu, 3=total
 	$keg_rangking='';
 	$db_keg = new db();
 	$conn_keg = $db_keg->connect();
-	$sql_keg= $conn_keg	-> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$keg_bulan' and year(kegiatan.keg_end)='$keg_tahun' group by keg_t_unitkerja order by point_total desc, keg_t_unitkerja asc");
+	$sql_keg= $conn_keg	-> query("select keg_t_unitkerja, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$keg_bulan' and year(kegiatan.keg_end)='$keg_tahun' group by keg_t_unitkerja order by point_total desc, keg_t_unitkerja asc");
 	$cek_keg=$sql_keg->num_rows;
 	if ($cek_keg>0) {
 		$data_rangking[]='';
-		$data_kabkota[]='';
 		while ($k=$sql_keg->fetch_object()) {
-				$total_keg=$k->keg_jml;
-				$point_total=$k->point_total;
-				$nilai=$point_total/$total_keg;
-				$nama_unit=get_nama_unit($k->keg_t_unitkerja);
-				$data_kabkota[]=$nama_unit;
-				if ($nilai==0) {
-					$data_rangking[]=$nilai;
-				}
-				else {
-					$data_rangking[]=number_format($nilai,4,".",",");
-				}
+			if ($jenis_nilai==1) {
+				$data_rangking[]=number_format($k->point_jumlah,2,".",",");
 			}
+			elseif ($jenis_nilai==2) {
+				$data_rangking[]=number_format($k->point_waktu,2,".",",");
+			}
+			elseif ($jenis_nilai==3) {
+				$data_rangking[]=number_format($k->point_total,2,".",",");
+			}
+			else {
+				$data_rangking[]='';
+			}
+		}
 		$keg_rangking=$data_rangking;
 	}
 	else {

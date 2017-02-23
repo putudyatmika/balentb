@@ -1,8 +1,15 @@
 <?php
-$keg_id=$lvl3;
+
 if ($_SESSION['sesi_level'] > 2) {
+$spj_d_id=$lvl3;
+$db_view = new db();
+$conn_view = $db_view -> connect();
+$sql_view = $conn_view -> query("select * from spj_detil where spj_d_id='$spj_d_id'");
+$cek=$sql_view->num_rows;
+if ($cek>0) {
+$kt=$sql_view->fetch_object();
+$keg_id=$kt->keg_id;
 $keg_nama=get_nama_kegiatan($keg_id);
-$keg_d_unitkerja=$lvl4;
 $keg_unitkerja=get_unitkerja_kegiatan($keg_id);
   if ($_SESSION['sesi_level'] > 3) {
     $edit=1;
@@ -22,16 +29,11 @@ $keg_unitkerja=get_unitkerja_kegiatan($keg_id);
      }
   }
 
-   if ($edit==1){
-      $db_view = new db();
-$conn_view = $db_view -> connect();
-$sql_view = $conn_view -> query("select * from keg_target,unitkerja where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_id='$keg_id' and keg_t_unitkerja='$keg_d_unitkerja'");
-$cek=$sql_view->num_rows;
-if ($cek>0) {
-   $kt=$sql_view->fetch_object();
+   if ($edit==1) {
+     
    ?>
-   <legend>Konfirmasi Penerimaan</legend>
-         <form id="formKirimTarget" name="formKirimTarget" action="<?php echo $url.'/'.$page;?>/saveterima/"  method="post" class="form-horizontal well" role="form">
+   <legend>Edit Penerimaan SPJ <?php echo get_nama_unit($kt->spj_d_unitkerja);?></legend>
+         <form id="formKirimTarget" name="formKirimTarget" action="<?php echo $url.'/'.$page;?>/updateterimaspj/"  method="post" class="form-horizontal well" role="form">
          <fieldset>
          <div class="form-group">
             <label for="keg_nama" class="col-sm-2 control-label">Nama Kegiatan</label>
@@ -42,19 +44,19 @@ if ($cek>0) {
           <div class="form-group">
             <label for="keg_nama" class="col-sm-2 control-label">Batas waktu</label>
                <div class="col-lg-7 col-sm-7">
-                  <?php echo tgl_convert(1,get_tgl_kegiatan($keg_id)); ?>
+                  <?php echo tgl_convert(1,get_tgl_kegiatan($kt->keg_id)); ?>
                </div>
          </div>
          <div class="form-group">
             <label for="keg_unitkerja" class="col-sm-2 control-label">Unit Kerja</label>
                <div class="col-sm-6">
-                  <?php echo $kt->unit_nama; ?>
+                  <?php echo '['.$kt->spj_d_unitkerja.'] '.get_nama_unit($kt->spj_d_unitkerja); ?>
                </div>
          </div>
       <div class="form-group">
         <label for="keg_unitkerja" class="col-sm-2 control-label">Target</label>
           <div class="col-sm-6">
-            <?php echo $kt->keg_t_target; ?>
+            <?php echo get_spj_kabkota_target($keg_id,$kt->spj_d_unitkerja); ?> SPJ
           </div>
       </div>
          <div class="form-group">
@@ -62,7 +64,7 @@ if ($cek>0) {
                <div class="col-sm-3" id="tgl_mulai_keg">
                   <div class="input-group margin-bottom-sm">
                <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-               <input type="text" name="keg_d_tgl" id="keg_tglmulai" class="form-control" placeholder="Format : YYYY-MM-DD" />
+               <input type="text" name="keg_d_tgl" id="keg_tglmulai" class="form-control" placeholder="Format : YYYY-MM-DD" value="<?php echo $kt->spj_d_tgl;?>" />
                </div>
                </div>
          </div>
@@ -71,7 +73,7 @@ if ($cek>0) {
                <div class="col-sm-3">
                   <div class="input-group margin-bottom-sm">
                <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-               <input type="text" name="keg_d_jumlah" class="form-control" placeholder="Jumlah Diterima" />
+               <input type="text" name="keg_d_jumlah" class="form-control" placeholder="Jumlah Diterima" value="<?php echo $kt->spj_d_jumlah;?>"  />
                </div>
                </div>
          </div>
@@ -90,22 +92,23 @@ if ($cek>0) {
          </div>-->
          <div class="form-group">
             <div class="col-sm-offset-2 col-sm-8">
-              <button type="submit" id="submit_keg" name="submit_keg" value="kirim" class="btn btn-primary">KIRIM</button>
+              <button type="submit" id="submit_keg" name="submit_keg" value="kirim" class="btn btn-primary">UPDATE</button>
             </div>
          </div>
    </fieldset>
+   <input type="hidden" name="spj_d_id" value="<?php echo $spj_d_id;?>" />
    <input type="hidden" name="keg_id" value="<?php echo $keg_id;?>" />
-   <input type="hidden" name="keg_d_unitkerja" value="<?php echo $keg_d_unitkerja;?>" />
+   <input type="hidden" name="spj_d_unitkerja" value="<?php echo $kt->spj_d_unitkerja;?>" />
    </form>
 <?php
       }
-      else {
-        echo 'Data kegiatan tidak tersedia';
-      }
-   }
    else {
       echo 'User tidak bisa mengakses menu ini';
    }
+}
+else {
+    echo 'Data pengiriman SPJ tidak tersedia';
+}
 }
 else {
 	echo 'Level user tidak bisa mengakses menu ini';

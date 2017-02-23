@@ -40,6 +40,12 @@ if ($cek>0) {
                </div>
          </div>
          <div class="form-group">
+            <label for="keg_nama" class="col-sm-2 control-label">Batas waktu</label>
+               <div class="col-lg-7 col-sm-7">
+                  <?php echo tgl_convert(1,get_tgl_kegiatan($kt->keg_id)); ?>
+               </div>
+         </div>
+         <div class="form-group">
             <label for="keg_unitkerja" class="col-sm-2 control-label">Unit Kerja</label>
                <div class="col-sm-6">
                   <?php echo $kt->unit_nama; ?>
@@ -69,19 +75,6 @@ if ($cek>0) {
                </div>
                </div>
          </div>
-         <!--<div class="form-group">
-            <label for="keg_d_file" class="col-sm-2 control-label">File Lampiran</label>
-               <div class="col-sm-3">
-            <div style="position:relative;">
-      <a class='btn btn-primary' href='javascript:;'>
-         Pilih File...
-         <input type="file" style='position:absolute;z-index:2;top:0;left:0;filter: alpha(opacity=0);-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";opacity:0;background-color:transparent;color:transparent;' name="file_source" size="40"  onchange='$("#upload-file-info").html($(this).val());'>
-      </a>
-      &nbsp;
-      <span class='label label-info' id="upload-file-info"></span>
-   </div>
-               </div>
-         </div>-->
          <div class="form-group">
             <div class="col-sm-offset-2 col-sm-8">
               <button type="submit" id="submit_keg" name="submit_keg" value="kirim" class="btn btn-primary">KIRIM</button>

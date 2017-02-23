@@ -1,23 +1,16 @@
 <?php
 for ($i=1;$i<=12;$i++) {
-	$sql_list_kabkota= $conn -> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$i' and year(kegiatan.keg_end)='$tahun_kegiatan' and keg_t_unitkerja='$unit_kode' order by point_total desc, keg_t_unitkerja asc");
+	$sql_list_kabkota= $conn -> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$i' and year(kegiatan.keg_end)='$tahun_kegiatan' and keg_t_unitkerja='$unit_kode' order by point_total desc, keg_t_unitkerja asc");
 	$cek_jumlah=$sql_list_kabkota->num_rows;
 	if ($cek_jumlah>0) {
 		$k=$sql_list_kabkota->fetch_object();
 		$total_keg=$k->keg_jml;
+		$data_keg[]=$k->keg_jml;
 		if ($total_keg==0) {
 			$data[]=0;
 		}
 		else {
-			$point_total=$k->point_total;
-			$nilai=$point_total/$total_keg;
-			if ($nilai==0) {
-				$data[]=$nilai;
-			}
-			else {
-				$data[]=number_format($nilai,4,".",",");
-			}
-			
+			$data[]=number_format($k->point_total,4,".",",");
 		}
 	}
 	else {
@@ -28,8 +21,11 @@ for ($i=1;$i<=12;$i++) {
 <script type="text/javascript">
 $(function () {
     Highcharts.chart('grafikkabkota', {
+    	chart: {
+        type: 'column'
+    },
         title: {
-            text: 'Nilai Perbulan <?php echo get_nama_unit($unit_kode);?>',
+            text: 'Jumlah Kegiatan dan Nilai Perbulan <?php echo get_nama_unit($unit_kode);?>',
             x: -20 //center
         },
         subtitle: {
@@ -37,7 +33,7 @@ $(function () {
             x: -20
         },
         xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun',
                 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         },
         yAxis: {
@@ -50,14 +46,18 @@ $(function () {
                 color: '#808080'
             }]
         },
-        tooltip: {
-            valueSuffix: ''
-        },
-        legend: {
-             enabled: false
+        plotOptions: {
+            column: {
+                pointPadding: 0.1,
+                borderWidth: 0
+            }
         },
         series: [{
-            name: '<?php echo get_nama_unit($unit_kode);?>',
+            name: 'Jumlah Kegiatan',
+            data: [<?php echo join($data_keg, ',')?>]
+        },
+        {
+            name: 'Nilai Total',
             data: [<?php echo join($data, ',')?>]
         }]
     });
