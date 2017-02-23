@@ -8,7 +8,6 @@ if (isset($_POST['submit_unitkerja'])) {
 	$bulan_kegiatan=$_POST['bulan_kegiatan'];
 }
 if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
-
 ?>
 <form class="form-inline" action="<?php echo $url.'/'.$page;?>/kabkota/" method="post">
   <div class="form-group">
@@ -100,8 +99,58 @@ if ($unit_kode=='') { //semua kabkotaa
 		if ($cek_kabkota>0) {			
 			$j=1; //untuk buat kolom grafik
 			$nilai_grafik=get_ranking_kegiatan($i,$tahun_kegiatan);
-			$kabkota_grafik=get_ranking_kabkota($i,$tahun_kegiatan);
-			
+			$kabkota_grafik=get_ranking_kabkota($i,$tahun_kegiatan); ?>
+			<script type="text/javascript">
+$(function () {
+    Highcharts.chart('grafikkabkota_<?php echo $i;?>', {
+       chart: {
+        type: 'bar'
+    },
+        title: {
+            text: 'Nilai Bulan <?php echo $nama_bulan_panjang[$i] .' '.$tahun_kegiatan;?>',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Keadaan : <?php echo tgljam_hari_ini(); ?>',
+            x: -20
+        },
+        xAxis: {
+            categories: [<?php echo '\''.ltrim(implode("','",$kabkota_grafik),"',").'\'';?>],
+             title: {
+            text: null
+        	}
+        },
+        yAxis: {
+        min: 0,
+        title: {
+            text: '',
+            align: 'high'
+        },
+        labels: {
+            overflow: 'justify'
+        }
+    },
+    tooltip: {
+        valueSuffix: ''
+    },
+     plotOptions: {
+        bar: {
+            dataLabels: {
+                enabled: true
+            }
+        }
+    },
+        legend: {
+             enabled: false
+        },
+        series: [{
+            name: 'Nilai',
+            data: [<?php echo ltrim(implode (",",$nilai_grafik),',');?>]
+        }]
+    });
+});
+		</script>
+			<?php
 			echo '
 				<tr>
 					<td rowspan="'.$cek_kabkota.'">'.$nama_bulan_panjang[$i].'</td>';
@@ -117,7 +166,7 @@ if ($unit_kode=='') { //semua kabkotaa
 				<td>'.number_format($nilai,4,",",".").'</td>';
 				if ($j==1) {
 					//include 'page/laporan/lap_grafik.php';
-					echo	'<td rowspan="'.$cek_kabkota.'">'. ltrim(implode (",",$nilai_grafik),',') .'<br /> \''.ltrim(implode("','",$kabkota_grafik),"',").'\'
+					echo	'<td rowspan="'.$cek_kabkota.'"><div id="grafikkabkota_'.$i.'" style="min-width: 450px; height: 300px; margin: 0 auto"></div>
 					</td>';
 				}
 				echo '</tr>
@@ -170,7 +219,6 @@ if ($unit_kode=='') { //semua kabkotaa
 				</tr>
 				';
 		}
-
 	}
 	?>
 </table>
@@ -182,4 +230,3 @@ else { //terpilih salah satu kabkota
 	include 'page/laporan/kabkota_only.php';
 }
 ?>
-
