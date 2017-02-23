@@ -8,7 +8,6 @@ if (isset($_POST['submit_unitkerja'])) {
 	$bulan_kegiatan=$_POST['bulan_kegiatan'];
 }
 if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
-
 ?>
 <form class="form-inline" action="<?php echo $url.'/'.$page;?>/kabkota/" method="post">
   <div class="form-group">
@@ -220,7 +219,6 @@ $(function () {
 				</tr>
 				';
 		}
-
 	}
 	?>
 </table>
@@ -232,4 +230,3 @@ else { //terpilih salah satu kabkota
 	include 'page/laporan/kabkota_only.php';
 }
 ?>
-

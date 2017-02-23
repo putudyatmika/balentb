@@ -18,13 +18,14 @@ if ($cek>0) {
 		else { $update_nilai=0;echo '(ERROR) Konfirmasi '.$JenisDetilKegiatan[$r->keg_d_jenis].' tidak bisa dihapus'; }
 	  }
 	  else {
-	  	if ($_SESSION['sesi_unitkerja']==$keg_d_unitkerja) {
+	  	$keg_unit=get_unitkerja_kegiatan($keg_id);
+	  	if ($_SESSION['sesi_unitkerja']==$keg_unit) {
 	  		$sql_hapus=$conn_keg -> query("delete from keg_detil where keg_d_id='$keg_d_id'");
 			if ($sql_hapus) { $update_nilai=1;echo '(BERHASIL) Konfirmasi '.$JenisDetilKegiatan[$r->keg_d_jenis].' berhasil di hapus'; }
 			else { $update_nilai=0;echo '(ERROR) Konfirmasi '.$JenisDetilKegiatan[$r->keg_d_jenis].' tidak bisa dihapus'; }
 	  	}
 	  	else {
-	  		$parent_unit=get_parent_unit($keg_d_unitkerja);
+	  		$parent_unit=get_parent_kode($keg_unit);
 			if ($_SESSION['sesi_unitkerja']==$parent_unit) {
 				$sql_hapus=$conn_keg -> query("delete from keg_detil where keg_d_id='$keg_d_id'");
 				if ($sql_hapus) { $update_nilai=1;echo '(BERHASIL) Konfirmasi '.$JenisDetilKegiatan[$r->keg_d_jenis].' berhasil di hapus'; }

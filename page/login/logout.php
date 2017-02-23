@@ -10,7 +10,7 @@
 	unset($_SESSION['sesi_nama']);
 	unset($_SESSION['sesi_level']);
 	unset($_SESSION['sesi_unitkerja']);
-	print "<meta http-equiv=\"refresh\" content=\"3; URL=".$url."\">";
+	print "<meta http-equiv=\"refresh\" content=\"2; URL=".$url."\">";
 ?>
 		</div>
 	</div>

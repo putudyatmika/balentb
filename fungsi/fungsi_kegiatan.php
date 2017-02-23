@@ -217,18 +217,20 @@ function get_nilai_kegiatan($keg_id,$keg_unitkerja) {
 			$interval = $pengiriman->diff($target_waktu);
 			$int=$interval->format('%r%a');
 
-			if ($int>4) $nilai_wkt=5;
-			elseif ($int>1) $nilai_wkt=3;
-			elseif ($int>=0) $nilai_wkt=1;
+			if ($int>=1) $nilai_wkt=5;
+			elseif ($int>=0) $nilai_wkt=4;
+			elseif ($int>=-1) $nilai_wkt=3;
+			elseif ($int>=-2) $nilai_wkt=2;
+			elseif ($int>=-3) $nilai_wkt=1;
 			else $nilai_wkt=0;
 
 			$nilai_waktu+=$nilai_wkt;
 		}
 		$nilai_waktu=($nilai_waktu/$cek);
 		$persen_vol=($nilai_vol/$kabkota_target)*100;
-		if ($persen_vol>99) $nilai_volume=5;
+		if ($persen_vol>94) $nilai_volume=5;
 		elseif ($persen_vol>89) $nilai_volume=3;
-		elseif ($persen_vol>79) $nilai_volume=1;
+		elseif ($persen_vol>85) $nilai_volume=1;
 		else $nilai_volume=0;
 		$nilai_total=($nilai_volume*0.70)+($nilai_waktu*0.30);
 		$keg_nilai=array($nilai_waktu,$nilai_volume,$nilai_total);

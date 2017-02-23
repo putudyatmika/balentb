@@ -1,9 +1,11 @@
 <?php
 $unit_kode='';
 $tahun_kegiatan='';
+$bulan_kegiatan='';
 if (isset($_POST['submit_unitkerja'])) {
 	$unit_kode=$_POST['unit_kode'];
 	$tahun_kegiatan=$_POST['tahun_kegiatan'];
+	$bulan_kegiatan=$_POST['bulan_kegiatan'];
 }
 if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 ?>
@@ -31,7 +33,18 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 		</select>
   </div>
 	<div class="form-group">
-		<label for="email">Tahun Kegiatan</label>
+	<label for="email">Tahun Kegiatan</label>
+		<select class="form-control" name="bulan_kegiatan" id="bulan_kegiatan" style="font-family:'FontAwesome', Arial;">
+		<option value="">Pilih Bulan</option>
+		<?php
+		for ($i=1;$i<=12;$i++) {
+			if ($bulan_kegiatan==$i) $pilih='selected="selected"';
+			else $pilih='';
+			echo '<option value="'.$i.'" '.$pilih.'>'.$nama_bulan_panjang[$i].'</option>';
+		}
+		 ?>
+	</select>
+		
 		<select class="form-control" name="tahun_kegiatan" id="tahun_kegiatan" style="font-family:'FontAwesome', Arial;">
 		<option value="">Pilih Tahun</option>
 		<?php
@@ -119,8 +132,14 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 		}
 	}
 	else {
-		$i=1;
-				$sql_keg_es4= $conn->query("select * from kegiatan,keg_target where kegiatan.keg_id=keg_target.keg_id and keg_t_unitkerja='$unit_kode' and keg_t_target>0 and year(keg_start)='$tahun_kegiatan'");
+				if ($bulan_kegiatan=='') {
+					$sql_keg_es4= $conn->query("select * from kegiatan,keg_target where kegiatan.keg_id=keg_target.keg_id and keg_t_unitkerja='$unit_kode' and keg_t_target>0 and year(keg_start)='$tahun_kegiatan'");
+				}
+				else {
+					$sql_keg_es4= $conn->query("select * from kegiatan,keg_target where kegiatan.keg_id=keg_target.keg_id and keg_t_unitkerja='$unit_kode' and keg_t_target>0 and month(keg_start)='$bulan_kegiatan' and year(keg_start)='$tahun_kegiatan'");
+				}
+				$i=1;
+				
 				while ($k=$sql_keg_es4->fetch_object()) {
 					$target_total=$k->keg_t_target;
 					//get_keg_kabkota_realisasi($keg_id,$unit_kabkota, $keg_jenis)
