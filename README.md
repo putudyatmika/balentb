@@ -4,3 +4,5 @@ adalah sebuah sistem yang berfungsi untuk memonitoring semua kegiatan BPS disatu
 memberikan peringkat dan penilaian BPS Kabupaten/Kota sesuai capaian kerjanya.
 
 target soft launching beta version Akhir Februari 2017
+
+Launching final version pertengahan April 2017 bertepatan dengan RATEKDA BPS Provinsi NTB

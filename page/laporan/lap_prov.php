@@ -189,6 +189,8 @@ else {
 				<tr>
 					<td rowspan="'.$cek_keg.'">'.$nama_bulan_panjang[$bulan_kegiatan].'</td>';
 				while ($k=$sql_keg->fetch_object()) {
+					$cek_spj='';
+					$cek_spj=cek_spj_kegiatan($k->keg_id);
 					$total_kirim=get_keg_realisasi($k->keg_id,1);
 					$total_terima=get_keg_realisasi($k->keg_id,2);
 					$target_total=$k->keg_total_target;
@@ -210,7 +212,30 @@ else {
 					<td>'.$k->keg_target_satuan.'</td>
 					<td class="text-right">'.$k->keg_total_target.'</td>
 					<td '.$rr_kirim.'>'.$total_kirim.' ('.number_format($persen_kirim,2,",",".").' %)</td>
-					<td '.$rr_terima.'>'.$total_terima.' ('.number_format($persen_terima,2,",",".").' %)</td>
+					<td '.$rr_terima.'>'.$total_terima.' ('.number_format($persen_terima,2,",",".").' %)</td>';
+					if ($cek_spj=="1") {
+						$target_spj=get_spj_target($k->keg_id);
+						$spj_dikirim=get_spj_realisasi($k->keg_id,1);
+						$spj_diterima=get_spj_realisasi($k->keg_id,2);
+						$spj_persen_dikirim=($spj_dikirim/$target_spj)*100;
+						$spj_persen_diterima=($spj_diterima/$target_spj)*100;
+						//warna item spj
+						if ($spj_persen_dikirim > 85) $spj_rr_kirim='class="text-right bpsgood"';
+						elseif ($spj_persen_dikirim > 70) $spj_rr_kirim='class="text-right bpsmedium"';
+						else $spj_rr_kirim='class="text-right bpsbad"';
+
+						if ($spj_persen_diterima > 85) $spj_rr_terima='class="text-right bpsgood"';
+						elseif ($spj_persen_diterima > 70) $spj_rr_terima='class="text-right bpsmedium"';
+						else $spj_rr_terima='class="text-right bpsbad"';
+
+						echo '<td class="text-right">'.$target_spj.'</td>
+						<td '.$spj_rr_kirim.'>'.$spj_dikirim.' ('.number_format($spj_persen_dikirim,2,",",".").' %)</td>
+						<td '.$spj_rr_terima.'>'.$spj_diterima.' ('.number_format($spj_persen_diterima,2,",",".").' %)</td>';
+					}
+					else {
+						echo '<td colspan="3" class="info text-center">Tidak tersedia</td>';
+					}
+					echo '
 					</tr>
 					<tr>
 					';
