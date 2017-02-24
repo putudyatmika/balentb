@@ -349,9 +349,11 @@ function get_nilai_spj($keg_id,$keg_unitkerja) {
 			$interval = $pengiriman->diff($target_waktu);
 			$int=$interval->format('%r%a');
 
-			if ($int>4) $nilai_wkt=5;
-			elseif ($int>1) $nilai_wkt=3;
-			elseif ($int>=0) $nilai_wkt=1;
+			if ($int>=1) $nilai_wkt=5;
+			elseif ($int>=0) $nilai_wkt=4;
+			elseif ($int>=-1) $nilai_wkt=3;
+			elseif ($int>=-2) $nilai_wkt=2;
+			elseif ($int>=-3) $nilai_wkt=1;
 			else $nilai_wkt=0;
 
 			$nilai_waktu+=$nilai_wkt;

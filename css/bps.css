@@ -194,3 +194,7 @@ body {
 .spjkabkota {
   display: none;
 }
+.modal-dialog {
+  top:10% !important;
+ 
+}
