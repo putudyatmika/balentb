@@ -248,7 +248,7 @@ else {
 				echo '
 				<tr>
 					<td>'.$nama_bulan_panjang[$bulan_kegiatan].'</td>
-					<td colspan="6" class="text-center">Belum ada kegiatan dibulan ini</td>
+					<td colspan="9" class="text-center">Belum ada kegiatan dibulan ini</td>
 				</tr>
 				';
 			}

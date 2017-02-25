@@ -8,6 +8,12 @@ if (isset($_POST['submit_unitkerja'])) {
 	$bulan_kegiatan=$_POST['bulan_kegiatan'];
 }
 if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
+if ($bulan_kegiatan=='') {
+	$bln_tahun='Tahun '. $tahun_kegiatan;
+}
+else {
+	$bln_tahun='Bulan '. $nama_bulan_panjang[$bulan_kegiatan] .' '. $tahun_kegiatan;
+}
 ?>
 <form class="form-inline margin10px" action="<?php echo $url.'/'.$page;?>/kabkota/" method="post">
   <div class="form-group">
@@ -67,7 +73,7 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 	</div>
   <button type="submit" name="submit_unitkerja" class="btn btn-default">Get Data</button>
 </form>
-<legend class="margin10px">Daftar Kegiatan <?php echo get_nama_unit($unit_kode); ?></legend>
+<legend class="margin10px">Daftar Kegiatan <?php echo get_nama_unit($unit_kode) .' '. $bln_tahun; ?></legend>
 <div class="table-responsive">
 <table class="table table-hover table-bordered table-condensed">
 	<tr class="success">
@@ -92,7 +98,14 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 				$unit_es3=$b->unit_kode;
 				echo '<tr><td colspan="8"><strong>'.$b->unit_nama .'</strong></td></tr>';
 				$i=1;
-				$sql_keg_es4= $conn->query("select * from kegiatan,keg_target where kegiatan.keg_id=keg_target.keg_id and keg_t_unitkerja='$unit_es3' and keg_t_target>0 and year(keg_start)='$tahun_kegiatan' order by keg_end asc");
+				if ($bulan_kegiatan=='') {
+					$sql_keg_es4= $conn->query("select * from kegiatan,keg_target where kegiatan.keg_id=keg_target.keg_id and keg_t_unitkerja='$unit_es3' and keg_t_target>0 and year(keg_end)='$tahun_kegiatan' order by keg_end asc");
+				}
+				else {
+					$sql_keg_es4= $conn->query("select * from kegiatan,keg_target where kegiatan.keg_id=keg_target.keg_id and keg_t_unitkerja='$unit_es3' and keg_t_target>0 and month(keg_end)='$bulan_kegiatan' and year(keg_end)='$tahun_kegiatan' order by keg_end asc");
+				}
+				$cek_kegiatan=$sql_keg_es4->num_rows;
+				if ($cek_kegiatan>0) {	
 				while ($k=$sql_keg_es4->fetch_object()) {
 					$target_total=$k->keg_t_target;
 					//get_keg_kabkota_realisasi($keg_id,$unit_kabkota, $keg_jenis)
@@ -123,6 +136,10 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 					</tr>
 					';
 					$i++;
+				}
+				}
+				else {
+					echo '<tr><td colspan="8" class="text-center">Data kegiatan bulan <strong>'.$nama_bulan_panjang[$bulan_kegiatan] .' '. $tahun_kegiatan.'</strong> belum tersedia</td></tr>';
 				}
 				$i_bid++;
 			}
@@ -133,13 +150,14 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 	}
 	else {
 				if ($bulan_kegiatan=='') {
-					$sql_keg_es4= $conn->query("select * from kegiatan,keg_target where kegiatan.keg_id=keg_target.keg_id and keg_t_unitkerja='$unit_kode' and keg_t_target>0 and year(keg_start)='$tahun_kegiatan'");
+					$sql_keg_es4= $conn->query("select * from kegiatan,keg_target where kegiatan.keg_id=keg_target.keg_id and keg_t_unitkerja='$unit_kode' and keg_t_target>0 and year(keg_end)='$tahun_kegiatan' order by kegiatan.keg_end asc");
 				}
 				else {
-					$sql_keg_es4= $conn->query("select * from kegiatan,keg_target where kegiatan.keg_id=keg_target.keg_id and keg_t_unitkerja='$unit_kode' and keg_t_target>0 and month(keg_start)='$bulan_kegiatan' and year(keg_start)='$tahun_kegiatan'");
+					$sql_keg_es4= $conn->query("select * from kegiatan,keg_target where kegiatan.keg_id=keg_target.keg_id and keg_t_unitkerja='$unit_kode' and keg_t_target>0 and month(keg_end)='$bulan_kegiatan' and year(keg_end)='$tahun_kegiatan'");
 				}
 				$i=1;
-				
+				$cek_kegiatan=$sql_keg_es4->num_rows;
+				if ($cek_kegiatan>0) {	
 				while ($k=$sql_keg_es4->fetch_object()) {
 					$target_total=$k->keg_t_target;
 					//get_keg_kabkota_realisasi($keg_id,$unit_kabkota, $keg_jenis)
@@ -170,6 +188,10 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 					</tr>
 					';
 					$i++;
+				}
+				}
+				else {
+					echo '<tr><td colspan="8" class="text-center">Data kegiatan bulan <strong>'.$nama_bulan_panjang[$bulan_kegiatan] .' '. $tahun_kegiatan.'</strong> belum tersedia</td></tr>';
 				}
 	}
 	?>

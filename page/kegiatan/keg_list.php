@@ -63,7 +63,7 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 	$db = new db();
 	$conn = $db -> connect();
 	if ($bulan_kegiatan=='') {
-		$sql_list_kegiatan= $conn -> query("select * from kegiatan,unitkerja where kegiatan.keg_unitkerja=unitkerja.unit_kode and year(kegiatan.keg_start)='$tahun_kegiatan' order by kegiatan.keg_end asc"); 
+		$sql_list_kegiatan= $conn -> query("select * from kegiatan,unitkerja where kegiatan.keg_unitkerja=unitkerja.unit_kode and year(kegiatan.keg_start)='$tahun_kegiatan' order by kegiatan.keg_id desc"); 
 	}
 	else {
 	$sql_list_kegiatan= $conn -> query("select * from kegiatan,unitkerja where kegiatan.keg_unitkerja=unitkerja.unit_kode and month(kegiatan.keg_end)='$bulan_kegiatan' and year(kegiatan.keg_end)='$tahun_kegiatan' order by kegiatan.keg_end asc"); 

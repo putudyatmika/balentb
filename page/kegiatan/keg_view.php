@@ -115,10 +115,16 @@ while ($k=$sql_kabkota_target->fetch_object()) {
 	else $rr_terima='class="text-right bpsbad"';
 	if (($_SESSION['sesi_level'] > 1) and ($tgl_mulai <= $tanggal_hari_ini)) {
 		if ($_SESSION['sesi_level'] > 2) {
+			if ($_SESSION['sesi_level'] > 3) { //level admin dan superadmin
 			$kirim_data='<a href="'.$url.'/'.$page.'/kirim/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i>';
 			$terima_data='<a href="'.$url.'/'.$page.'/terima/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a>';
+			}
+			else { //level operator provinsi hanya kirim saja
+				$terima_data='<a href="'.$url.'/'.$page.'/terima/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a>';
+				$kirim_data='';
+			}
 		}
-		else {
+		else { //level operator kabkota
 			if ($_SESSION['sesi_unitkerja']==$k->keg_t_unitkerja) {
 				$kirim_data='<a href="'.$url.'/'.$page.'/kirim/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i></a>';
 			}
@@ -210,8 +216,14 @@ while ($k=$sql_kabkota_spj->fetch_object()) {
 	else $rr_terima='class="text-right bpsbad"';
 	if (($_SESSION['sesi_level'] > 1) and ($tgl_mulai <= $tanggal_hari_ini)) {
 		if ($_SESSION['sesi_level'] > 2) {
+			if ($_SESSION['sesi_level'] > 3) {
 			$kirim_data='<a href="'.$url.'/'.$page.'/kirimspj/'.$k->keg_id.'/'.$k->keg_s_unitkerja.'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i>';
 			$terima_data='<a href="'.$url.'/'.$page.'/terimaspj/'.$k->keg_id.'/'.$k->keg_s_unitkerja.'"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a>';
+			}
+			else {
+				$kirim_data='';
+				$terima_data='<a href="'.$url.'/'.$page.'/terimaspj/'.$k->keg_id.'/'.$k->keg_s_unitkerja.'"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a>';
+			}
 		}
 		else {
 			if ($_SESSION['sesi_unitkerja']==$k->keg_s_unitkerja) {
