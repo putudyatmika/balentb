@@ -37,7 +37,7 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 		<?php
 		$db = new db();
 		$conn = $db -> connect();
-		$sql_unitkerja = $conn -> query("select year(keg_start) as tahun from kegiatan group by year(keg_start) order by tahun asc");
+		$sql_unitkerja = $conn -> query("select year(keg_end) as tahun from kegiatan group by year(keg_end) order by tahun asc");
 		$cek= $sql_unitkerja -> num_rows;
 		if ($cek > 0) {
 			while ($r=$sql_unitkerja->fetch_object()) {
@@ -85,7 +85,7 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 						$sql_keg_es4='';
 						echo '<tr><td colspan="7">'.$s->unit_nama .'</td></tr>';
 						$i=1;
-						$sql_keg_es4= $conn->query("select * from kegiatan where keg_unitkerja='$es4_prov' and year(keg_start)='$tahun_kegiatan'");
+						$sql_keg_es4= $conn->query("select * from kegiatan where keg_unitkerja='$es4_prov' and year(keg_end)='$tahun_kegiatan' order by keg_end asc");
 						while ($k=$sql_keg_es4->fetch_object()) {
 							$total_kirim=get_keg_realisasi($k->keg_id,1);
 							$total_terima=get_keg_realisasi($k->keg_id,2);
