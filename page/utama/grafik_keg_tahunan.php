@@ -60,4 +60,4 @@ $(function () {
 });
 </script>
 <div id="grafiktahunan" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
-<a href="<?php echo $url; ?>/kegiatan/" class="btn btn-danger btn-xs"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> Selengkapnya</a>
+<a href="<?php echo $url; ?>/kegiatan/" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Kegiatan Tahunan Selengkapnya"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> Selengkapnya</a>

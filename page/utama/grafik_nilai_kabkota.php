@@ -62,4 +62,4 @@ $(function () {
 }); 
 		</script>
 <div id="grafiknilaikabkota" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
-<a href="<?php echo $url; ?>/laporan/kabkota/" class="btn btn-info btn-xs"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> Selengkapnya</a>
+<a href="<?php echo $url; ?>/laporan/kabkota/" class="btn btn-info btn-xs" data-toggle="tooltip" data-placement="top" title="Laporan Nilai BPS Kabupaten/Kota Selengkapnya"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> Selengkapnya</a>
