@@ -140,7 +140,10 @@ function get_detil_kegiatan($keg_id,$keg_d_unitkerja,$jenis_keg) {
 			
 			if ($_SESSION['sesi_level'] > 1) {
 				if ($_SESSION['sesi_level'] > 2) {
-					if ($_SESSION['sesi_level'] > 3) {
+					if ($_SESSION['sesi_level'] == 3 and $jenis_keg==2 ) {
+					$link_crud='<a href="'.$url.'/'.$page.'/'.$edit_d.'/'.$r->keg_d_id.'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r->keg_d_id.'" data-confirm="Apakah data ('.$r->keg_d_id.') ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a>';
+					}
+					elseif ($_SESSION['sesi_level'] > 3 ) {
 					$link_crud='<a href="'.$url.'/'.$page.'/'.$edit_d.'/'.$r->keg_d_id.'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/deletedetil/'.$r->keg_d_id.'" data-confirm="Apakah data ('.$r->keg_d_id.') ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a>';
 					}
 					else { //level operator provinsi
