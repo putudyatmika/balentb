@@ -87,7 +87,10 @@ function DivTampil(elem){
    } else{
      $('.spjkabkota').hide();
    }
-} 
+}; 
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+});
 	</script>
 
 

@@ -61,4 +61,4 @@ $(function () {
 });
 </script>
 <div id="grafikbulanan" style="min-width: 200px; height: 300px; margin: 0 auto"></div>
-<a href="<?php echo $url; ?>/kegiatan/bidang/" class="btn btn-success btn-xs"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> Selengkapnya</a>
+<a href="<?php echo $url; ?>/kegiatan/bidang/" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Kegiatan Menurut Bidang/Bagian Selengkapnya"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> Selengkapnya</a>
