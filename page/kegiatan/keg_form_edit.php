@@ -207,7 +207,7 @@ if ($cek>0) {
 </form>
 <?php }
 	else {
-		echo '(ERROR) Level user tidak bisa mengedit master kegiatan <strong>'. get_nama_kegiatan($keg_id).'</strong> <br />';
+		echo '<div class="margin10px"><div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i> Level user <strong>'.$_SESSION['sesi_user_id'].'</strong> tidak bisa mengedit Master Kegiatan <strong>'. get_nama_kegiatan($keg_id).'</strong></div></div>';
 		
 	}
 }
@@ -216,8 +216,8 @@ else {
 }
 }
 else {
-	echo 'Level user tidak bisa mengakses menu ini <br />';
+	echo '<div class="margin10px"><div class="alert alert-danger" role="alert">(ERROR) Level user <strong>'.$_SESSION['sesi_user_id'].'</strong> tidak bisa mengakses menu ini </div></div>';
 	
 }
-echo '<a href="'.$url.'/'.$page.'/view/'.$keg_id.'">Kembali</a>';
+echo '<a class="btn btn-success" href="'.$url.'/'.$page.'/view/'.$keg_id.'"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>';
 ?>

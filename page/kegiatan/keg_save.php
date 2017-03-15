@@ -14,11 +14,13 @@ $keg_spj=$_POST['keg_spj'];
 //print_r($_POST['keg_kabkota']);
 //var_dump($_POST['keg_kabkota']);
 //echo '<br />';
+echo '<div class="margin10px"><div class="alert alert-danger" role="alert">'; //untuk alert
 $cek=cek_kegiatan($nama_kegiatan,$keg_unitkerja);
 if ($cek==1) {
-  echo 'Kegiatan : '. $nama_kegiatan .' sudah ada';
+  echo 'Kegiatan : '. $nama_kegiatan .' sudah ada</div></div>';
 }
 else {
+
 $db = new db();
 $conn = $db -> connect();
 $sql_keg = $conn->query("insert into kegiatan(keg_nama, keg_unitkerja, keg_start, keg_end, keg_dibuat_oleh, keg_dibuat_waktu, keg_diupdate_oleh, keg_jenis, keg_total_target, keg_target_satuan, keg_spj) values('$nama_kegiatan', '$keg_unitkerja', '$keg_tglmulai', '$keg_tglakhir', '$created', '$waktu_lokal', '$created', '$keg_jenis', '$keg_t', '$keg_satuan','$keg_spj')");
@@ -71,7 +73,8 @@ foreach ($kabkota_target as $key => $value) {
 
 	if ($sql_keg_kabkota) echo '<br />(BERHASIL) Target kegiatan masing-masing kabupaten/kota berhasil disimpan';
 	else echo '<br />(ERROR) target kegiatan masing-masing kabupaten/kota tidak berhasil di simpan';
-  echo '<br /><p><a href="'.$url.'/'.$page.'">Kembali</a></p>';
+  
+  echo '</div></div><a class="btn btn-success" href="'.$url.'/'.$page.'"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>';
 
 }
 }
