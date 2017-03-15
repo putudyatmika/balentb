@@ -53,6 +53,12 @@ if ($cek>0) {
                </div>
          </div>
          <div class="form-group">
+        <label for="keg_unitkerja" class="col-sm-2 control-label">Target</label>
+          <div class="col-sm-6">
+            <?php echo $kk->keg_t_target; ?>
+          </div>
+      </div>
+         <div class="form-group">
             <label for="keg_d_tgl" class="col-sm-2 control-label">Tanggal pengiriman</label>
                <div class="col-sm-3" id="tgl_mulai_keg">
                   <div class="input-group margin-bottom-sm">
@@ -94,17 +100,17 @@ if ($cek>0) {
 <?php
    }
    else {
-      echo 'User tidak bisa mengakses menu ini';
-      echo '<br /><a href="'.$url.'/'.$page.'/view/'.$kk->keg_id.'">Kembali</a>';
+      echo '<div class="margin10px"><div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i> User <strong>'.$_SESSION['sesi_user_id'].'</strong> tidak bisa mengakses menu ini</div></div>';
+      echo '<a class="btn btn-success" href="'.$url.'/'.$page.'/view/'.$kk->keg_id.'"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>';
    }
    
 }
 else {
-  echo 'Data kegiatan tidak tersedia';
+  echo '<div class="margin10px"><div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i> Data kegiatan tidak tersedia</div></div>';
 }
 }
 else {
-   echo 'level user tidak bisa mengakses menu ini';
+   echo '<div class="margin10px"><div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i> level user <strong>'.$_SESSION['sesi_user_id'].'</strong> tidak bisa mengakses menu ini</div></div>';
 }
 
 ?>

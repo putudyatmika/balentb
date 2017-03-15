@@ -100,15 +100,15 @@ if ($cek>0) {
 <?php
       }
       else {
-        echo 'Data kegiatan tidak tersedia';
+        echo '<div class="margin10px"><div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i>Data kegiatan tidak tersedia</div></div>';
       }
    }
    else {
-      echo 'User tidak bisa mengakses menu ini';
+      echo '<div class="margin10px"><div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i> User <strong>'.$_SESSION['sesi_user_id'].'</strong> tidak bisa mengakses menu ini</div></div>';
    }
 }
 else {
-	echo 'Level user tidak bisa mengakses menu ini';
+	echo '<div class="margin10px"><div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i> Level user <strong>'.$_SESSION['sesi_user_id'].'</strong> tidak bisa mengakses menu ini </div></div>';
 }
-echo '<br /><a href="'.$url.'/'.$page.'/view/'.$keg_id.'">Kembali</a>';
+echo '<a class="btn btn-success" href="'.$url.'/'.$page.'/view/'.$keg_id.'"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>';
 ?>

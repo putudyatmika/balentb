@@ -7,6 +7,7 @@ $sql_delete_keg = $conn_keg -> query("select * from spj_detil where spj_d_id='$s
 $cek=$sql_delete_keg->num_rows;
 $update_nilai='';
 if ($cek>0) {
+	echo '<div class="margin10px"><div class="alert alert-danger" role="alert">'; //untuk alert semua pesan
 	$r=$sql_delete_keg->fetch_object();
 	$keg_id=$r->keg_id;
 	$spj_d_unitkerja=$r->spj_d_unitkerja;
@@ -46,14 +47,14 @@ if ($cek>0) {
 		  else { $update_nilai=2;echo '(ERROR) Konfirmasi '.$JenisDetilKegiatan[$r->spj_d_jenis].' tidak bisa dihapus';}
 		}
 		else {
-			echo 'unit kerja user tidak bisa mengakses menu ini';
+			echo 'unit kerja user <strong>'.$_SESSION['sesi_user_id'].'</strong> tidak bisa mengakses menu ini';
 		}
 	}
 	else {
-		echo 'Level user tidak mengakses menu ini';
+		echo 'Level user <strong>'.$_SESSION['sesi_user_id'].'</strong> tidak mengakses menu ini';
 	}
   }
-  echo '<br /><a href="'.$url.'/'.$page.'/view/'.$r->keg_id.'">Kembali</a>';
+  echo '</div></div><a class="btn btn-success" href="'.$url.'/'.$page.'/view/'.$r->keg_id.'"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>';
   $nilai_point=get_nilai_spj($keg_id,$spj_d_unitkerja);
 	if ($nilai_point!='') {
 	$nilai_waktu=$nilai_point[0];
@@ -71,10 +72,10 @@ if ($cek>0) {
 	}
 else {
 	echo 'Data kegiatan ini tidak tersedia';
-}
+	}
 }
 else {
-	echo 'Level user tidak bisa mengakses menu ini';
+	echo 'Level user <strong>'.$_SESSION['sesi_user_id'].'</strong> tidak bisa mengakses menu ini';
 }
 
 ?>
