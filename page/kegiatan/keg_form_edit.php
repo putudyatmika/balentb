@@ -153,12 +153,8 @@ if ($cek>0) {
 		//$ada_spj=$e->keg_spj;
 		$db_kabkota = new db();
 		$conn_kabkota = $db_kabkota -> connect();
-		if ($e->keg_spj==1) {
-			$sql_kabkota = $conn_kabkota->query("select * from unitkerja,keg_target,keg_spj where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_spj.keg_s_unitkerja=keg_target.keg_t_unitkerja and keg_spj.keg_id=keg_target.keg_id and keg_target.keg_id='$keg_id' order by unitkerja.unit_kode asc");
-		}
-		else {
-			$sql_kabkota = $conn_kabkota->query("select * from unitkerja,keg_target where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_target.keg_id='$keg_id' order by unitkerja.unit_kode asc");
-		}
+		$sql_kabkota = $conn_kabkota->query("select * from unitkerja,keg_target where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_target.keg_id='$keg_id' order by unitkerja.unit_kode asc") or die(mysqli_error($conn));
+		
 		$i=1;
 		while ($k = $sql_kabkota ->fetch_object()) {
 			echo '
@@ -172,13 +168,20 @@ if ($cek>0) {
 					</div>
 			</div>';
 			if ($e->keg_spj==1) {
+				$spj_target_kabkota=get_spj_kabkota_target($keg_id,$k->keg_t_unitkerja);
+				if ($spj_target_kabkota>0) {
+					$spj_s_target=$spj_target_kabkota;
+				}
+				else {
+					$spj_s_target='';
+				}
 				echo '
 			<div class="form-group">
 				<label for="keg_target_spj" class="col-sm-4 control-label"> SPJ '.$k->unit_nama.'</label>
 					<div class="col-sm-2">
 						<div class="input-group margin-bottom-sm">
 							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-							<input type="text" name="keg_target_spj['.$k->unit_kode.'][]" class="form-control" value="'.$k->keg_s_target.'" placeholder="Target SPJ" />
+							<input type="text" name="keg_target_spj['.$k->unit_kode.'][]" class="form-control" value="'.$spj_s_target.'" placeholder="Target SPJ" />
 						</div>
 					</div>
 			</div>';

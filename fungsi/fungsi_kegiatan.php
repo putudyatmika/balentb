@@ -318,8 +318,14 @@ function get_spj_kabkota_target($keg_id,$unit_kabkota) {
 	$db_keg = new db();
 	$conn_keg = $db_keg->connect();
 	$sql_d_keg = $conn_keg -> query("select * from keg_spj where keg_id='$keg_id' and keg_s_unitkerja='$unit_kabkota'");
+	$cek_target=$sql_d_keg->num_rows;
+	if ($cek_target>0) {
 	$r=$sql_d_keg->fetch_object();
 	$spj_t_target=$r->keg_s_target;
+	}
+	else {
+		$spj_t_target=0;
+	}
 	return $spj_t_target;
 	$conn_keg->close();
 }
