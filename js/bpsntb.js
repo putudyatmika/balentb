@@ -499,6 +499,13 @@ $(document).ready(function() {
                     }
                 }
             },
+            keg_spj: {
+                          validators: {
+                              notEmpty: {
+                                  message: 'Silakan pilih laporan SPJ ke Provinsi'
+                              }
+                          }
+                      },
             'keg_kabkota[]' : {
                       validators: {
                           notEmpty: {

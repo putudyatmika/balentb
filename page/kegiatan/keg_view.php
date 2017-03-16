@@ -175,6 +175,8 @@ echo '</table>
  ';
  if ($r->keg_spj==1) {
  $sql_kabkota_spj=$conn_view -> query("select * from keg_spj,unitkerja where keg_spj.keg_s_unitkerja=unitkerja.unit_kode and keg_spj.keg_id='$keg_id' and keg_s_target>0");
+ $cek_spj=$sql_kabkota_spj->num_rows;
+
  echo '
  <p>Laporan pengiriman dan penerimaan SPJ</p>
  <div class="table-responsive">
@@ -196,6 +198,7 @@ echo '</table>
 	<th></th>
 	</tr>
 	';
+if ($cek_spj>0) {
 	$i=1;
 	$total=0;
 	$total_kirim=0;
@@ -274,7 +277,17 @@ echo '<tr class="info">
 echo '</table>
 <div>
  ';
- }
+}
+else {
+	echo '
+	<tr>
+		<td class="text-center" colspan="10">Data target SPJ masih kosong</td>
+		</tr>
+		</table>
+<div>';
+	}
+
+}
 }
 else {
 	echo 'Data view kegiatan tidak tersedia';

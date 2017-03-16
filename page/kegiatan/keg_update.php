@@ -15,6 +15,7 @@ $keg_spj=$_POST['keg_spj'];
 //print_r($_POST['keg_kabkota']);
 //var_dump($_POST['keg_kabkota']);
 //echo '<br />';
+echo '<div class="margin10px"><div class="alert alert-danger" role="alert">'; //untuk alert semua pesan
 $cek=cek_id_kegiatan($keg_id);
 if ($cek==0) {
 	echo 'ID Kegiatan ('.$keg_id.') tidak tersedia';
@@ -42,8 +43,37 @@ foreach ($kabkota_target as $key => $value) {
    $sql_keg_kabkota = $conn -> query("update keg_target set keg_t_target='$target_kabkota', keg_t_diupdate_oleh='$created' where keg_id='$keg_id' and keg_t_unitkerja='$kabkota_id'") or die(mysqli_error($conn));
    //echo $kabkota_id .' '. $target_kabkota .' '. $keg_id .'<br />';
    }
+  if ($keg_spj==1) {
+      $spj_target=$_POST['keg_target_spj'];
+      foreach ($spj_target as $key => $value) {
+        $kabkota_id='';
+        $target_spj='';
+        $sql_keg_spj='';
+        $kabkota_id=$key;
+        foreach ($value as $key2 => $value2) {
+           $target_spj=$value2;
+        }
+        if ($target_spj > 0) {
+          $sql_cek_spj=$conn->query("select * from keg_spj where keg_id='$keg_id' and keg_s_unitkerja='$kabkota_id'") or die(mysqli_error($conn));
+          $cek_spj=$sql_cek_spj->num_rows;
+          if ($cek_spj>0) {
+            $sql_keg_spj= $conn-> query("update keg_spj set keg_s_target='$target_spj' where keg_id='$keg_id' and keg_s_unitkerja='$kabkota_id'") or die(mysqli_error($conn));
+          }
+          else {
+            $sql_keg_spj = $conn -> query("insert into keg_spj(keg_id, keg_s_unitkerja, keg_s_target, keg_s_dibuat_oleh, keg_s_dibuat_waktu, keg_s_diupdate_oleh) values('$keg_id', '$kabkota_id', '$target_spj', '$created', '$waktu_lokal', '$created')") or die(mysqli_error($conn));
+          }
+        }
+        else {
+          $sql_keg_spj='';
+          $cek_spj='';
+        }
+
+      }
+
+  }
 	if ($sql_keg_kabkota) echo '<br />(BERHASIL) Target kegiatan masing-masing kabupaten/kota berhasil diupdate';
 	else echo '<br />(ERROR) target kegiatan masing-masing kabupaten/kota tidak berhasil diupdate';
 }
+  echo '</div></div><a class="btn btn-success" href="'.$url.'/'.$page.'/view/'.$keg_id.'"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>';
 }
 ?>
