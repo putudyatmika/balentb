@@ -21,6 +21,9 @@ elseif ($page=="logout") {
 elseif ($page=="users") {
 	include 'page/users/m_users.php';
 }
+elseif ($page=="json") {
+	include 'page/json/m_json.php';
+}
 else {
 	include 'page/utama/m_utama.php';
 }
