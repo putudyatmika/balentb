@@ -35,6 +35,11 @@ if ($url_db[2] != $_SERVER['HTTP_HOST']) {
 require('fungsi/fungsi_url_lokal.php');
 //require('fungsi/fungsi_url_net.php');
 
+if ($page=="json") {
+	require_once 'page/json/m_json.php';
+	exit();
+}
+
 if (!isset($_SESSION['sesi_user_id']) or empty($_SESSION['sesi_user_id']))
      {
 		require ('page/login/login.php');
