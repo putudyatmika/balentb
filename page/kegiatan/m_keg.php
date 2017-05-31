@@ -7,7 +7,7 @@ elseif ($act=="") { $btn_keg="active";$btn_bid='';$btn_add=''; } ?>
 	<div class="col-lg-12 col-sm-12">
 		<div class="btn-toolbar" role="toolbar">
 		<div class="btn-group">
-			<?php if ($_SESSION['sesi_level'] > 2) { ?><a href="<?php echo $url; ?>/kegiatan/add/" class="btn btn-primary <?php echo $btn_add;?>"><span class="glyphicon glyphicon-plus"></span> Tambah</a> <?php } ?>
+			<?php if ($_SESSION['sesi_level'] > 2) { ?><a href="<?php echo $url; ?>/kegiatan/add/" class="btn btn-primary <?php echo $btn_add;?>"><span class="glyphicon glyphicon-plus"></span></a> <?php } ?>
 				<a href="<?php echo $url; ?>/kegiatan/" class="btn btn-danger <?php echo $btn_keg;?>"><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp; Semua</a>
 				<a href="<?php echo $url; ?>/kegiatan/bidang/" class="btn btn-success <?php echo $btn_bid;?>"><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp; Bidang/Bagian</a>
 			</div>

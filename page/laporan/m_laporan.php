@@ -3,8 +3,8 @@
 	<div class="col-lg-12 col-sm-12">
 		<div class="btn-toolbar" role="toolbar">
 		<div class="btn-group">
-			<a href="<?php echo $url; ?>/laporan/" class="btn btn-danger"><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp; Provinsi</a>
-			<a href="<?php echo $url; ?>/laporan/kabkota/" class="btn btn-success"><i class="fa fa-tasks" aria-hidden="true"></i>&nbsp; Kabupaten/Kota</a>
+			<a href="<?php echo $url; ?>/laporan/" class="btn btn-danger"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp; Provinsi</a>
+			<a href="<?php echo $url; ?>/laporan/kabkota/" class="btn btn-success"><i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp; Kabupaten/Kota</a>
 		</div>
 		</div>
 	</div>

@@ -2,7 +2,7 @@
         <div class="container">
 		<div class="row">
 			<div class="col-lg-12 col-xs-12">
-			<p class="text-left"> copyright &copy; <?php echo date('Y').' - <a href="'.$url.'"> Bidang IPDS BPS Provinsi NTB</a> '; ?></p>
+			<p class="text-left"> copyright &copy; <?php echo date('Y').' - <a href="'.$url.'"> Bidang IPDS BPS Provinsi NTB</a> '; ?> versi <?php echo $ver_app; ?></p>
 			  <p class="text-left">Jl. Gunung Rinjani No. 2 Mataram</p>
         <p class="text-left">User : <?php if (isset($_SESSION['sesi_user_id'])) { echo $_SESSION['sesi_user_id'] .' ('. $_SESSION['sesi_nama'].')'; } ?> Level : <?php if (isset($_SESSION['sesi_level'])) { echo $lvl_user[$_SESSION['sesi_level']]; } ?></p>
          <p class="text-left">Unit Kerja : <?php if (isset($_SESSION['sesi_unitkerja'])) { echo '('.$_SESSION['sesi_unitkerja'] .') '. get_nama_unit($_SESSION['sesi_unitkerja']); } ?></p>
@@ -23,7 +23,12 @@
 	<script src="<?php echo $url; ?>/addons/ckeditor/ckeditor.js"></script>
   <script src="<?php echo $url; ?>/addons/highcharts/highcharts.js"></script>
   <script src="<?php echo $url; ?>/addons/highcharts/exporting.js"></script>
-	<script type="text/javascript">
+  <script src="<?php echo $url; ?>/addons/datatables/media/js/jquery.dataTables.min.js"></script>
+  <script src="<?php echo $url; ?>/addons/datatables/media/js/dataTables.bootstrap.min.js"></script>
+ 
+  <script type="text/javascript">
+  
+
   $(document).ready(function() {
    $('input[type="radio"]').click(function() {
        if($(this).attr('id') == 'keg_klik') {
@@ -79,7 +84,6 @@ $(document).ready(function() {
       $('#pegawai_tmt_pns').prop('readonly',true);
 
   });
-
 });
 function DivTampil(elem){
    if(elem.value==1){
@@ -91,9 +95,14 @@ function DivTampil(elem){
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 });
+$(document).ready(function() {
+  $('#KegTabel').DataTable({
+    "pageLength": 15,
+   "lengthMenu": [ [15, 30, 50, -1], [15, 30, 50, "All"] ]
+  });
+} );
+
 	</script>
-
-
 </body>
 <?php //tutup_db($con); ?>
 </html>

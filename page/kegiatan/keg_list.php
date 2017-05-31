@@ -43,12 +43,12 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
   </div>
   <button type="submit" name="submit_unitkerja" class="btn btn-default">Get Data</button>
 </form>
-<div class="table-responsive">
-<table class="table table-hover table-striped table-condensed" data-toggle="table">
+<div class="margin10px table-responsive">
+<table id="KegTabel" class="table table-hover table-striped table-condensed">
+	<thead>
 	<tr class="success">
 		<th>No</th>
-		<th data-field="kegiatan" 
-            data-sortable="true">Kegiatan</th>
+		<th>Kegiatan</th>
 		<th>Unit Kerja</th>
 		<th>Tanggal Berakhir</th>
 		<th>Satuan</th>
@@ -56,9 +56,26 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 		<th>SPJ</th>
 		<?php
 		if ($_SESSION['sesi_level']>2) { ?>
-		<th colspan="2">Aksi</th>
+		<th>Aksi</th>
 		<?php } ?>
 	</tr>
+	</thead>
+	<tfoot>
+	<tr class="success">
+		<th>No</th>
+		<th>Kegiatan</th>
+		<th>Unit Kerja</th>
+		<th>Tanggal Berakhir</th>
+		<th>Satuan</th>
+		<th>Target</th>
+		<th>SPJ</th>
+		<?php
+		if ($_SESSION['sesi_level']>2) { ?>
+		<th>Aksi</th>
+		<?php } ?>
+	</tr>
+	</tfoot>
+	<tbody>
 	<?php
 	$db = new db();
 	$conn = $db -> connect();
@@ -83,8 +100,7 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 				<td>'.$StatusSPJ[$r->keg_spj].'</td>';
 				if ($_SESSION['sesi_level'] > 2) {
 					echo '
-				<td><a href="'.$url.'/'.$page.'/edit/'.$r->keg_id.'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a></td>
-				<td><a href="'.$url.'/'.$page.'/delete/'.$r->keg_id.'" data-confirm="Apakah data ('.$r->keg_id.') '.$r->keg_nama.' ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></td>';
+				<td><a href="'.$url.'/'.$page.'/edit/'.$r->keg_id.'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a> <a href="'.$url.'/'.$page.'/delete/'.$r->keg_id.'" data-confirm="Apakah data ('.$r->keg_id.') '.$r->keg_nama.' ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></td>';
 				}
 			echo '
 			</tr>
@@ -93,8 +109,9 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 		}
 	}
 	else {
-		echo '<tr><td colspan="9">Data kegiatan masih kosong</td></tr>';
+		echo '<tr><td colspan="8">Data kegiatan masih kosong</td></tr>';
 	}
 	?>
+	</tbody>
 	</table>
 </div>

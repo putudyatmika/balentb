@@ -48,7 +48,7 @@
 }
 
 body {
-  font-family: GothamBook, Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'OpenSans', Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.42857143;
   color: #333333;
@@ -61,6 +61,9 @@ body {
     font-size: 13px !important;
     line-height: 1.42857143 !important;
     border-radius: 0;
+}
+.iconWarna {
+  color: #f4511e ;
 }
 .konten {
 	margin-top:50px;
