@@ -39,4 +39,4 @@ else {
 	echo 'Belum ada kegiatan yang mendekati batas waktu';
 }
 ?>
-<a href="<?php echo $url; ?>/kegiatan/" class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Kegiatan Selengkapnya"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> Selengkapnya</a>
+<p><a href="<?php echo $url; ?>/kegiatan/" class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Kegiatan Selengkapnya"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> Selengkapnya</a></p>

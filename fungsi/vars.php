@@ -7,8 +7,8 @@ Tgl 1 Desember 2016
 */
 //variabel-variabel
 
-$ver_app='1.0.0';
-$ver_db='1.0.0';
+$ver_app='1.2.0';
+$ver_db='1.2.0';
 date_default_timezone_set('Asia/Makassar');
 //variabel-variabel
 $pengacak='Jb##ndhBN**adj##%)%hdn8xx60;:0621##213.#..12??//><LSjjds31-+~~=276';
@@ -26,5 +26,5 @@ $unit_eselon=array(1=>'I',2=>'II',3=>'III',4=>'IV');
 $JenisKegiatan=array(1=>'Bulanan',2=>'Triwulanan',3=>'Semesteran',4=>'Tahunan',5=>'Subround',6=>'AdHoc');
 $JenisDetilKegiatan=array(1=>'Pengiriman',2=>'Penerimaan');
 $TahunDefault=date('Y');
-$StatusSPJ=array(1=>'Ya',2=>'Tidak');
+$StatusSPJ=array(1=>'<span class="label label-success">Ya</span',2=>'<span class="label label-danger">Tidak</span>');
 ?>

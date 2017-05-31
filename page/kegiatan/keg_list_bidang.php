@@ -77,8 +77,8 @@ if ($tahun_kegiatan=='') $tahun_kegiatan=$TahunDefault;
 	$sql_list_bidang= $conn -> query("select * from unitkerja where unit_jenis=1 and unit_eselon=3 order by unit_kode asc");
 	$cek = $sql_list_bidang -> num_rows;
 	if ($cek > 0) {
-			if ($_SESSION['sesi_level']>2) $kol_span=8;
-			else $kol_span=6;
+			if ($_SESSION['sesi_level']>2) $kol_span=9;
+			else $kol_span=7;
 		$i_es3=1;
 		while ($r=$sql_list_bidang->fetch_object()) {
 			$sql_unit_es4='';
