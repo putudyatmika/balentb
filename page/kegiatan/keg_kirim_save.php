@@ -23,7 +23,7 @@ $conn = $db -> connect();
 $sql_keg = $conn->query("insert into keg_detil(keg_id, keg_d_unitkerja, keg_d_tgl, keg_d_jumlah, keg_d_jenis, keg_d_ket, keg_d_dibuat_oleh, keg_d_dibuat_waktu, keg_d_diupdate_oleh,keg_d_link_laci) value('$keg_id', '$keg_d_unitkerja', '$keg_d_tgl', '$keg_d_jumlah', '$keg_d_jenis', '$keg_d_ket', '$created', '$waktu_lokal', '$created','$keg_d_link')");
 if ($sql_keg) echo '(BERHASIL) data berhasil di simpan';
 else echo '(ERROR) data tidak berhasil disimpan' ;
-echo '<br /><a href="'.$url.'/'.$page.'/view/'.$keg_id.'">Kembali</a>';
+echo '<br /><a href="'.$url.'/'.$page.'/view/'.$keg_id.'" class="btn btn-success"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>';
 }
 }
 ?>
