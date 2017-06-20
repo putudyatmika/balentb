@@ -38,7 +38,7 @@ echo '<br />';
 if ($sql_update_nilai) echo '(BERHASIL) data nilai berhasil disimpan';
 else echo '(ERROR) data nilai tidak berhasil disimpan' ;
 
-echo '<br /><a href="'.$url.'/'.$page.'/view/'.$keg_id.'">Kembali</a>';
+echo '<br /><a class="btn btn-success" href="'.$url.'/'.$page.'/view/'.$keg_id.'"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>';
 }
 }
 ?>

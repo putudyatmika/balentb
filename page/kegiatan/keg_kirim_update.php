@@ -20,7 +20,7 @@ $r=$sql_keg_d_id->fetch_object();
   $sql_keg = $conn->query("update keg_detil set keg_d_tgl='$keg_d_tgl', keg_d_jumlah='$keg_d_jumlah',  keg_d_ket='$keg_d_ket', keg_d_diupdate_oleh='$created', keg_d_link_laci='$keg_d_link'  where keg_d_id='$keg_d_id'");
 if ($sql_keg) echo '(BERHASIL) data berhasil di simpan';
 else echo '(ERROR) data tidak berhasil disimpan' ;
-echo '<br /><a href="'.$url.'/'.$page.'/view/'.$r->keg_id.'">Kembali</a>';
+echo '<br /><a href="'.$url.'/'.$page.'/view/'.$r->keg_id.'" class="btn btn-success"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>';
 }
 else {
   echo 'Kegiatan : '. $keg_d_id .' tidak tersedia ada';

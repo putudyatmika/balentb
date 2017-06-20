@@ -55,7 +55,7 @@ if ($cek>0) {
          <div class="form-group">
         <label for="keg_unitkerja" class="col-sm-2 control-label">Target</label>
           <div class="col-sm-6">
-            <?php echo $kk->keg_t_target; ?>
+            <?php echo get_keg_kabkota_target($kk->keg_id,$kk->keg_d_unitkerja); ?>
           </div>
       </div>
          <div class="form-group">
@@ -112,5 +112,5 @@ else {
 else {
    echo '<div class="margin10px"><div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i> level user <strong>'.$_SESSION['sesi_user_id'].'</strong> tidak bisa mengakses menu ini</div></div>';
 }
-
+echo '<br /><br /><a href="'.$url.'/'.$page.'/view/'.$kk->keg_id.'" class="btn btn-success"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>';
 ?>

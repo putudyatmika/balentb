@@ -38,7 +38,7 @@ echo '<br /><br />';
 if ($sql_update_nilai) echo '(BERHASIL) data nilai berhasil diupdate';
 else echo '(ERROR) data nilai tidak berhasil diupdate' ;
 
-echo '<br /><a href="'.$url.'/'.$page.'/view/'.$r->keg_id.'">Kembali</a>';
+echo '<br /><a class="btn btn-success" href="'.$url.'/'.$page.'/view/'.$r->keg_id.'"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>';
 }
 else {
   echo 'Kegiatan : '. $keg_d_id .' tidak tersedia ada';

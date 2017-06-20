@@ -395,11 +395,11 @@ function get_nilai_spj($keg_id,$keg_unitkerja) {
 	$conn_keg->close();
 }
 function get_ranking_kegiatan($keg_bulan,$keg_tahun,$jenis_nilai) {
-	//$jenis_nilai 1=vol, 2=waktu, 3=total
+	//$jenis_nilai 1=vol, 2=waktu, 3=total 4=rata-rata
 	$keg_rangking='';
 	$db_keg = new db();
 	$conn_keg = $db_keg->connect();
-	$sql_keg= $conn_keg	-> query("select keg_t_unitkerja, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$keg_bulan' and year(kegiatan.keg_end)='$keg_tahun' group by keg_t_unitkerja order by point_total desc, keg_t_unitkerja asc");
+	$sql_keg= $conn_keg	-> query("select keg_t_unitkerja, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total, avg(keg_target.keg_t_point) as point_rata from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$keg_bulan' and year(kegiatan.keg_end)='$keg_tahun' group by keg_t_unitkerja order by point_total desc, keg_t_unitkerja asc");
 	$cek_keg=$sql_keg->num_rows;
 	if ($cek_keg>0) {
 		$data_rangking[]='';
@@ -412,6 +412,9 @@ function get_ranking_kegiatan($keg_bulan,$keg_tahun,$jenis_nilai) {
 			}
 			elseif ($jenis_nilai==3) {
 				$data_rangking[]=number_format($k->point_total,2,".",",");
+			}
+			elseif ($jenis_nilai==4) {
+				$data_rangking[]=number_format($k->point_rata,4,".",",");
 			}
 			else {
 				$data_rangking[]='';
@@ -429,7 +432,7 @@ function get_ranking_kabkota($keg_bulan,$keg_tahun) {
 	$kabkota_rangking='';
 	$db_keg = new db();
 	$conn_keg = $db_keg->connect();
-	$sql_keg= $conn_keg	-> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$keg_bulan' and year(kegiatan.keg_end)='$keg_tahun' group by keg_t_unitkerja order by point_total desc, keg_t_unitkerja asc");
+	$sql_keg= $conn_keg	-> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total, avg(keg_target.keg_t_point) as point_rata from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$keg_bulan' and year(kegiatan.keg_end)='$keg_tahun' group by keg_t_unitkerja order by point_rata desc, keg_t_unitkerja asc");
 	$cek_keg=$sql_keg->num_rows;
 	if ($cek_keg>0) {
 		$data_kabkota[]='';
