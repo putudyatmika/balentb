@@ -1,72 +1,32 @@
-	<legend>Tambah data pegawai baru</legend>
-		<form id="formAddPegawai" name="formAddPegawai" action="<?php echo $url.'/'.$page.'/'.$act;?>/save/"  method="post" class="form-horizontal well" role="form">
+	<legend>Tambah data absen pegawai</legend>
+		<form id="formAddPegawaiAbsen" name="formAddPegawaiAbsen" action="<?php echo $url.'/'.$page.'/'.$act;?>/save/"  method="post" class="form-horizontal well" role="form">
 		<fieldset>
 		<div class="form-group">
-			<label for="pegawai_nip" class="col-sm-3 control-label">NIP</label>
+			<label for="peg_id" class="col-sm-3 control-label">ID Absen Pegawai</label>
 
 				<div class="col-lg-4 col-sm-4">
 					<div class="input-group margin-bottom-sm">
 				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<input type="text" name="pegawai_nip" class="form-control" placeholder="NIP Baru" />
+					<input type="text" name="peg_id" class="form-control" placeholder="ID Absen di Mesin" />
 				</div>
 				</div>
 		</div>
 		<div class="form-group">
-			<label for="pegawai_nama" class="col-sm-3 control-label">Nama Lengkap</label>
+			<label for="peg_nama" class="col-sm-3 control-label">Nama Lengkap</label>
 
 				<div class="col-lg-7 col-sm-7">
 					<div class="input-group margin-bottom-sm">
 				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<input type="text" name="pegawai_nama" class="form-control" placeholder="nama lengkap tanpa gelar" />
+					<input type="text" name="peg_nama" class="form-control" placeholder="nama lengkap tanpa gelar" />
 				 </div>
 				</div>
 		</div>
 		<div class="form-group">
-			<label for="pegawai_nama" class="col-sm-3 control-label">Nama Panggilan</label>
-
-				<div class="col-lg-4 col-sm-4">
-					<div class="input-group margin-bottom-sm">
-				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<input type="text" name="pegawai_nama_panggilan" class="form-control" placeholder="nama panggilan" />
-				 </div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_nip_lama" class="col-sm-3 control-label">NIP Lama</label>
-				<div class="col-lg-4 col-sm-4">
-						<div class="input-group margin-bottom-sm">
-							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-								<input type="text" name="pegawai_nip_lama" class="form-control" placeholder="NIP lama BPS" />
-						</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_agama" class="col-sm-3 control-label">Agama</label>
+			<label for="peg_jk" class="col-sm-3 control-label">Jenis Kelamin</label>
 				<div class="col-sm-4">
 					<div class="input-group margin-bottom-sm">
 						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-							<select class="form-control" name="pegawai_agama" id="pegawai_agama" style="font-family:'FontAwesome', Arial;">
-						<option value="">Pilih Agama</option>
-						<?php
-						$db = new db();
-						$conn = $db -> connect();
-						$sql_agama = $conn->query("select * from m_agama order by agama_kode asc");
-						while ($r = $sql_agama ->fetch_object()) {
-							echo '<option value="'.$r->agama_kode.'">'.$r->agama_nama.'</option>'."\n";
-
-						}
-						$conn->close();
-						?>
-					</select>
-				</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_jk" class="col-sm-3 control-label">Jenis Kelamin</label>
-				<div class="col-sm-4">
-					<div class="input-group margin-bottom-sm">
-						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-						<select class="form-control" name="pegawai_jk" id="pegawai_jk" style="font-family:'FontAwesome', Arial;">
+						<select class="form-control" name="peg_jk" id="peg_jk" style="font-family:'FontAwesome', Arial;">
 						<option value="">Pilih Jenis Kelamin</option>
 						<?php
 						for ($i=1;$i<=2;$i++)
@@ -79,139 +39,68 @@
 				</div>
 		</div>
 		<div class="form-group">
-			<label for="pegawai_nama" class="col-sm-3 control-label">Tempat Lahir</label>
+			<label for="peg_user_no" class="col-sm-3 control-label">ID Username</label>
 
-				<div class="col-lg-4 col-sm-4">
-					<div class="input-group margin-bottom-sm">
-				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-
-
-					<input type="text" name="pegawai_tempat_lahir" class="form-control" placeholder="Kota tempat lahir" />
-				 </div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_tgl_lahir" class="col-sm-3 control-label">Tanggal Lahir</label>
-				<div class="col-sm-3">
-				<div class="input-group margin-bottom-sm">
-					<input type="text" name="pegawai_tgl_lahir" id="pegawai_tgl_lahir" class="form-control" placeholder="YYYY-MM-DD"/>
-					<span class="input-group-addon date" id="tanggal" style="cursor:pointer;"><i class="fa fa-calendar fa-fw"></i></span>
-					</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_tmt_cpns" class="col-sm-3 control-label">TMT CPNS</label>
-				<div class="col-sm-3">
-				<div class="input-group margin-bottom-sm">
-					<input type="text" name="pegawai_tmt_cpns" id="pegawai_tmt_cpns" readonly="readonly" class="form-control" placeholder="TMT CPNS"/>
-					<span class="input-group-addon date" id="tgl_cpns" style="cursor:pointer;"><i class="fa fa-calendar fa-fw"></i></span>
-					</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_gol_cpns" class="col-sm-3 control-label">Pangkat/Gol CPNS</label>
-
-				<div class="col-sm-5">
+				<div class="col-sm-4">
 					<div class="input-group margin-bottom-sm">
 						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<select class="form-control" name="pegawai_gol_cpns" id="pegawai_gol_cpns" style="font-family:'FontAwesome', Arial;">
-						<option value="">Pilih Pangkat/Golongan CPNS</option>
+						<select class="form-control" name="peg_user_no" id="peg_user_no" style="font-family:'FontAwesome', Arial;">
+						<option value="">Pilih User ID</option>
 						<?php
-						$db = new db();
-						$conn = $db -> connect();
-						$sql_agama = $conn->query("select * from m_gol order by gol_kode asc");
-						while ($r = $sql_agama ->fetch_object()) {
-							echo '<option value="'.$r->gol_kode.'">('.$r->gol_nama.') '.$r->gol_jabatan.'</option>'."\n";
-
+						$r_user=list_users(0,false);
+						if ($r_user["error"]==false) {
+							$i=1;
+							$max_users=$r_user["user_total"];
+							for ($i=1;$i<=$max_users;$i++)
+								{
+									echo '<option value="'.$r_user["item"][$i]["user_no"].'">('.$r_user["item"][$i]["user_id"].') '.$r_user["item"][$i]["user_nama"].'</option>';
+								}
 						}
-						$conn->close();
-						?>
-					</select>
-				</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_tmt_pns" class="col-sm-3 control-label">TMT PNS</label>
-				<div class="col-sm-3">
-				<div class="input-group margin-bottom-sm">
-					<input type="text" name="pegawai_tmt_pns" id="pegawai_tmt_pns" readonly="readonly" class="form-control" placeholder="TMT PNS"/>
-					<span class="input-group-addon date" id="tgl_pns" style="cursor:pointer;"><i class="fa fa-calendar fa-fw"></i></span>
-					</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_gol_pns" class="col-sm-3 control-label">Pangkat/Gol Terakhir</label>
-
-				<div class="col-sm-5">
-					<div class="input-group margin-bottom-sm">
-						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<select class="form-control" name="pegawai_gol_pns" id="pegawai_gol_pns" style="font-family:'FontAwesome', Arial;">
-						<option value="">Pilih Pangkat/Golongan Terakhir</option>
-						<?php
-						$db = new db();
-						$conn = $db -> connect();
-						$sql_agama = $conn->query("select * from m_gol order by gol_kode asc");
-						while ($r = $sql_agama ->fetch_object()) {
-							echo '<option value="'.$r->gol_kode.'">('.$r->gol_nama.') '.$r->gol_jabatan.'</option>'."\n";
-
+						else {
+							echo '<option value="">Data User Kosong</option>';
 						}
-						$conn->close();
-						?>
-					</select>
-				</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_unit" class="col-sm-3 control-label">Unit Kerja</label>
-
-				<div class="col-sm-8">
-					<div class="input-group margin-bottom-sm">
-						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<select class="form-control" name="pegawai_unit" id="pegawai_unit" style="font-family:'FontAwesome', Arial;">
-						<option value="">Pilih Unit Kerja Terakhir</option>
-						<?php
-						$db = new db();
-						$conn = $db -> connect();
-						$sql_unit = $conn->query("select * from m_unitkerja order by unit_jenis,unit_kode asc");
-						while ($r = $sql_unit ->fetch_object()) {
-							echo '<option value="'.$r->unit_kode.'">['.$r->unit_kode.'] '.$r->unit_nama.'</option>'."\n";
-
-						}
-						$conn->close();
-
 						?>
 						</select>
 					</div>
 				</div>
 		</div>
 		<div class="form-group">
-			<label for="pegawai_jabatan" class="col-sm-3 control-label">Jabatan Terakhir</label>
-				<div class="col-sm-4">
+			<label for="peg_unitkerja" class="col-sm-3 control-label">Unitkerja</label>
+
+				<div class="col-sm-7">
 					<div class="input-group margin-bottom-sm">
 						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-						<select class="form-control" name="pegawai_jabatan" id="pegawai_jabatan" style="font-family:'FontAwesome', Arial;">
-						<option value="">Pilih Jabatan Terakhir</option>
+						<select class="form-control" name="peg_unitkerja" id="peg_unitkerja" style="font-family:'FontAwesome', Arial;">
+						<option value="">Pilih Unitkerja</option>
 						<?php
-						for ($i=1;$i<=4;$i++)
-							{
-								echo '<option value="'.$i.'">'.$jabatanPegawai[$i].'</option>';
-							}
+						$r_unit=list_unitkerja(0,false,false);
+						if ($r_unit["error"]==false) {
+							$i=1;
+							$max_unit=$r_unit["unit_total"];
+							for ($i=1;$i<=$max_unit;$i++)
+								{
+									echo '<option value="'.$r_unit["item"][$i]["unit_kode"].'">['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</option>';
+								}
+						}
+						else {
+							echo '<option value="">Data Unit Kosong</option>';
+						}
 						?>
 						</select>
 					</div>
 				</div>
 		</div>
 		<div class="form-group">
-			<label for="pegawai_status" class="col-sm-3 control-label">Status Pegawai</label>
+			<label for="peg_status" class="col-sm-3 control-label">Status</label>
 				<div class="col-sm-4">
 					<div class="input-group margin-bottom-sm">
 						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-						<select class="form-control" name="pegawai_status" id="pegawai_status" style="font-family:'FontAwesome', Arial;">
+						<select class="form-control" name="peg_status" id="peg_status" style="font-family:'FontAwesome', Arial;">
 						<option value="">Pilih Status Pegawai</option>
 						<?php
-						for ($i=1;$i<=2;$i++)
+						for ($i=0;$i<=1;$i++)
 							{
-								echo '<option value="'.$i.'">'.$statusPNS[$i].'</option>';
+								echo '<option value="'.$i.'">'.$status_umum[$i].'</option>';
 							}
 						?>
 						</select>

@@ -1,197 +1,52 @@
-<?php
-$pegawai_nip=$lvl4;
-$db = new db();
-$conn = $db ->connect();
-$sql_edit_peg = $conn -> query("select * from m_pegawai where pegawai_nip='$pegawai_nip'");
-$cek=$sql_edit_peg->num_rows;
-if ($cek>0) {
-	$r=$sql_edit_peg->fetch_object();
-?>
-		<legend>Edit pegawai <strong><?php echo $r->pegawai_nama;?></strong></legend>
-		<form id="formAddPegawai" name="formAddPegawai" action="<?php echo $url.'/'.$page.'/'.$act;?>/update/"  method="post" class="form-horizontal well" role="form">
+	<legend>Edit data absen pegawai</legend>
+	<?php
+	$peg_no=$lvl4;
+	$r_peg=list_pegawai($peg_no,true);
+	if ($r_peg["error"]==false) {
+		$peg_id=$r_peg["item"][1]["peg_id"];
+		$peg_nama=$r_peg["item"][1]["peg_nama"];
+		$peg_jk=$r_peg["item"][1]["peg_jk"];
+		$user_no=$r_peg["item"][1]["user_no"];
+		$peg_status=$r_peg["item"][1]["peg_status"];
+		$peg_unitkerja=$r_peg["item"][1]["peg_unitkerja"];
+	?>
+		<form id="formAddPegawaiAbsen" name="formAddPegawaiAbsen" action="<?php echo $url.'/'.$page.'/'.$act;?>/update/"  method="post" class="form-horizontal well" role="form">
 		<fieldset>
 		<div class="form-group">
-			<label for="pegawai_nip" class="col-sm-3 control-label">NIP</label>
-				<div class="col-lg-6 col-sm-6">
-					<div class="input-group margin-bottom-sm">
-				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<input type="text" name="pegawai_nip" class="form-control" value="<?php echo $r->pegawai_nip;?>" placeholder="NIP Baru" disabled />
-				</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_nama" class="col-sm-3 control-label">Nama Lengkap</label>
-				<div class="col-lg-7 col-sm-7">
-					<div class="input-group margin-bottom-sm">
-				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<input type="text" name="pegawai_nama" class="form-control" value="<?php echo $r->pegawai_nama;?>" placeholder="nama lengkap tanpa gelar" />
-				 </div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_nama" class="col-sm-3 control-label">Nama Panggilan</label>
+			<label for="peg_id" class="col-sm-3 control-label">ID Absen Pegawai</label>
 
-				<div class="col-lg-7 col-sm-7">
-					<div class="input-group margin-bottom-sm">
-				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<input type="text" name="pegawai_nama_panggilan" class="form-control" value="<?php echo $r->pegawai_nama_panggilan;?>" placeholder="nama panggilan" />
-				 </div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_nip_lama" class="col-sm-3 control-label">NIP Lama</label>
-				<div class="col-lg-6 col-sm-6">
-					<div class="input-group margin-bottom-sm">
-				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<input type="text" name="pegawai_nip_lama" class="form-control" value="<?php echo $r->pegawai_nip_lama;?>" placeholder="NIP lama BPS" />
-				</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_agama" class="col-sm-3 control-label">Agama</label>
-				<div class="col-sm-4">
-					<div class="input-group margin-bottom-sm">
-						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-						<select class="form-control" name="pegawai_agama" id="pegawai_agama" style="font-family:'FontAwesome', Arial;">
-						<option value="">Pilih</option>
-						<?php
-						$sql_agama = $conn->query("select * from m_agama order by agama_kode asc");
-						while ($a = $sql_agama ->fetch_object()) {
-							if ($r->pegawai_agama==$a->agama_kode) $pilih='selected="selected"';
-							else $pilih='';
-							echo '<option value="'.$a->agama_kode.'" '.$pilih.'>'.$a->agama_nama.'</option>'."\n";
-						}
-						?>
-					</select>
-				</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_jk" class="col-sm-3 control-label">Jenis Kelamin</label>
-				<div class="col-sm-3">
-					<div class="input-group margin-bottom-sm">
-						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<select class="form-control" name="pegawai_jk" id="pegawai_jk" style="font-family:'FontAwesome', Arial;">
-						<option value="">Pilih</option>
-						<?php
-						for ($i=1;$i<=2;$i++)
-							{
-								if ($r->pegawai_jk==$i) $pilih='selected="selected"';
-								else $pilih='';
-								echo '<option value="'.$i.'" '.$pilih.'>'.$JenisKelamin[$i].'</option>';
-							}
-						?>
-						</select>
-					</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_nama" class="col-sm-3 control-label">Tempat Lahir</label>
 				<div class="col-lg-4 col-sm-4">
 					<div class="input-group margin-bottom-sm">
 				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<input type="text" name="pegawai_tempat_lahir" class="form-control" value="<?php echo $r->pegawai_tempat_lahir;?>" placeholder="Kota tempat lahir" />
+					<input type="text" name="peg_id" class="form-control" value="<?php echo $peg_id;?>" placeholder="ID Absen di Mesin" />
+				</div>
+				</div>
+		</div>
+		<div class="form-group">
+			<label for="peg_nama" class="col-sm-3 control-label">Nama Lengkap</label>
+
+				<div class="col-lg-7 col-sm-7">
+					<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+					<input type="text" name="peg_nama" class="form-control" value="<?php echo $peg_nama;?>" placeholder="nama lengkap tanpa gelar" />
 				 </div>
 				</div>
 		</div>
 		<div class="form-group">
-			<label for="pegawai_tgl_lahir" class="col-sm-3 control-label">Tanggal Lahir</label>
-				<div class="col-sm-3">
-				<div class="input-group margin-bottom-sm">
-					<input type="text" name="pegawai_tgl_lahir" id="pegawai_tgl_lahir" value="<?php echo $r->pegawai_tgl_lahir;?>" class="form-control" placeholder="Tanggal Lahir"/>
-					<span class="input-group-addon date" id="tanggal" style="cursor:pointer;"><i class="fa fa-calendar fa-fw"></i></span>
-					</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_tmt_cpns" class="col-sm-3 control-label">TMT CPNS</label>
-				<div class="col-sm-3">
-				<div class="input-group margin-bottom-sm">
-
-					<input type="text" name="pegawai_tmt_cpns" id="pegawai_tmt_cpns" value="<?php echo $r->pegawai_tmt_cpns;?>" readonly="readonly" class="form-control" placeholder="TMT CPNS"/>
-					<span class="input-group-addon date" id="tgl_cpns" style="cursor:pointer;"><i class="fa fa-calendar fa-fw"></i></span>
-					</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_gol_cpns" class="col-sm-3 control-label">Pangkat/Gol CPNS</label>
-				<div class="col-sm-5">
-					<div class="input-group margin-bottom-sm">
-						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<select class="form-control" name="pegawai_gol_cpns" id="pegawai_gol_cpns" >
-						<option value="">Pilih</option>
-						<?php
-						$sql_gol_cpns = $conn->query("select * from m_gol order by gol_kode asc");
-						while ($g = $sql_gol_cpns ->fetch_object()) {
-							if ($r->pegawai_gol_cpns==$g->gol_kode) $pilih='selected="selected"';
-							else $pilih='';
-							echo '<option value="'.$g->gol_kode.'" '.$pilih.'>('.$g->gol_nama.') '.$g->gol_jabatan.'</option>'."\n";
-						}
-						?>
-					</select>
-				</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_tmt_pns" class="col-sm-3 control-label">TMT PNS</label>
-				<div class="col-sm-3">
-				<div class="input-group margin-bottom-sm">
-
-					<input type="text" name="pegawai_tmt_pns" id="pegawai_tmt_pns" value="<?php echo $r->pegawai_tmt_pns;?>" readonly="readonly" class="form-control" placeholder="TMT PNS"/>
-					<span class="input-group-addon date" id="tgl_pns" style="cursor:pointer;"><i class="fa fa-calendar fa-fw"></i></span>
-					</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_gol_pns" class="col-sm-3 control-label">Pangkat/Gol Sekarang</label>
-				<div class="col-sm-5">
-					<div class="input-group margin-bottom-sm">
-						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<select class="form-control" name="pegawai_gol_pns" id="pegawai_gol_pns" style="font-family:'FontAwesome', Arial;">
-						<option value="">Pilih</option>
-						<?php
-						$sql_gol_pns = $conn->query("select * from m_gol order by gol_kode asc");
-						while ($g2 = $sql_gol_pns ->fetch_object()) {
-							if ($r->pegawai_gol_pns==$g2->gol_kode) $pilih='selected="selected"';
-							else $pilih='';
-							echo '<option value="'.$g2->gol_kode.'" '.$pilih.'>('.$g2->gol_nama.') '.$g2->gol_jabatan.'</option>'."\n"; }
-						?>
-					</select>
-				</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_unit" class="col-sm-3 control-label">Unit Kerja</label>
-				<div class="col-sm-8">
-					<div class="input-group margin-bottom-sm">
-						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-					<select class="form-control" name="pegawai_unit" id="pegawai_unit" style="font-family:'FontAwesome', Arial;">
-						<option value="">Pilih</option>
-						<?php
-						$sql_unit = $conn->query("select * from m_unitkerja order by unit_jenis,unit_kode asc");
-						while ($u = $sql_unit ->fetch_object()) {
-							if ($r->pegawai_unit==$u->unit_kode) $pilih='selected="selected"';
-							else $pilih='';
-							echo '<option value="'.$u->unit_kode.'" '.$pilih.'>['.$u->unit_kode.'] '.$u->unit_nama.'</option>'."\n";
-						}
-						?>
-						</select>
-					</div>
-				</div>
-		</div>
-		<div class="form-group">
-			<label for="pegawai_jabatan" class="col-sm-3 control-label">Jabatan Terakhir</label>
+			<label for="peg_jk" class="col-sm-3 control-label">Jenis Kelamin</label>
 				<div class="col-sm-4">
 					<div class="input-group margin-bottom-sm">
 						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-						<select class="form-control" name="pegawai_jabatan" id="pegawai_jabatan" style="font-family:'FontAwesome', Arial;">
-						<option value="">Pilih Jabatan Terakhir</option>
+						<select class="form-control" name="peg_jk" id="peg_jk" style="font-family:'FontAwesome', Arial;">
+						<option value="">Pilih Jenis Kelamin</option>
 						<?php
-						for ($i=1;$i<=4;$i++)
+						for ($i=1;$i<=2;$i++)
 							{
-								if ($r->pegawai_jabatan==$i) $pilih='selected="selected"';
-								else $pilih='';
-								echo '<option value="'.$i.'" '.$pilih.'>'.$jabatanPegawai[$i].'</option>';
+								if ($i==$peg_jk) {
+									$dipilih='selected="selected"';
+								}
+								else { $dipilih='';}
+								echo '<option value="'.$i.'" '.$dipilih.'>'.$JenisKelamin[$i].'</option>';
 							}
 						?>
 						</select>
@@ -199,18 +54,82 @@ if ($cek>0) {
 				</div>
 		</div>
 		<div class="form-group">
-			<label for="pegawai_status" class="col-sm-3 control-label">Status Pegawai</label>
+			<label for="peg_user_no" class="col-sm-3 control-label">ID Username</label>
+
 				<div class="col-sm-4">
 					<div class="input-group margin-bottom-sm">
 						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-						<select class="form-control" name="pegawai_status" id="pegawai_status" style="font-family:'FontAwesome', Arial;">
+						<select class="form-control" name="peg_user_no" id="peg_user_no" style="font-family:'FontAwesome', Arial;">
+						<option value="">Pilih User ID</option>
+						<?php
+						$r_user=list_users(0,false);
+						if ($r_user["error"]==false) {
+							$i=1;
+							$max_users=$r_user["user_total"];
+							for ($i=1;$i<=$max_users;$i++)
+								{
+									if ($r_user["item"][$i]["user_no"]==$user_no) {
+									$dipilih_user='selected="selected"';
+								}
+								else { $dipilih_user='';}
+
+									echo '<option value="'.$r_user["item"][$i]["user_no"].'" '.$dipilih_user.'>('.$r_user["item"][$i]["user_id"].') '.$r_user["item"][$i]["user_nama"].'</option>';
+								}
+						}
+						else {
+							echo '<option value="">Data User Kosong</option>';
+						}
+						?>
+						</select>
+					</div>
+				</div>
+		</div>
+		<div class="form-group">
+			<label for="peg_unitkerja" class="col-sm-3 control-label">Unitkerja</label>
+
+				<div class="col-sm-7">
+					<div class="input-group margin-bottom-sm">
+						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+						<select class="form-control" name="peg_unitkerja" id="peg_unitkerja" style="font-family:'FontAwesome', Arial;">
+						<option value="">Pilih Unitkerja</option>
+						<?php
+						$r_unit=list_unitkerja(0,false,false);
+						if ($r_unit["error"]==false) {
+							$i=1;
+							$max_unit=$r_unit["unit_total"];
+							for ($i=1;$i<=$max_unit;$i++)
+								{
+									if ($r_unit["item"][$i]["unit_kode"]==$peg_unitkerja) {
+									$dipilih_unit='selected="selected"';
+									}
+									else { $dipilih_unit='';}
+
+									echo '<option value="'.$r_unit["item"][$i]["unit_kode"].'" '.$dipilih_unit.'>['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</option>';
+								}
+						}
+						else {
+							echo '<option value="">Data Unit Kosong</option>';
+						}
+						?>
+						</select>
+					</div>
+				</div>
+		</div>
+		<div class="form-group">
+			<label for="peg_status" class="col-sm-3 control-label">Status</label>
+				<div class="col-sm-4">
+					<div class="input-group margin-bottom-sm">
+						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+						<select class="form-control" name="peg_status" id="peg_status" style="font-family:'FontAwesome', Arial;">
 						<option value="">Pilih Status Pegawai</option>
 						<?php
-						for ($i=1;$i<=2;$i++)
+						for ($i=0;$i<=1;$i++)
 							{
-								if ($r->pegawai_status==$i) $pilih='selected="selected"';
-								else $pilih='';
-								echo '<option value="'.$i.'" '.$pilih.'>'.$statusPNS[$i].'</option>';
+								if ($i==$peg_status) {
+									$dipilih_status='selected="selected"';
+								}
+								else { $dipilih_status='';}
+								echo '<option value="'.$i.'" '.$dipilih_status.'>'.$status_umum[$i].'</option>';
 							}
 						?>
 						</select>
@@ -219,16 +138,15 @@ if ($cek>0) {
 		</div>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-8">
-			  <button type="submit" id="submit_pegawai" name="submit_pegawai" value="update" class="btn btn-primary">UPDATE</button>
+			  <button type="submit" id="submit_pegawai" name="submit_pegawai" value="save" class="btn btn-primary">UPDATE</button>
 			</div>
 		</div>
-		<input type="hidden" name="pegawai_nip" value="<?php echo $pegawai_nip;?>" />
+		<input type="hidden" name="peg_no" value="<?php echo $peg_no;?>" />
 </fieldset>
 </form>
-
-<?php }
-else {
-	echo 'NIP Pegawai salah / data belum tersedia';
+<?php
 }
-$conn->close();
+else {
+	echo 'Data Pegawai tidak tersedia';
+}
 ?>

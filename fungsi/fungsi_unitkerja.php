@@ -86,4 +86,46 @@ function get_parent_kode($kode_unit) {
 		return $kode_parent;
 		$conn_unit->close();
 		}
+
+function list_unitkerja($unit_kode,$detil=false,$jenis=false) {
+	$db_unit = new db();
+	$conn_unit = $db_unit -> connect();
+	if ($detil==true) {
+		$sql_unit = $conn_unit -> query("select * from unitkerja where unit_kode='$unit_kode'");
+	}
+
+	if ($jenis==false) {
+		$sql_unit = $conn_unit -> query("select * from unitkerja where unit_jenis='1' order by unit_kode asc");
+	}
+	else {
+		$sql_unit = $conn_unit -> query("select * from unitkerja order by unit_jenis,unit_kode asc");
+	}
+	$cek_unit = $sql_unit->num_rows;
+	$unitkerja_list=array("error"=>false);
+	if ($cek_unit>0) {
+		$unitkerja_list["error"]=false;
+		$unitkerja_list["unit_total"]=$cek_unit;
+		$i=1;
+		while ($r=$sql_unit->fetch_object()) {
+			$unitkerja_list["item"][$i]=array(
+				"unit_kode"=>$r->unit_kode,
+				"unit_nama"=>$r->unit_nama,
+				"unit_parent"=>$r->unit_parent,
+				"unit_jenis"=>$r->unit_jenis,
+				"unit_dibuat_waktu"=>$r->unit_dibuat_waktu,
+				"unit_dibuat_oleh"=>$r->unit_dibuat_oleh,
+				"unit_diupdate_waktu"=>$r->unit_diupdate_waktu,
+				"unit_diupdate_oleh"=>$r->unit_diupdate_oleh,
+				"unit_eselon"=>$r->unit_eselon
+			);
+			$i++;
+		}
+	}
+	else {
+		$unitkerja_list["error"]=true;
+		$unitkerja_list["pesan_error"]="data kosong";
+	}
+	return $unitkerja_list;
+	$conn_unit->close();
+}
 ?>

@@ -11,7 +11,7 @@ if ($cek>0) {
 <div class="table-responsive margin10px">
 <table class="table table-hover table-striped table-condensed">
 <tr>
-  <th colspan="2" class="success text-danger"><h3>'.$r->keg_nama.'</h3></td>
+  <th colspan="2" class="success text-danger"><h4>'.$r->keg_nama.'</h4></td>
   </tr>
 	<tr>
 		<td class="text-right"><strong>Kegiatan</strong></td>
