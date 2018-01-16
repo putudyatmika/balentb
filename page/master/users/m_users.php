@@ -1,12 +1,12 @@
 <div class="col-lg-12 col-sm-12">
 		<div class="btn-toolbar" role="toolbar">
 			<div class="btn-group">
-				<a href="<?php echo $url; ?>/master/users/add/" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Tambah User</a>
-				<a href="<?php echo $url; ?>/master/users/" class="btn btn-success"><span class="glyphicon glyphicon-th"></span> Semua User</a>
-				<a href="<?php echo $url; ?>/master/users/admin/" class="btn btn-danger"><span class="glyphicon glyphicon-th"></span> Admin</a>
-				<a href="<?php echo $url; ?>/master/users/operatorkab/" class="btn btn-info"><span class="glyphicon glyphicon-th"></span> Operator KabKota</a>
-				<a href="<?php echo $url; ?>/master/users/operatorprov/" class="btn btn-primary"><span class="glyphicon glyphicon-th"></span> Operator Provinsi</a>
-				<a href="<?php echo $url; ?>/master/users/pemantau/" class="btn btn-warning"><span class="glyphicon glyphicon-th"></span> Pemantau</a>
+				<a href="<?php echo $url; ?>/master/users/add/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span></a>
+				<a href="<?php echo $url; ?>/master/users/" class="btn btn-success  btn-sm"><span class="glyphicon glyphicon-th"></span> Semua User</a>
+				<a href="<?php echo $url; ?>/master/users/admin/" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-th"></span> Admin</a>
+				<a href="<?php echo $url; ?>/master/users/operatorkab/" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-th"></span> Operator KabKota</a>
+				<a href="<?php echo $url; ?>/master/users/operatorprov/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-th"></span> Operator Provinsi</a>
+				<a href="<?php echo $url; ?>/master/users/pemantau/" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-th"></span> Pemantau</a>
 			</div>
 		</div>
 </div>

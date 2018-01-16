@@ -7,8 +7,8 @@ Tgl 1 Desember 2016
 */
 //variabel-variabel
 
-$ver_app='1.2.0';
-$ver_db='1.2.0';
+$ver_app='1.3.0';
+$ver_db='1.3.0';
 date_default_timezone_set('Asia/Makassar');
 //variabel-variabel
 $pengacak='Jb##ndhBN**adj##%)%hdn8xx60;:0621##213.#..12??//><LSjjds31-+~~=276';
