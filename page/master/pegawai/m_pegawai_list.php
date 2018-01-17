@@ -13,6 +13,7 @@
 		<th>Jenis Kelamin</th>
 		<th>User No</th>
 		<th>Unit Kerja</th>
+		<th>Jabatan</th>
 		<th>Status</th>
 		<th colspan="3">&nbsp;</th>
 		</tr>
@@ -34,6 +35,13 @@
 			else {
 				$peg_unitkerja=get_nama_unit($r_peg["item"][$i]["peg_unitkerja"]);
 			}
+			//jenis jabatan
+			if ($r_peg["item"][$i]["peg_jabatan"]==0) {
+				$peg_jabatan='';
+			}
+			else {
+				$peg_jabatan=$JenisJabatan[$r_peg["item"][$i]["peg_jabatan"]];
+			}
 			echo '
 			<tr>
 			<td>'.$i.'</td>
@@ -42,6 +50,7 @@
 			<td>'.$JenisKelamin[$r_peg["item"][$i]["peg_jk"]].'</td>
 			<td>'.$user_no.'</td>
 			<td>'.$peg_unitkerja.'</td>
+			<td>'.$peg_jabatan.'</td>
 			<td>'.$status_umum[$r_peg["item"][$i]["peg_status"]].'</td>
 			<td><a href="'.$url.'/'.$page.'/'.$act.'/view/'.$r_peg["item"][$i]["peg_no"].'"><i class="fa fa-search text-success" aria-hidden="true"></i></a></td>
 			<td><a href="'.$url.'/'.$page.'/'.$act.'/edit/'.$r_peg["item"][$i]["peg_no"].'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a></td>

@@ -24,6 +24,7 @@ function list_pegawai($peg_no,$detil=false) {
 				"peg_status"=>$r->peg_status,
 				"user_no"=>$r->peg_user_no,
 				"peg_unitkerja"=>$r->peg_unitkerja,
+				"peg_jabatan"=>$r->peg_jabatan,
 				"user_id"=>$r->user_id,
 				"peg_dibuat_waktu"=>$r->peg_dibuat_waktu,
 				"peg_dibuat_oleh"=>$r->peg_dibuat_oleh,
@@ -143,11 +144,11 @@ function cek_pegawai_no($peg_no) {
 	return $cekValue;
 	$conn_cek->close();
 }
-function save_pegawai_absen($peg_id,$peg_nama,$peg_jk,$peg_user_no,$peg_unitkerja,$peg_status,$user_created) {
+function save_pegawai_absen($peg_id,$peg_nama,$peg_jk,$peg_user_no,$peg_unitkerja,$peg_status,$peg_jabatan,$user_created) {
 	$waktu_lokal=date("Y-m-d H:i:s");
 	$db_sync = new db();
 	$conn_sync = $db_sync -> connect();
-	$sql_sync = $conn_sync-> query("insert into m_pegawai(peg_id,peg_nama,peg_jk,peg_user_no,peg_status,peg_unitkerja,peg_dibuat_waktu,peg_dibuat_oleh) values('$peg_id','$peg_nama','$peg_jk','$peg_user_no','$peg_status','$peg_unitkerja','$waktu_lokal','$user_created')") or die(mysqli_error($conn_sync));
+	$sql_sync = $conn_sync-> query("insert into m_pegawai(peg_id,peg_nama,peg_jk,peg_user_no,peg_status,peg_unitkerja,peg_jabatan,peg_dibuat_waktu,peg_dibuat_oleh) values('$peg_id','$peg_nama','$peg_jk','$peg_user_no','$peg_status','$peg_unitkerja','$peg_jabatan','$waktu_lokal','$user_created')") or die(mysqli_error($conn_sync));
 	if ($sql_sync) {
 		$status_sync=TRUE;
 	}
@@ -157,11 +158,11 @@ function save_pegawai_absen($peg_id,$peg_nama,$peg_jk,$peg_user_no,$peg_unitkerj
 	return $status_sync;
 	$db_sync->close();
 }
-function update_pegawai_absen($peg_no,$peg_id,$peg_nama,$peg_jk,$peg_user_no,$peg_unitkerja,$peg_status,$user_update) {
+function update_pegawai_absen($peg_no,$peg_id,$peg_nama,$peg_jk,$peg_user_no,$peg_unitkerja,$peg_jabatan,$peg_status,$user_update) {
 	$waktu_lokal=date("Y-m-d H:i:s");
 	$db_sync = new db();
 	$conn_sync = $db_sync -> connect();
-	$sql_sync = $conn_sync-> query("update m_pegawai set peg_id='$peg_id', peg_nama='$peg_nama', peg_jk='$peg_jk', peg_user_no='$peg_user_no', peg_unitkerja='$peg_unitkerja', peg_status='$peg_status', peg_diupdate_oleh='$user_update', peg_diupdate_waktu='$waktu_lokal' where peg_no='$peg_no'") or die(mysqli_error($conn_sync));
+	$sql_sync = $conn_sync-> query("update m_pegawai set peg_id='$peg_id', peg_nama='$peg_nama', peg_jk='$peg_jk', peg_user_no='$peg_user_no', peg_unitkerja='$peg_unitkerja', peg_jabatan='$peg_jabatan', peg_status='$peg_status', peg_diupdate_oleh='$user_update', peg_diupdate_waktu='$waktu_lokal' where peg_no='$peg_no'") or die(mysqli_error($conn_sync));
 	if ($sql_sync) {
 		$status_sync=TRUE;
 	}

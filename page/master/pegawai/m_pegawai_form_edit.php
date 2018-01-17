@@ -9,6 +9,7 @@
 		$user_no=$r_peg["item"][1]["user_no"];
 		$peg_status=$r_peg["item"][1]["peg_status"];
 		$peg_unitkerja=$r_peg["item"][1]["peg_unitkerja"];
+		$peg_jabatan=$r_peg["item"][1]["peg_jabatan"];
 	?>
 		<form id="formAddPegawaiAbsen" name="formAddPegawaiAbsen" action="<?php echo $url.'/'.$page.'/'.$act;?>/update/"  method="post" class="form-horizontal well" role="form">
 		<fieldset>
@@ -110,6 +111,27 @@
 						else {
 							echo '<option value="">Data Unit Kosong</option>';
 						}
+						?>
+						</select>
+					</div>
+				</div>
+		</div>
+		<div class="form-group">
+			<label for="peg_jabatan" class="col-sm-3 control-label">Jabatan</label>
+				<div class="col-sm-4">
+					<div class="input-group margin-bottom-sm">
+						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+						<select class="form-control" name="peg_jabatan" id="peg_jabatan" style="font-family:'FontAwesome', Arial;">
+						<option value="">Pilih Jabatan</option>
+						<?php
+						for ($i=1;$i<=2;$i++)
+							{
+								if ($i==$peg_jabatan) {
+									$dipilih_jabatan='selected="selected"';
+								}
+								else { $dipilih_jabatan='';}
+								echo '<option value="'.$i.'" '.$dipilih_jabatan.'>'.$JenisJabatan[$i].'</option>';
+							}
 						?>
 						</select>
 					</div>

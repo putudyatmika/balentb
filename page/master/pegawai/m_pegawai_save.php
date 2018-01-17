@@ -7,6 +7,7 @@ if ($_POST['submit_pegawai']) {
 	$peg_jk = $_POST['peg_jk'];
 	$peg_user_no = $_POST['peg_user_no'];
 	$peg_unitkerja = $_POST['peg_unitkerja'];
+	$peg_jabatan = $_POST['peg_jabatan'];
 	$peg_status = $_POST['peg_status'];
 	//$peg_nama= strtoupper(strtolower($peg_nama));
 	//$waktu_lokal=date("Y-m-d H:i:s");
@@ -16,8 +17,8 @@ if ($_POST['submit_pegawai']) {
 	}
 	else {
 		if ($peg_user_no!="") {
-
-			$result_absen=save_pegawai_absen($peg_id,$peg_nama,$peg_jk,$peg_user_no,$peg_unitkerja,$peg_status,$user_created);
+			//save_pegawai_absen($peg_id,$peg_nama,$peg_jk,$peg_user_no,$peg_unitkerja,$peg_status,$peg_jabatan,$user_created)
+			$result_absen=save_pegawai_absen($peg_id,$peg_nama,$peg_jk,$peg_user_no,$peg_unitkerja,$peg_status,$peg_jabatan,$user_created);
 			if ($result_absen) {
 				echo "Berhasil di simpan database absen pegawai";
 			}
@@ -28,7 +29,7 @@ if ($_POST['submit_pegawai']) {
 		}
 		else {
 			//simpan tanpa peg_user_no
-			$result_absen_dua=save_pegawai_absen($peg_id,$peg_nama,$peg_jk,0,$peg_unitkerja,$peg_status,$user_created);
+			$result_absen_dua=save_pegawai_absen($peg_id,$peg_nama,$peg_jk,0,$peg_unitkerja,$peg_status,$peg_jabatan,$user_created);
 			if ($result_absen_dua) {
 				echo 'Berhasil di simpan database absen pegawai';
 			}

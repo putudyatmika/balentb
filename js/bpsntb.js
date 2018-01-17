@@ -209,9 +209,9 @@ $(document).ready(function() {
                         message: 'Silakan isikan nama lengkap'
                     },
                     stringLength: {
-                        min: 6,
+                        min: 4,
                         max: 100,
-                        message: 'minimal 6 huruf'
+                        message: 'minimal 4 huruf'
                     }
                 }
             },

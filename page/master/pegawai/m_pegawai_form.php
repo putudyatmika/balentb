@@ -91,6 +91,23 @@
 				</div>
 		</div>
 		<div class="form-group">
+			<label for="peg_jabatan" class="col-sm-3 control-label">Jabatan</label>
+				<div class="col-sm-4">
+					<div class="input-group margin-bottom-sm">
+						<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+						<select class="form-control" name="peg_jabatan" id="peg_jabatan" style="font-family:'FontAwesome', Arial;">
+						<option value="">Pilih Jabatan</option>
+						<?php
+						for ($i=1;$i<=2;$i++)
+							{
+								echo '<option value="'.$i.'">'.$JenisJabatan[$i].'</option>';
+							}
+						?>
+						</select>
+					</div>
+				</div>
+		</div>
+		<div class="form-group">
 			<label for="peg_status" class="col-sm-3 control-label">Status</label>
 				<div class="col-sm-4">
 					<div class="input-group margin-bottom-sm">

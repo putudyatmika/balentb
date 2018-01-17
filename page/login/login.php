@@ -170,6 +170,7 @@ h4 {
 					$_SESSION['sesi_nama']=$r->user_nama;
 					$_SESSION['sesi_level']=$r->user_level;
 					$_SESSION['sesi_unitkerja']=$r->user_unitkerja;
+                    $_SESSION['sesi_provkab']=get_jenis_unit($r->user_unitkerja);
 					$login_ku="sukses";
 					$sql_update_login=$conn -> query("update users set user_lastip='$ip', user_lastlogin='$waktu_lokal' where user_id='$user_id'");
 					$text_alert="Selamat Datang <b>".$r->user_nama."</b>";

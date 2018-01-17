@@ -22,6 +22,7 @@ $lvl_user=array(1=>"Pemantau",2=>'Operator Kab/Kota',3=>'Operator Prov',4=>"Admi
 $status_umum=array(0=>'Tidak Aktif',1=>'Aktif');
 $JenisKelamin=array(1=>'Laki-Laki',2=>'Perempuan');
 $JenisUnit=array(1=>'Provinsi',2=>'Kabupaten');
+$JenisJabatan=array(1=>'Kepala',2=>'Staf');
 $unit_eselon=array(1=>'I',2=>'II',3=>'III',4=>'IV');
 $JenisKegiatan=array(1=>'Bulanan',2=>'Triwulanan',3=>'Semesteran',4=>'Tahunan',5=>'Subround',6=>'AdHoc');
 $JenisDetilKegiatan=array(1=>'Pengiriman',2=>'Penerimaan');
