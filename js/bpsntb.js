@@ -185,7 +185,7 @@ $(document).ready(function() {
     });
 });
 $(document).ready(function() {
-    $('#formAddPegawai').bootstrapValidator({
+    $('#formAddPegawaiAbsen').bootstrapValidator({
         message: 'Nilai tidak valid',
        feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
@@ -193,129 +193,39 @@ $(document).ready(function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-            pegawai_nip: {
+            peg_id: {
                 validators: {
                     notEmpty: {
-                        message: 'Silakan isikan nip'
+                        message: 'Silakan isikan ID Pegawai di Mesin'
                     },
 					numeric: {
 						message: 'isian harus berupa angka'
-					},
-                    stringLength: {
-                        min: 18,
-                        max: 18,
-                        message: 'harus 18 digit angka'
-                    }
+					}
                 }
             },
-			pegawai_nama: {
+			peg_nama: {
                 validators: {
                     notEmpty: {
                         message: 'Silakan isikan nama lengkap'
                     },
                     stringLength: {
-                        min: 6,
+                        min: 4,
                         max: 100,
-                        message: 'minimal 6 huruf'
+                        message: 'minimal 4 huruf'
                     }
                 }
             },
-			pegawai_nama_panggilan: {
-                validators: {
-                    notEmpty: {
-                        message: 'Silakan isikan nama panggilan'
-                    },
-                    stringLength: {
-                        min: 3,
-                        max: 15,
-                        message: 'minimal 3 huruf'
-                    }
-                }
-            },
-			pegawai_nip_lama: {
-                validators: {
-                    notEmpty: {
-                        message: 'Silakan isikan nip lama bps'
-                    },
-					numeric: {
-						message: 'isian harus berupa angka'
-					},
-                    stringLength: {
-                        min: 9,
-                        max: 9,
-                        message: 'harus 9 digit angka'
-                    }
-                }
-            },
-			pegawai_agama: {
-                validators: {
-                    notEmpty: {
-                        message: 'Silakan pilih agama'
-                    }
-                }
-            },
-			pegawai_jk: {
+			peg_jk: {
                 validators: {
                     notEmpty: {
                         message: 'Silakan pilih jenis kelamin'
                     }
                 }
             },
-			pegawai_tempat_lahir: {
-                validators: {
-                    notEmpty: {
-                        message: 'Silakan isikan tempat lahir'
-                    },
-                    stringLength: {
-                        min: 4,
-                        max: 30,
-                        message: 'minimal 4 huruf'
-                    }
-                }
-            },
-      pegawai_tgl_lahir: {
-                validators: {
-                    notEmpty: {
-                        message: 'Silakan isi tgl lahir'
-                      },
-                      date: {
-                       format: 'YYYY-MM-DD',
-                       message: 'format YYYY-MM-DD'
-                   }
-                      }
-                },
-      pegawai_gol_cpns: {
-                validators: {
-                    notEmpty: {
-                        message: 'Silakan pilih gol cpns'
-                          }
-                      }
-                },
-      pegawai_gol_pns: {
-                validators: {
-                    notEmpty: {
-                        message: 'Silakan pilih gol terakhir'
-                          }
-                      }
-                },
-			pegawai_unit: {
-                validators: {
-                    notEmpty: {
-                        message: 'Silakan pilih jenis unit kerja'
-                    }
-                }
-            },
-      pegawai_jabatan: {
-                validators: {
-                    notEmpty: {
-                        message: 'Silakan pilih jabatan terakhir'
-                          }
-                      }
-                },
-      pegawai_status: {
+            peg_status: {
             validators: {
                 notEmpty: {
-                    message: 'Silakan pilih status pegawai'
+                    message: 'Silakan pilih status absen pegawai'
                       }
                   }
             }

@@ -5,6 +5,7 @@
 		<a href="#" class="list-group-item active"><i class="fa fa-cubes fa-fw"></i>&nbsp; Master Data</a>
 		<a href="<?php echo $url; ?>/master/users/" class="list-group-item"><i class="fa fa-dot-circle-o text-primary fa-fw"></i>&nbsp; Users</a>
 		<a href="<?php echo $url; ?>/master/unitkerja/" class="list-group-item"><i class="fa fa-dot-circle-o text-primary fa-fw"></i>&nbsp; Unit Kerja</a>
+		<a href="<?php echo $url; ?>/master/pegawai/" class="list-group-item"><i class="fa fa-dot-circle-o text-primary fa-fw"></i>&nbsp; Pegawai</a>
 		</div>
 	</div>
 		<div class="col-lg-10 col-sm-10">

@@ -1,26 +1,15 @@
+<div class="col-lg-12 col-sm-12">
 <?php
-  $pegawai_nip=$lvl4;
-	$db = new db();
-	$conn = $db -> connect();
-  $sql_user=$conn-> query("select * from users where user_nip='$pegawai_nip'");
-  $cek_user=$sql_user -> num_rows;
-  if ($cek_user>0) {
-    echo '<strong>(ERROR)</strong> data pegawai nip '.$pegawai_nip.' masih ada akses sistem.<br />silakan hapus terlebih dahulu data username nya';
+  $peg_no=$lvl4;
+	if (cek_pegawai_no($peg_no)==false) {
+    echo 'Pegawai ID tidak ada';
   }
   else {
-    $sql_peg= $conn -> query("select * from m_pegawai where pegawai_nip='$pegawai_nip'");
-  	$cek=$sql_peg -> num_rows;
-      	if ($cek>0) {
-      		$r=$sql_peg ->fetch_object();
-      		$parent_unit=get_nama_unit($r->pegawai_unit);
-      		$peg_nama ='<strong>('.$pegawai_nip.') '. $r->pegawai_nama .'</strong> '.$parent_unit;
-      		$sql_delete=$conn->query("delete from m_pegawai where pegawai_nip='$pegawai_nip'");
-      		if ($sql_delete) echo '(SUCCESS) Data Pegawai : '.$peg_nama.' telah dihapus';
-      		else echo '(ERROR) Data Pegawai : '.$peg_nama.' tidak dihapus';
-      	}
-      	else {
-      		 echo 'ERROR : NIP Pegawai '.$pegawai_nip.' tidak ada';
-      	}
+    $r_peg=list_pegawai($peg_no,true);
+    $peg_nama=$r_peg["item"][1]["peg_nama"];
+    $hapus_peg=hapus_pegawai_absen($peg_no);
+    if ($hapus_peg) { echo 'Pegawai an. <strong>'.$peg_nama.'</strong> berhasil di hapus'; }
+    else { echo 'Error menghapus data pegawai'; }
   }
-  	$conn -> close();
 ?>
+</div>

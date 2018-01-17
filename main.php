@@ -15,6 +15,9 @@ elseif ($page=="unitkerja") {
 elseif ($page=="laporan") {
 		include 'page/laporan/m_laporan.php';
 	}
+elseif (($page=="absen") && ($_SESSION['sesi_provkab'] == 1)) {
+		include 'page/absen/m_absen.php';
+	}
 elseif ($page=="logout") {
 	include 'page/login/logout.php';
 }
