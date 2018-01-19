@@ -124,7 +124,7 @@
 						<select class="form-control" name="peg_jabatan" id="peg_jabatan" style="font-family:'FontAwesome', Arial;">
 						<option value="">Pilih Jabatan</option>
 						<?php
-						for ($i=1;$i<=2;$i++)
+						for ($i=1;$i<=4;$i++)
 							{
 								if ($i==$peg_jabatan) {
 									$dipilih_jabatan='selected="selected"';

@@ -45,7 +45,7 @@ function peg_absen($peg_id,$tgl_absen,$kode_absen) {
 	// kode 0:masuk, 1:pulang, 2:keluar, 3:kembali, 4:masuk lembur, 5:plg lembur
 	$db_absen = new db();
 	$conn_absen = $db_absen -> connect();
-	$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and absen_kode='$kode_absen' order by absen_jam asc limit 0,1");
+	$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and absen_kode='$kode_absen' order by absen_jam asc limit 1");
 	$cek_absen = $sql_absen->num_rows;
 	if ($cek_absen>0) {
 		$r=$sql_absen->fetch_object();
@@ -184,5 +184,58 @@ function hapus_pegawai_absen($peg_no) {
 		$peg_hapus_status=FALSE;
 	}
 	return $peg_hapus_status;
+}
+
+function list_absen($peg_id,$detil=false,$sdate,$edate,$tglDurasi=false) {
+	$db_absen = new db();
+	$conn_absen = $db_absen -> connect();
+	if ($detil==true) {
+		if ($tglDurasi==true) {
+			$sql_absen= $conn_absen->query();
+		}
+		else {
+
+		}
+	}
+	else {
+		if ($tglDurasi==true) {
+
+		}
+		else {
+			//list absen 1 titik tanggal untuk semua record
+			$sql_absen= $conn_absen->query();
+		}	
+	}
+	$cek_absen = $sql_absen->num_rows;
+	$absen_list=array("error"=>false);
+	if ($cek_absen>0) {
+		$absen_list["error"]=false;
+		$absen_list["peg_total"]=$cek_absen;
+		$i=1;
+		while ($r=$sql_absen->fetch_object()) {
+			$absen_list["item"][$i]=array(
+				"absen_id"=>$r->absen_id,
+				"absen_peg_id"=>$r->absen_peg_id,
+				"absen_peg_nama"=>$r->absen_peg_nama,
+				"absen_tgl"=>$r->absen_tgl,
+				"absen_jam"=>$r->absen_jam,
+				"absen_kode"=>$r->absen_kode,
+				"absen_sync_tgl"=>$r->absen_sync_tgl,
+				"absen_status"=>$r->absen_status,
+				"absen_ket"=>$r->absen_ket,
+				"peg_dibuat_waktu"=>$r->peg_dibuat_waktu,
+				"peg_dibuat_oleh"=>$r->peg_dibuat_oleh,
+				"peg_diupdate_waktu"=>$r->peg_diupdate_waktu,
+				"peg_diupdate_oleh"=>$r->peg_diupdate_oleh
+			);
+			$i++;
+		}
+	}
+	else {
+		$absen_list["error"]=true;
+		$absen_list["pesan_error"]="data kosong";
+	}
+	return $absen_list;
+	$conn_absen->close();
 }
 ?>
