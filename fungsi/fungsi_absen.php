@@ -41,6 +41,68 @@ function list_pegawai($peg_no,$detil=false) {
 	return $list_pegawai;
 	$conn_pegawai->close();
 }
+function peg_absen_v2($peg_id,$tgl_absen,$kode_absen) {
+	// kode 0:masuk, 1:pulang, 2:keluar, 3:kembali, 4:masuk lembur, 5:plg lembur
+	$db_absen = new db();
+	$conn_absen = $db_absen -> connect();
+	if ($kode_absen==0) {
+		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and hour(absen_jam) between 5 and 11 order by absen_jam asc limit 1");
+	}
+	elseif ($kode_absen==1) {
+		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and hour(absen_jam) between 15 and 23 order by absen_jam desc limit 1");
+	}
+	elseif ($kode_absen==3) {
+
+	}
+	elseif ($kode_absen==4) {
+
+	}
+	else {
+		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and absen_kode='$kode_absen' order by absen_jam asc limit 1");
+	}
+	$cek_absen = $sql_absen->num_rows;
+	if ($cek_absen>0) {
+		$r=$sql_absen->fetch_object();
+		$waktu_absen=$r->absen_jam;
+		$w_absen=strtotime($waktu_absen);
+		/*
+		if ($kode_absen==0) {
+			$pagi = strtotime('07:30:59');
+			if ($w_absen>$pagi) {
+				//telat merah
+				$waktu_absen='<font color="red">'.$waktu_absen.'</font>';
+			}
+			else {
+				//bner hijau
+				$waktu_absen='<font color="green">'.$waktu_absen.'</font>';
+			}
+		 
+		}
+		elseif ($kode_absen==1) {
+			$sore = strtotime('16:00:00');
+			if ($w_absen<$sore) {
+				//duluan pulang
+				$waktu_absen='<font color="red">'.$waktu_absen.'</font>';
+			}
+			else {
+				//normal
+				$waktu_absen='<font color="green">'.$waktu_absen.'</font>';
+			}
+			
+		}
+		else {
+			$istirahat = strtotime('12:30:00');
+			$siang = strtotime('14:00:00');
+			$waktu_absen='<font color="green">'.$waktu_absen.'</font>';
+		}
+		*/
+	}
+	else {
+		$waktu_absen='-';
+	}
+	return $waktu_absen;
+	$conn_absen->close();
+}
 function peg_absen($peg_id,$tgl_absen,$kode_absen) {
 	// kode 0:masuk, 1:pulang, 2:keluar, 3:kembali, 4:masuk lembur, 5:plg lembur
 	$db_absen = new db();
@@ -237,5 +299,87 @@ function list_absen($peg_id,$detil=false,$sdate,$edate,$tglDurasi=false) {
 	}
 	return $absen_list;
 	$conn_absen->close();
+}
+
+function list_pegawai_unitkerja($unit_kode,$detil=false) {
+	$db_pegawai = new db();
+	$conn_pegawai = $db_pegawai -> connect();
+	if ($detil==true) {
+		$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where m_pegawai.peg_status='1' and substring(m_pegawai.peg_unitkerja,1,4)=substring('$unit_kode',1,4) order by m_pegawai.peg_unitkerja,m_pegawai.peg_jabatan asc");
+	}
+	else {
+		$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where m_pegawai.peg_status='1' order by m_pegawai.peg_unitkerja,m_pegawai.peg_jabatan asc");
+	}
+	$cek_pegawai = $sql_pegawai->num_rows;
+	$list_pegawai=array("error"=>false);
+	if ($cek_pegawai>0) {
+		$list_pegawai["error"]=false;
+		$list_pegawai["peg_total"]=$cek_pegawai;
+		$i=1;
+		while ($r=$sql_pegawai->fetch_object()) {
+			$list_pegawai["item"][$i]=array(
+				"peg_no"=>$r->peg_no,
+				"peg_id"=>$r->peg_id,
+				"peg_nama"=>$r->peg_nama,
+				"peg_jk"=>$r->peg_jk,
+				"peg_status"=>$r->peg_status,
+				"user_no"=>$r->peg_user_no,
+				"peg_unitkerja"=>$r->peg_unitkerja,
+				"peg_jabatan"=>$r->peg_jabatan,
+				"user_id"=>$r->user_id,
+				"peg_dibuat_waktu"=>$r->peg_dibuat_waktu,
+				"peg_dibuat_oleh"=>$r->peg_dibuat_oleh,
+				"peg_diupdate_waktu"=>$r->peg_diupdate_waktu,
+				"peg_diupdate_oleh"=>$r->peg_diupdate_oleh
+			);
+			$i++;
+		}
+	}
+	else {
+		$list_pegawai["error"]=true;
+		$list_pegawai["pesan_error"]="data kosong";
+	}
+	return $list_pegawai;
+	$conn_pegawai->close();
+}
+function cek_absen_telat($tgl_absen,$waktu_absen,$kode_absen) {
+	// kode 0:masuk, 1:pulang, 2:keluar, 3:kembali, 4:masuk lembur, 5:plg lembur
+	$telat_absen;=array("error"=>false);
+	$hari=date("N",strtotime($tgl_absen));
+	if ($kode_absen==0) {
+		//absen pagi
+		$wkt_absen=strtotime($waktu_absen);
+		$pagi = strtotime('07:30:59');
+		$selisih=$wkt_absen-$pagi;
+		$telat_absen["error"]=false;
+		if ($selisih<0) {
+			//tidak telat
+			$telat_absen["absen_telat"]=0;
+			$telat_absen["absen_selisih"]=0;
+		}
+		else {
+			//telat absen
+			$telat_absen["absen_telat"]=1;
+			$selisih=floor($selisih/60);
+			$telat_absen["absen_selisih"]=$selisih;
+		}
+	}
+	elseif ($kode_absen==1) {
+		//absen sore
+	}
+	elseif ($kode_absen==2) {
+
+	}
+	elseif ($kode_absen==3) {
+
+	}
+	elseif ($kode_absen==4) {
+
+	}
+	else {
+		$telat_absen["error"]=true;
+		$telat_absen["pesan_error"]="Kode Absen tidak sesuai";
+	}
+	return $telat_absen;
 }
 ?>

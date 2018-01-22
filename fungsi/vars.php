@@ -22,10 +22,18 @@ $lvl_user=array(1=>"Pemantau",2=>'Operator Kab/Kota',3=>'Operator Prov',4=>"Admi
 $status_umum=array(0=>'Tidak Aktif',1=>'Aktif');
 $JenisKelamin=array(1=>'Laki-Laki',2=>'Perempuan');
 $JenisUnit=array(1=>'Provinsi',2=>'Kabupaten');
-$JenisJabatan=array(1=>'Kepala',2=>'Staf',3=>"Mitra",4=>"Tugas Belajar");
+$JenisJabatan=array(1=>'Kepala',2=>'Staf',3=>"CS/Satpam",4=>"Tugas Belajar");
 $unit_eselon=array(1=>'I',2=>'II',3=>'III',4=>'IV');
 $JenisKegiatan=array(1=>'Bulanan',2=>'Triwulanan',3=>'Semesteran',4=>'Tahunan',5=>'Subround',6=>'AdHoc');
 $JenisDetilKegiatan=array(1=>'Pengiriman',2=>'Penerimaan');
 $TahunDefault=date('Y');
 $StatusSPJ=array(1=>'<span class="label label-success">Ya</span',2=>'<span class="label label-danger">Tidak</span>');
+//pengaturan absen
+$AbsenMasuk='07:30:00';
+$AbsenPulang='16:00:00';
+$AbsenPulangJumat='17:00:00';
+//absen untuk bulan puasa
+$AbsenMasukPuasa='08:00:00';
+$AbsenPulangPuasa='15:00:00';
+$AbsenPulangJumatPuasa='15:30:00';
 ?>
