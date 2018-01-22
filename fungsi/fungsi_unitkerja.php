@@ -87,7 +87,7 @@ function get_parent_kode($kode_unit) {
 		$conn_unit->close();
 		}
 
-function list_unitkerja($unit_kode,$detil=false,$jenis=false) {
+function list_unitkerja($unit_kode,$detil=false,$jenis=false,$eselon3=false) {
 	$db_unit = new db();
 	$conn_unit = $db_unit -> connect();
 	if ($detil==true) {
@@ -95,7 +95,12 @@ function list_unitkerja($unit_kode,$detil=false,$jenis=false) {
 	}
 
 	if ($jenis==false) {
-		$sql_unit = $conn_unit -> query("select * from unitkerja where unit_jenis='1' order by unit_kode asc");
+		if ($eselon3==false) {
+			$sql_unit = $conn_unit -> query("select * from unitkerja where unit_jenis='1' order by unit_kode asc");
+		}
+		else {
+			$sql_unit = $conn_unit -> query("select * from unitkerja where unit_jenis='1' and SUBSTRING(unit_kode,5,1)=0 order by unit_kode asc");	
+		}
 	}
 	else {
 		$sql_unit = $conn_unit -> query("select * from unitkerja order by unit_jenis,unit_kode asc");
