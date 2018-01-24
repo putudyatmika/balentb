@@ -65,16 +65,16 @@ function peg_absen_v2($peg_id,$tgl_absen,$kode_absen) {
 		$r=$sql_absen->fetch_object();
 		$waktu_absen=$r->absen_jam;
 		$w_absen=strtotime($waktu_absen);
-		/*
+		
 		if ($kode_absen==0) {
 			$pagi = strtotime('07:30:59');
 			if ($w_absen>$pagi) {
 				//telat merah
-				$waktu_absen='<font color="red">'.$waktu_absen.'</font>';
+				$waktu_absen='<span class="label label-danger">'.$waktu_absen.'</span>';
 			}
 			else {
 				//bner hijau
-				$waktu_absen='<font color="green">'.$waktu_absen.'</font>';
+				//$waktu_absen='<span class="bg-success">'.$waktu_absen.'</span>';
 			}
 		 
 		}
@@ -82,20 +82,20 @@ function peg_absen_v2($peg_id,$tgl_absen,$kode_absen) {
 			$sore = strtotime('16:00:00');
 			if ($w_absen<$sore) {
 				//duluan pulang
-				$waktu_absen='<font color="red">'.$waktu_absen.'</font>';
+				$waktu_absen='<span class="label label-danger">'.$waktu_absen.'</span>';
 			}
 			else {
 				//normal
-				$waktu_absen='<font color="green">'.$waktu_absen.'</font>';
+				//$waktu_absen='<span class="bg-success">'.$waktu_absen.'</span>';
 			}
 			
 		}
 		else {
 			$istirahat = strtotime('12:30:00');
 			$siang = strtotime('14:00:00');
-			$waktu_absen='<font color="green">'.$waktu_absen.'</font>';
+			$waktu_absen='<span class="label label-success">'.$waktu_absen.'</span>';
 		}
-		*/
+		
 	}
 	else {
 		$waktu_absen='-';
@@ -344,7 +344,7 @@ function list_pegawai_unitkerja($unit_kode,$detil=false) {
 }
 function cek_absen_telat($tgl_absen,$waktu_absen,$kode_absen) {
 	// kode 0:masuk, 1:pulang, 2:keluar, 3:kembali, 4:masuk lembur, 5:plg lembur
-	$telat_absen;=array("error"=>false);
+	$telat_absen=array("error"=>false);
 	$hari=date("N",strtotime($tgl_absen));
 	if ($kode_absen==0) {
 		//absen pagi
