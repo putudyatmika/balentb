@@ -11,7 +11,6 @@
 		<th>Absen ID</th>
 		<th>Nama</th>
 		<th>Jenis Kelamin</th>
-		<th>User No</th>
 		<th>Unit Kerja</th>
 		<th>Jabatan</th>
 		<th>Status</th>
@@ -48,7 +47,6 @@
 			<td>'.$r_peg["item"][$i]["peg_id"].'</td>
 			<td>'.$r_peg["item"][$i]["peg_nama"].'</td>
 			<td>'.$JenisKelamin[$r_peg["item"][$i]["peg_jk"]].'</td>
-			<td>'.$user_no.'</td>
 			<td>'.$peg_unitkerja.'</td>
 			<td>'.$peg_jabatan.'</td>
 			<td>'.$status_umum[$r_peg["item"][$i]["peg_status"]].'</td>
