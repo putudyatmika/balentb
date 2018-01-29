@@ -6,7 +6,7 @@
  	<tr>
  		<th>#</th>
  		<th>Nama</th>
- 		<th>Jabatan</th>
+ 		<th class="hidden-xs">Jabatan</th>
  		<th>Masuk</th>
  		<th>Terlambat</th>
  		<th>Keluar Istirahat</th>
@@ -55,14 +55,14 @@
 						$AbsenAwalNama='
 						<th>'.$j.'</th>
 						<th>'.$r_peg["item"][$j]["peg_nama"].'</th>
-						<th>'.$JenisJabatan[$r_peg["item"][$j]["peg_jabatan"]].' '.get_nama_unit($r_peg["item"][$j]["peg_unitkerja"]).'</th>
+						<th class="hidden-xs">'.$JenisJabatan[$r_peg["item"][$j]["peg_jabatan"]].' '.get_nama_unit($r_peg["item"][$j]["peg_unitkerja"]).'</th>
 						';
 					}
 					else {
 						$AbsenAwalNama='
 						<td>'.$j.'</td>
 						<td>'.$r_peg["item"][$j]["peg_nama"].'</td>
-						<td>'.$JenisJabatan[$r_peg["item"][$j]["peg_jabatan"]].' '.get_nama_unit($r_peg["item"][$j]["peg_unitkerja"]).'</td>
+						<td class="hidden-xs">'.$JenisJabatan[$r_peg["item"][$j]["peg_jabatan"]].' '.get_nama_unit($r_peg["item"][$j]["peg_unitkerja"]).'</td>
 						';
 					}
 
