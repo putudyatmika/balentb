@@ -6,9 +6,11 @@
  	<tr>
  		<th>#</th>
  		<th>Nama</th>
- 		<th>Jabatan</th>
+ 		<th class="hidden-xs">Jabatan</th>
  		<th>Masuk</th>
  		<th>Terlambat</th>
+ 		<th>Keluar Istirahat</th>
+ 		<th>Masuk Istirahat</th>
  		<th>Pulang</th>
  		<th>Pulang Cepat</th>
  	</tr>
@@ -24,13 +26,13 @@
 			if ($r_unit["item"][$i]["unit_eselon"] < 4) {
 				//eselon 2 dan 3 bold
 				echo '<tr>
-			<td colspan="7"><strong>['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</strong></td>
+			<td colspan="9"><strong>['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</strong></td>
 			</tr>';
 			}
 			else {
 				
 				echo '<tr>
-			<td colspan="7">['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</td>
+			<td colspan="9">['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</td>
 			</tr>';
 			}
 			$r_peg=list_pegawai_unitkerja($r_unit["item"][$i]["unit_kode"],true);
@@ -38,39 +40,52 @@
 				$j=1;
 				$max_peg=$r_peg["peg_total"];
 				for ($j=1;$j<=$max_peg;$j++) {
+					$a_masuk=peg_absen_v2($r_peg["item"][$j]["peg_id"],$sdate,0);
+					if ($a_masuk["absen_telat"]==1) {
+						$waktu_telat=$a_masuk["absen_selisih"];
+					}
+					else {
+						$waktu_telat='';
+					}
+					$a_pulang=peg_absen_v2($r_peg["item"][$j]["peg_id"],$sdate,1);
+					$a_keluar=peg_absen_v2($r_peg["item"][$j]["peg_id"],$sdate,2);
+					$a_kembali=peg_absen_v2($r_peg["item"][$j]["peg_id"],$sdate,3);
+
 					if ($r_peg["item"][$j]["peg_jabatan"]==1) {
 						$AbsenAwalNama='
 						<th>'.$j.'</th>
 						<th>'.$r_peg["item"][$j]["peg_nama"].'</th>
-						<th>'.$JenisJabatan[$r_peg["item"][$j]["peg_jabatan"]].' '.get_nama_unit($r_peg["item"][$j]["peg_unitkerja"]).'</th>
+						<th class="hidden-xs">'.$JenisJabatan[$r_peg["item"][$j]["peg_jabatan"]].' '.get_nama_unit($r_peg["item"][$j]["peg_unitkerja"]).'</th>
 						';
 					}
 					else {
 						$AbsenAwalNama='
 						<td>'.$j.'</td>
 						<td>'.$r_peg["item"][$j]["peg_nama"].'</td>
-						<td>'.$JenisJabatan[$r_peg["item"][$j]["peg_jabatan"]].' '.get_nama_unit($r_peg["item"][$j]["peg_unitkerja"]).'</td>
+						<td class="hidden-xs">'.$JenisJabatan[$r_peg["item"][$j]["peg_jabatan"]].' '.get_nama_unit($r_peg["item"][$j]["peg_unitkerja"]).'</td>
 						';
 					}
 
 					echo '
 					<tr> '.$AbsenAwalNama.'
-						<td>'.peg_absen_v2($r_peg["item"][$j]["peg_id"],$sdate,0).'</td>
-						<td></td>
-						<td>'.peg_absen_v2($r_peg["item"][$j]["peg_id"],$sdate,1).'</td>
-						<td></td>
+						<td>'.$a_masuk["absen_teks"].'</td>
+					<td>'.$waktu_telat.'</td>
+					<td>'.$a_keluar["absen_teks"].'</td>
+					<td>'.$a_kembali["absen_teks"].'</td>
+					<td>'.$a_pulang["absen_teks"].'</td>
+					<td></td>
 					</tr>
 					';
 				}
 			}
 			else {
-				echo '<tr><td colspan="7">Data pegawai masih kosong</td></tr>';
+				echo '<tr><td colspan="9">Data pegawai masih kosong</td></tr>';
 			}
 		}
 	}
 	else {
 		echo '<tr>
-		<td colspan="7">Data masing kosong</td>
+		<td colspan="9">Data masing kosong</td>
 		</tr>';
 	}
 

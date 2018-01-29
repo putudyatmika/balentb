@@ -29,11 +29,17 @@ $JenisDetilKegiatan=array(1=>'Pengiriman',2=>'Penerimaan');
 $TahunDefault=date('Y');
 $StatusSPJ=array(1=>'<span class="label label-success">Ya</span',2=>'<span class="label label-danger">Tidak</span>');
 //pengaturan absen
-$AbsenMasuk='07:30:00';
-$AbsenPulang='16:00:00';
-$AbsenPulangJumat='17:00:00';
+$JamMasuk='07:30:59';
+$JamPulang='16:00:00';
+$JamPulangJumat='17:00:00';
+$JamKeluarIstirahat='12:30:00';
+$JamKembaliIstirahat='13:30:00';
+$JamKeluarJumat='12:00:00';
+$JamKembaliJumat='14:00:00';
 //absen untuk bulan puasa
 $AbsenMasukPuasa='08:00:00';
 $AbsenPulangPuasa='15:00:00';
 $AbsenPulangJumatPuasa='15:30:00';
+$ip_server_absen='10.52.6.235';
+$KodeMesinAbsen=array(0=>'Masuk',1=>'Pulang',2=>'Keluar',3=>'Kembali',4=>'Masuk Lembur',5=>'Pulang Lembur');
 ?>
