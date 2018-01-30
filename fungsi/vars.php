@@ -12,6 +12,7 @@ $ver_db='1.3.2';
 date_default_timezone_set('Asia/Makassar');
 //variabel-variabel
 $pengacak='Jb##ndhBN**adj##%)%hdn8xx60;:0621##213.#..12??//><LSjjds31-+~~=276';
+$cryptKey  = 'huxLLLnHHJjdfa652jdhHHGKnzhanleipz$$@a9832VZQzzsmpohahdg156';
 $nama_bulan_panjang=array (1 => 'Januari', 'Pebruari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember');
 $nama_bulan_pendek=array (1 => 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des');
 $nama_hari_indo = array (0=> "Minggu", 1=> "Senin", 2=> "Selasa", 3=> "Rabu", 4=> "Kamis", 5=> "Jumat", 6=> "Sabtu");
@@ -42,4 +43,6 @@ $AbsenPulangPuasa='15:00:00';
 $AbsenPulangJumatPuasa='15:30:00';
 $ip_server_absen='10.52.6.235';
 $KodeMesinAbsen=array(0=>'Masuk',1=>'Pulang',2=>'Keluar',3=>'Kembali',4=>'Masuk Lembur',5=>'Pulang Lembur');
+$JenisHariAbsen=array(0=>"Tanpa Keterangan",1=>"Kerja",2=>"Sakit",3=>"Ijin",4=>"Cuti",5=>"Dinas Luar",6=>"Libur Nasional",7=>"Lainnya");
+
 ?>

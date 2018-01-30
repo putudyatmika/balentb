@@ -1,4 +1,17 @@
 <?php
+function encrypt_url( $s ) {
+	global $cryptKey;
+    
+    $qEncoded      = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), $s, MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ) );
+    return( $qEncoded );
+}
+
+function decrypt_url($s) {
+   	global $cryptKey;
+    $qDecoded  = rtrim( mcrypt_decrypt( MCRYPT_RIJNDAEL_256, md5( $cryptKey ), base64_decode( $s ), MCRYPT_MODE_CBC, md5( md5( $cryptKey ) ) ), "\0");
+    return( $qDecoded );
+}
+
 //fungsi untuk modul absen
 function list_pegawai($peg_no,$detil=false) {
 	$db_pegawai = new db();
@@ -209,6 +222,21 @@ function sync_absen($peg_id,$peg_nama,$tgl_absen,$jam_absen,$kode) {
 	return $status_sync;
 	$db_sync->close();
 }
+function sync_absen_v2($peg_id,$peg_nama,$tgl_absen,$jam_absen,$kode,$waktu_sync_lokal) {
+	//$waktu_lokal=date("Y-m-d H:i:s");
+	$db_sync = new db();
+	$conn_sync = $db_sync -> connect();
+	$sql_sync = $conn_sync-> query("insert into peg_absen(absen_peg_id,absen_peg_nama,absen_tgl,absen_jam,absen_kode,absen_sync_tgl,absen_status,absen_upload)
+	values('$peg_id','$peg_nama','$tgl_absen','$jam_absen','$kode','$waktu_sync_lokal',1,1)") or die(mysqli_error($conn_sync));
+	if ($sql_sync) {
+		$status_sync=TRUE;
+	}
+	else {
+		$status_sync=FALSE;
+	}
+	return $status_sync;
+	$db_sync->close();
+}
 function cek_absen_sync($peg_id,$tgl_absen,$jam_absen,$kode) {
 	$db_cek = new db();
 	$conn_cek = $db_cek -> connect();
@@ -292,7 +320,37 @@ function hapus_pegawai_absen($peg_no) {
 	}
 	return $peg_hapus_status;
 }
-
+function upload_data_absen($banyak) {
+	
+	$db_absen = new db();
+	$conn_absen = $db_absen -> connect();
+	$sql_absen = $conn_absen->query("select * from peg_absen where absen_status='0' order by absen_tgl desc limit 0,$banyak");
+	$cek_absen=$sql_absen->num_rows;
+	$absen_list=array("error"=>false);
+	if ($cek_absen>0) {
+		$absen_list["error"]=false;
+		$absen_list["absen_total"]=$cek_absen;
+		$i=1;
+		while ($r=$sql_absen->fetch_object()) {
+			$absen_list["item"][$i]=array(
+				"absen_peg_id"=>$r->absen_peg_id,
+				"absen_peg_nama"=>$r->absen_peg_nama,
+				"absen_tgl"=>$r->absen_tgl,
+				"absen_jam"=>$r->absen_jam,
+				"absen_kode"=>$r->absen_kode,
+				"absen_sync_tgl"=>$r->absen_sync_tgl,
+				"absen_status"=>$r->absen_status,
+			);
+			$i++;
+		}
+	}
+	else {
+		$absen_list["error"]=true;
+		$absen_list["pesan_error"]="data kosong";
+	}
+	return $absen_list;
+	$conn_absen->close();
+}
 function list_absen($peg_id,$detil=false,$sdate,$edate,$tglDurasi=false) {
 	//semua absen list_absen(0,false,'tanggal',0,false) << 1 tanggal
 	//semua absen interval list_absen(0,false,'tanggal',0,false) << beberapa tanggal
@@ -453,4 +511,23 @@ function peg_jabatan_absen($peg_id) {
 	return $peg_data;
 	$conn_pegawai->close();
 }
+function get_web_page( $url )
+  {
+
+          $options = array(
+              CURLOPT_CUSTOMREQUEST  =>"GET",    // Atur type request, get atau post
+              CURLOPT_POST           =>false,    // Atur menjadi GET
+              CURLOPT_FOLLOWLOCATION => true,    // Follow redirect aktif
+              CURLOPT_CONNECTTIMEOUT => 120,     // Atur koneksi timeout
+              CURLOPT_TIMEOUT        => 120,     // Atur response timeout
+          );
+
+          $ch      = curl_init( $url );          // Inisialisasi Curl
+          curl_setopt_array( $ch, $options );    // Set Opsi
+          $content = curl_exec( $ch );           // Eksekusi Curl
+          curl_close( $ch );                     // Stop atau tutup script
+
+          $header['content'] = $content;
+          return $header;
+  }
 ?>

@@ -5,7 +5,7 @@ if ($edate!='') {
 }
 else {
 	echo '<p>Hari '.tgl_convert(1,$sdate).'</p>';
-	$edate=$sdate;
+	$edate=date("Y-m-d");
 }
 ?>
 <div class="table-responsive">

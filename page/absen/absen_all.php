@@ -1,12 +1,13 @@
 <legend>Daftar Absen</legend>
 <?php
-if ($edate!='') {
-	echo '<p>Hari '.tgl_convert(1,$sdate).' s/d '.tgl_convert(1,$edate).' </p>';
-}
-else {
+if ($edate=='') {
 	echo '<p>Hari '.tgl_convert(1,$sdate).'</p>';
 	$edate=$sdate;
 }
+else {
+	echo '<p>Hari '.tgl_convert(1,$sdate).' s/d '.tgl_convert(1,$edate).' </p>';
+}
+
 ?>
 <div class="table-responsive">
 <table class="table table-hover table-striped table-condensed">

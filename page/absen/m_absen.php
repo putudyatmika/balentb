@@ -3,7 +3,7 @@ if (isset($_POST['sdate'])) { $sdate=$_POST['sdate']; }
 else { $sdate=date("Y-m-d"); }
 
 if (isset($_POST['edate'])) { $edate=$_POST['edate']; }
-else { $edate=date("Y-m-d"); }
+else { $edate=''; }
 ?>
 <div class="container">
 <div class="row konten">
@@ -13,8 +13,8 @@ else { $edate=date("Y-m-d"); }
 			<a href="<?php echo $url; ?>/absen/add/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span></a>
 			<a href="<?php echo $url; ?>/absen/unitkerja/" class="btn btn-danger btn-sm"><i class="fa fa-bar-chart" aria-hidden="true"></i>&nbsp; Bidang/Bagian</a>
 			<a href="<?php echo $url; ?>/absen/" class="btn btn-success btn-sm"><i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp; Semua</a>
-			<a href="<?php echo $url; ?>/absen/rekap/" class="btn btn-success btn-sm"><i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp; Rekap</a>
-			<a href="<?php echo $url; ?>/absen/sync/" class="btn btn-info btn-sm"><i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp; Sync</a>
+			<a href="<?php echo $url; ?>/absen/rekap/" class="btn btn-info btn-sm"><i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp; Rekap</a>
+			<a href="<?php echo $url; ?>/absen/sync/" class="btn btn-warning btn-sm"><i class="fa fa-area-chart" aria-hidden="true"></i>&nbsp; Sync</a>
 		</div>
 		</div>
 		</div>
