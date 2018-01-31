@@ -20,7 +20,48 @@ function list_pegawai($peg_no,$detil=false) {
 		$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where peg_no='$peg_no'");
 	}
 	else {
-		$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no order by m_pegawai.peg_status desc, m_pegawai.peg_unitkerja,m_pegawai.peg_jabatan asc");
+		$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where m_pegawai.peg_jabatan<3 order by m_pegawai.peg_status desc, m_pegawai.peg_unitkerja,m_pegawai.peg_jabatan asc");
+	}
+	$cek_pegawai = $sql_pegawai->num_rows;
+	$list_pegawai=array("error"=>false);
+	if ($cek_pegawai>0) {
+		$list_pegawai["error"]=false;
+		$list_pegawai["peg_total"]=$cek_pegawai;
+		$i=1;
+		while ($r=$sql_pegawai->fetch_object()) {
+			$list_pegawai["item"][$i]=array(
+				"peg_no"=>$r->peg_no,
+				"peg_id"=>$r->peg_id,
+				"peg_nama"=>$r->peg_nama,
+				"peg_jk"=>$r->peg_jk,
+				"peg_status"=>$r->peg_status,
+				"user_no"=>$r->peg_user_no,
+				"peg_unitkerja"=>$r->peg_unitkerja,
+				"peg_jabatan"=>$r->peg_jabatan,
+				"user_id"=>$r->user_id,
+				"peg_dibuat_waktu"=>$r->peg_dibuat_waktu,
+				"peg_dibuat_oleh"=>$r->peg_dibuat_oleh,
+				"peg_diupdate_waktu"=>$r->peg_diupdate_waktu,
+				"peg_diupdate_oleh"=>$r->peg_diupdate_oleh
+			);
+			$i++;
+		}
+	}
+	else {
+		$list_pegawai["error"]=true;
+		$list_pegawai["pesan_error"]="data kosong";
+	}
+	return $list_pegawai;
+	$conn_pegawai->close();
+}
+function list_pegawai_honor($peg_no,$detil=false) {
+	$db_pegawai = new db();
+	$conn_pegawai = $db_pegawai -> connect();
+	if ($detil==true) {
+		$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where peg_no='$peg_no'");
+	}
+	else {
+		$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where m_pegawai.peg_jabatan='3' order by m_pegawai.peg_status desc, m_pegawai.peg_unitkerja,m_pegawai.peg_jabatan asc");
 	}
 	$cek_pegawai = $sql_pegawai->num_rows;
 	$list_pegawai=array("error"=>false);
@@ -211,8 +252,8 @@ function sync_absen($peg_id,$peg_nama,$tgl_absen,$jam_absen,$kode) {
 	$waktu_lokal=date("Y-m-d H:i:s");
 	$db_sync = new db();
 	$conn_sync = $db_sync -> connect();
-	$sql_sync = $conn_sync-> query("insert into peg_absen(absen_peg_id,absen_peg_nama,absen_tgl,absen_jam,absen_kode,absen_sync_tgl,absen_status)
-	values('$peg_id','$peg_nama','$tgl_absen','$jam_absen','$kode','$waktu_lokal',0)") or die(mysqli_error($conn_sync));
+	$sql_sync = $conn_sync-> query("insert into peg_absen(absen_peg_id,absen_peg_nama,absen_tgl,absen_jam,absen_kode,absen_sync_tgl,absen_rekap,absen_flag)
+	values('$peg_id','$peg_nama','$tgl_absen','$jam_absen','$kode','$waktu_lokal',0,0)") or die(mysqli_error($conn_sync));
 	if ($sql_sync) {
 		$status_sync=TRUE;
 	}
@@ -226,8 +267,8 @@ function sync_absen_v2($peg_id,$peg_nama,$tgl_absen,$jam_absen,$kode,$waktu_sync
 	//$waktu_lokal=date("Y-m-d H:i:s");
 	$db_sync = new db();
 	$conn_sync = $db_sync -> connect();
-	$sql_sync = $conn_sync-> query("insert into peg_absen(absen_peg_id,absen_peg_nama,absen_tgl,absen_jam,absen_kode,absen_sync_tgl,absen_status,absen_upload)
-	values('$peg_id','$peg_nama','$tgl_absen','$jam_absen','$kode','$waktu_sync_lokal',1,1)") or die(mysqli_error($conn_sync));
+	$sql_sync = $conn_sync-> query("insert into peg_absen(absen_peg_id,absen_peg_nama,absen_tgl,absen_jam,absen_kode,absen_sync_tgl,absen_rekap,absen_flag)
+	values('$peg_id','$peg_nama','$tgl_absen','$jam_absen','$kode','$waktu_sync_lokal',0,1)") or die(mysqli_error($conn_sync));
 	if ($sql_sync) {
 		$status_sync=TRUE;
 	}
@@ -324,7 +365,7 @@ function upload_data_absen($banyak) {
 	
 	$db_absen = new db();
 	$conn_absen = $db_absen -> connect();
-	$sql_absen = $conn_absen->query("select * from peg_absen where absen_status='0' order by absen_tgl desc limit 0,$banyak");
+	$sql_absen = $conn_absen->query("select * from peg_absen where absen_flag='0' order by absen_tgl desc limit 0,$banyak");
 	$cek_absen=$sql_absen->num_rows;
 	$absen_list=array("error"=>false);
 	if ($cek_absen>0) {
@@ -339,7 +380,7 @@ function upload_data_absen($banyak) {
 				"absen_jam"=>$r->absen_jam,
 				"absen_kode"=>$r->absen_kode,
 				"absen_sync_tgl"=>$r->absen_sync_tgl,
-				"absen_status"=>$r->absen_status,
+				"absen_rekap"=>$r->absen_rekap,
 			);
 			$i++;
 		}
@@ -388,7 +429,8 @@ function list_absen($peg_id,$detil=false,$sdate,$edate,$tglDurasi=false) {
 				"absen_jam"=>$r->absen_jam,
 				"absen_kode"=>$r->absen_kode,
 				"absen_sync_tgl"=>$r->absen_sync_tgl,
-				"absen_status"=>$r->absen_status,
+				"absen_rekap"=>$r->absen_rekap,
+				"absen_flag"=>$r->absen_flag,
 				"absen_ket"=>$r->absen_ket,
 				"peg_dibuat_waktu"=>$r->peg_dibuat_waktu,
 				"peg_dibuat_oleh"=>$r->peg_dibuat_oleh,
@@ -511,7 +553,7 @@ function peg_jabatan_absen($peg_id) {
 	return $peg_data;
 	$conn_pegawai->close();
 }
-function get_web_page( $url )
+function get_web_page($url_curl)
   {
 
           $options = array(
@@ -522,7 +564,7 @@ function get_web_page( $url )
               CURLOPT_TIMEOUT        => 120,     // Atur response timeout
           );
 
-          $ch      = curl_init( $url );          // Inisialisasi Curl
+          $ch      = curl_init( $url_curl );          // Inisialisasi Curl
           curl_setopt_array( $ch, $options );    // Set Opsi
           $content = curl_exec( $ch );           // Eksekusi Curl
           curl_close( $ch );                     // Stop atau tutup script

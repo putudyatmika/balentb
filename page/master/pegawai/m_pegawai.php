@@ -2,7 +2,8 @@
 		<div class="btn-toolbar" role="toolbar">
 			<div class="btn-group">
 				<a href="<?php echo $url; ?>/master/pegawai/add/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span></a>
-				<a href="<?php echo $url; ?>/master/pegawai/" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-th"></span> Semua</a>
+				<a href="<?php echo $url; ?>/master/pegawai/" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-th"></span> Pegawai</a>
+				<a href="<?php echo $url; ?>/master/pegawai/honor/" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-th"></span> Honor</a>
 				
 			</div>
 		</div>
@@ -28,7 +29,9 @@
 			elseif ($lvl3=='delete') {
 				include 'page/master/pegawai/m_pegawai_delete.php';
 			}
-			
+			elseif ($lvl3=='honor') {
+				include 'page/master/pegawai/m_pegawai_honor.php';
+			}
 			else {
 				include 'page/master/pegawai/m_pegawai_list.php';
 			}
