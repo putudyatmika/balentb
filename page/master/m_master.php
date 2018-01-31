@@ -6,6 +6,7 @@
 		<a href="<?php echo $url; ?>/master/users/" class="list-group-item"><i class="fa fa-dot-circle-o text-primary fa-fw"></i>&nbsp; Users</a>
 		<a href="<?php echo $url; ?>/master/unitkerja/" class="list-group-item"><i class="fa fa-dot-circle-o text-primary fa-fw"></i>&nbsp; Unit Kerja</a>
 		<a href="<?php echo $url; ?>/master/pegawai/" class="list-group-item"><i class="fa fa-dot-circle-o text-primary fa-fw"></i>&nbsp; Pegawai</a>
+		<a href="<?php echo $url; ?>/master/absen/" class="list-group-item"><i class="fa fa-dot-circle-o text-primary fa-fw"></i>&nbsp; Absen</a>
 		</div>
 	</div>
 		<div class="col-lg-10 col-sm-10">
@@ -20,6 +21,9 @@
 	}
 	elseif ($act=="pegawai") {
 		include 'page/master/pegawai/m_pegawai.php';
+	}
+	elseif ($act=="absen") {
+		include 'page/master/absen/m_absen.php';
 	}
 	elseif ($act=="unitkerja") {
 		include 'page/master/unitkerja/m_unitkerja.php';

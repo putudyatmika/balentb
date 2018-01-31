@@ -16,7 +16,7 @@ $tanggal_hari_ini=date("Y-m-d");
 if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) $ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
 else $ip=$_SERVER['REMOTE_ADDR'];
 /*
-//
+// /uploadbasen/input/
 // /page/act/lvl3/lvl4/lvl5
 // /guest/add/
 // /guest/list/1
@@ -37,6 +37,11 @@ require('fungsi/fungsi_url_lokal.php');
 
 if ($page=="json") {
 	require_once 'page/json/m_json.php';
+	exit();
+}
+
+if ($page=="uploadabsen") {
+	require_once 'page/uploadabsen/m_index.php';
 	exit();
 }
 
