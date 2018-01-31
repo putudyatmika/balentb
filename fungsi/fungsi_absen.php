@@ -13,6 +13,39 @@ function decrypt_url($s) {
 }
 
 //fungsi untuk modul absen
+function log_peg_absen($absen_tgl) {
+	$db_absen = new db();
+	$conn_absen = $db_absen -> connect();
+	$sql_absen = $conn_absen -> query("select * from peg_absen where absen_tgl='$absen_tgl' order by absen_jam asc");
+	$cek_absen = $sql_absen->num_rows;
+	$list_absen=array("error"=>false);
+	if ($cek_absen>0) {
+		$list_absen["error"]=false;
+		$list_absen["absen_total"]=$cek_absen;
+		$i=1;
+		while ($r=$sql_absen->fetch_object()) {
+			$list_absen["item"][$i]=array(
+				"absen_id"=>$r->absen_id,
+				"absen_peg_id"=>$r->absen_peg_id,
+				"absen_peg_nama"=>$r->absen_peg_nama,
+				"absen_tgl"=>$r->absen_tgl,
+				"absen_jam"=>$r->absen_jam,
+				"absen_kode"=>$r->absen_kode,
+				"absen_sync_tgl"=>$r->absen_sync_tgl,
+				"absen_rekap"=>$r->absen_rekap,
+				"absen_flag"=>$r->absen_flag,
+				"absen_ket"=>$r->absen_ket
+			);
+			$i++;
+		}
+	}
+	else {
+		$list_absen["error"]=true;
+		$list_absen["pesan_error"]='Data masih kosong';
+	}
+	return $list_absen;
+	$conn_absen->close();
+}
 function list_pegawai($peg_no,$detil=false) {
 	$db_pegawai = new db();
 	$conn_pegawai = $db_pegawai -> connect();
@@ -95,6 +128,9 @@ function list_pegawai_honor($peg_no,$detil=false) {
 	return $list_pegawai;
 	$conn_pegawai->close();
 }
+function rekap_absen_pegawai($peg_id,$tgl_awal,$tgl_akhir,$detil=false) {
+
+}
 function peg_absen_v2($peg_id,$tgl_absen,$kode_absen) {
 	// kode 0:masuk, 1:pulang, 2:keluar, 3:kembali, 4:masuk lembur, 5:plg lembur
 	
@@ -141,14 +177,14 @@ function peg_absen_v2($peg_id,$tgl_absen,$kode_absen) {
 					else {
 						$jam=0;
 						$menit_sisa=$menit;
-						$jam_telat=sprintf("%02s", $menit_sisa).':'.sprintf("%02s", $detik);
+						$jam_telat='00:'.sprintf("%02s", $menit_sisa).':'.sprintf("%02s", $detik);
 					}
 				}
 				else {
 					$detik=$selisih;
 					$menit_sisa=0;
 					$jam=0;
-					$jam_telat='00:'.sprintf("%02s", $detik);
+					$jam_telat='00:00:'.sprintf("%02s", $detik);
 				}
 				$waktu_absen_list["absen_selisih"]=$jam_telat;
 				$waktu_absen_list["absen_teks"]='<span class="label label-danger">'.$jam_absen.'</span>';
@@ -182,6 +218,115 @@ function peg_absen_v2($peg_id,$tgl_absen,$kode_absen) {
 			
 		}
 		else {
+			$istirahat = strtotime('12:30:00');
+			$siang = strtotime('14:00:00');
+			//$waktu_absen='<span class="label label-success">'.$waktu_absen.'</span>';
+			$waktu_absen_list["absen_telat"]=0;
+			$waktu_absen_list["absen_selisih"]=0;
+			$waktu_absen_list["absen_teks"]=$jam_absen;
+		}
+		
+	}
+	else {
+		$waktu_absen_list["absen_telat"]=0;
+		$waktu_absen_list["absen_selisih"]=0;
+		$waktu_absen_list["absen_teks"]='-';
+	}
+	return $waktu_absen_list;
+	$conn_absen->close();
+}
+
+function peg_absen_v3($peg_id,$tgl_absen,$kode_absen) {
+	// kode 0:masuk, 1:pulang, 2:keluar, 3:kembali, 4:masuk lembur, 5:plg lembur
+	
+	$db_absen = new db();
+	$conn_absen = $db_absen -> connect();
+	if ($kode_absen==0) {
+		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and hour(absen_jam) between 5 and 11 order by absen_jam asc limit 1");
+	}
+	elseif ($kode_absen==1) {
+		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and hour(absen_jam) between 15 and 23 order by absen_jam desc limit 1");
+	}
+	elseif ($kode_absen==2) {
+		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and absen_kode='2' order by absen_jam asc limit 1");
+	}
+	elseif ($kode_absen==3) {
+		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and absen_kode='3' order by absen_jam desc limit 1");
+	}
+	elseif ($kode_absen==4) {
+
+	}
+	else {
+		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and absen_kode='$kode_absen' order by absen_jam asc limit 1");
+	}
+	$cek_absen = $sql_absen->num_rows;
+	if ($cek_absen>0) {
+		$r=$sql_absen->fetch_object();
+		$jam_absen=$r->absen_jam;
+		$w_absen=strtotime($jam_absen);
+		$waktu_absen_list=array("absen_telat"=>0);
+		if ($kode_absen==0) {
+			$pagi = strtotime("07:31:00");
+			if ($w_absen>$pagi) {
+				//telat merah
+				$waktu_absen_list["absen_telat"]=1;
+				$selisih= $w_absen - $pagi;
+				$selisih=$selisih + 60;
+				if ($selisih>59) {
+					$menit=floor($selisih/60);
+					if ($menit>59) {
+						$jam=floor($menit/60);
+						$menit_sisa=$menit-($jam*60);
+					}
+					else {
+						$jam=0;
+						$menit_sisa=$menit;
+						//$jam_telat=sprintf("%02s", $menit_sisa).':'.sprintf("%02s", $detik);
+					}
+					$jam_telat=sprintf("%02s", $jam).':'.sprintf("%02s", $menit_sisa);
+				}
+				else {
+					//$menit_sisa=1;
+					//$jam=0;
+					$menit_sisa=floor($selisih/60);
+					$jam_telat='00:'.sprintf("%02s", $menit_sisa);
+				}
+				$jam_absen=substr($jam_absen,0,5);
+				$waktu_absen_list["absen_selisih"]=$jam_telat;
+				$waktu_absen_list["absen_teks"]='<span class="label label-danger">'.$jam_absen.'</span>';
+			}
+			else {
+				//bner hijau
+				//$waktu_absen='<span class="bg-success">'.$waktu_absen.'</span>';
+				$jam_absen=substr($jam_absen,0,5);
+				$waktu_absen_list["absen_telat"]=0;
+				$waktu_absen_list["absen_selisih"]=0;
+				$waktu_absen_list["absen_teks"]=$jam_absen;
+			}
+		 
+		}
+		elseif ($kode_absen==1) {
+			$sore = strtotime('16:00:00');
+			$jam_absen=substr($jam_absen,0,5);
+			if ($w_absen<$sore) {
+				//duluan pulang
+				$waktu_absen_list["absen_telat"]=1;
+				$selisih=$w_absen-$sore;
+				//$wkt_telat=floor($selisih/60);
+				$waktu_absen_list["absen_selisih"]=$selisih;
+				$waktu_absen_list["absen_teks"]='<span class="label label-danger">'.$jam_absen.'</span>';
+			}
+			else {
+				//normal
+				//$waktu_absen='<span class="bg-success">'.$waktu_absen.'</span>';
+				$waktu_absen_list["absen_telat"]=0;
+				$waktu_absen_list["absen_selisih"]=0;
+				$waktu_absen_list["absen_teks"]=$jam_absen;
+			}
+			
+		}
+		else {
+			$jam_absen=substr($jam_absen,0,5);
 			$istirahat = strtotime('12:30:00');
 			$siang = strtotime('14:00:00');
 			//$waktu_absen='<span class="label label-success">'.$waktu_absen.'</span>';

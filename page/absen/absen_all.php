@@ -31,16 +31,16 @@ else {
 			$i=1;
 			$max_peg=$r_peg["peg_total"];
 			for ($i=1;$i<=$max_peg;$i++) {
-				$a_masuk=peg_absen_v2($r_peg["item"][$i]["peg_id"],$sdate,0);
+				$a_masuk=peg_absen_v3($r_peg["item"][$i]["peg_id"],$sdate,0);
 				if ($a_masuk["absen_telat"]==1) {
 					$waktu_telat=$a_masuk["absen_selisih"];
 				}
 				else {
 					$waktu_telat='';
 				}
-				$a_pulang=peg_absen_v2($r_peg["item"][$i]["peg_id"],$sdate,1);
-				$a_keluar=peg_absen_v2($r_peg["item"][$i]["peg_id"],$sdate,2);
-				$a_kembali=peg_absen_v2($r_peg["item"][$i]["peg_id"],$sdate,3);
+				$a_pulang=peg_absen_v3($r_peg["item"][$i]["peg_id"],$sdate,1);
+				$a_keluar=peg_absen_v3($r_peg["item"][$i]["peg_id"],$sdate,2);
+				$a_kembali=peg_absen_v3($r_peg["item"][$i]["peg_id"],$sdate,3);
 				echo '
 				<tr>
 					<td>'.$i.'</td>
