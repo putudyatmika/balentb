@@ -13,10 +13,44 @@ function decrypt_url($s) {
 }
 
 //fungsi untuk modul absen
-function log_peg_absen($absen_tgl) {
+function cek_log_absen($log_id) {
+	$db_cek = new db();
+	$conn_cek = $db_cek -> connect();
+	$sql_cek = $conn_cek -> query("select * from peg_absen where absen_id='$log_id'");
+	$cek_hsl = $sql_cek->num_rows;
+	if ($cek_hsl>0) {
+		$cekValue=TRUE;
+	}
+	else {
+		$cekValue=FALSE;
+	}
+	return $cekValue;
+	$conn_cek->close();
+}
+function update_log_absen($absen_id,$absen_kode,$absen_ket) {
+	$waktu_lokal=date("Y-m-d H:i:s");
+	$db_sync = new db();
+	$conn_sync = $db_sync -> connect();
+	$sql_sync = $conn_sync-> query("update peg_absen set absen_kode='$absen_kode', absen_ket='$absen_ket' where absen_id='$absen_id'") or die(mysqli_error($conn_sync));
+	if ($sql_sync) {
+		$status_sync=TRUE;
+	}
+	else {
+		$status_sync=FALSE;
+	}
+	return $status_sync;
+	$db_sync->close();
+}
+
+function log_peg_absen($absen_id,$absen_tgl,$detil=false) {
 	$db_absen = new db();
 	$conn_absen = $db_absen -> connect();
-	$sql_absen = $conn_absen -> query("select * from peg_absen where absen_tgl='$absen_tgl' order by absen_jam asc");
+	if ($detil==false) {
+		$sql_absen = $conn_absen -> query("select peg_absen.*, m_pegawai.peg_nama from peg_absen inner join m_pegawai on peg_absen.absen_peg_id=m_pegawai.peg_id where absen_tgl='$absen_tgl' order by absen_jam asc");
+	}	
+	else {
+		$sql_absen = $conn_absen -> query("select peg_absen.*, m_pegawai.peg_nama from peg_absen inner join m_pegawai on peg_absen.absen_peg_id=m_pegawai.peg_id where absen_id='$absen_id'");
+	}
 	$cek_absen = $sql_absen->num_rows;
 	$list_absen=array("error"=>false);
 	if ($cek_absen>0) {
@@ -28,6 +62,7 @@ function log_peg_absen($absen_tgl) {
 				"absen_id"=>$r->absen_id,
 				"absen_peg_id"=>$r->absen_peg_id,
 				"absen_peg_nama"=>$r->absen_peg_nama,
+				"peg_nama"=>$r->peg_nama,
 				"absen_tgl"=>$r->absen_tgl,
 				"absen_jam"=>$r->absen_jam,
 				"absen_kode"=>$r->absen_kode,
@@ -46,14 +81,19 @@ function log_peg_absen($absen_tgl) {
 	return $list_absen;
 	$conn_absen->close();
 }
-function list_pegawai($peg_no,$detil=false) {
+function list_pegawai($peg_no,$detil=false,$semua=false) {
 	$db_pegawai = new db();
 	$conn_pegawai = $db_pegawai -> connect();
 	if ($detil==true) {
 		$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where peg_no='$peg_no'");
 	}
 	else {
-		$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where m_pegawai.peg_jabatan<3 order by m_pegawai.peg_status desc, m_pegawai.peg_unitkerja,m_pegawai.peg_jabatan asc");
+		if ($semua==false) {
+			$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no order by m_pegawai.peg_status desc, m_pegawai.peg_unitkerja,m_pegawai.peg_jabatan asc");
+		}
+		else {
+		$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where m_pegawai.peg_jabatan<>3 order by m_pegawai.peg_status desc, m_pegawai.peg_unitkerja,m_pegawai.peg_jabatan asc");
+		}
 	}
 	$cek_pegawai = $sql_pegawai->num_rows;
 	$list_pegawai=array("error"=>false);
@@ -128,8 +168,33 @@ function list_pegawai_honor($peg_no,$detil=false) {
 	return $list_pegawai;
 	$conn_pegawai->close();
 }
-function rekap_absen_pegawai($peg_id,$tgl_awal,$tgl_akhir,$detil=false) {
 
+function input_generate_rekap($peg_id,$tgl_absen,$pola_absen) {
+	$db_absen = new db();
+	$conn_absen = $db_absen -> connect();
+	$sql_absen= $conn_absen->query("insert into rekap_absen (peg_id,pola,tgl) values('$peg_id','$pola_absen','$tgl_absen')") or die(mysqli_error($conn_absen));
+	if ($sql_absen) {
+		$status_rekap=true;
+	}
+	else {
+		$status_rekap=false;
+	}
+	return $status_rekap;
+	$conn_absen->close();
+}
+function cek_generate_rekap($peg_id,$tgl_absen) {
+	$db_absen = new db();
+	$conn_absen = $db_absen -> connect();
+	$sql_absen= $conn_absen->query("select * from rekap_absen where peg_id='$peg_id' and tgl='$tgl_absen'") or die(mysqli_error($conn_sync));
+	$cek_absen=$sql_absen->num_rows;
+	if ($cek_absen>0) {
+		$status_rekap=true;
+	}
+	else {
+		$status_rekap=false;
+	}
+	return $status_rekap;
+	$conn_absen->close();
 }
 function peg_absen_v2($peg_id,$tgl_absen,$kode_absen) {
 	// kode 0:masuk, 1:pulang, 2:keluar, 3:kembali, 4:masuk lembur, 5:plg lembur
@@ -149,7 +214,7 @@ function peg_absen_v2($peg_id,$tgl_absen,$kode_absen) {
 		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and absen_kode='3' order by absen_jam desc limit 1");
 	}
 	elseif ($kode_absen==4) {
-
+		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and absen_kode='4' order by absen_jam desc limit 1");
 	}
 	else {
 		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and absen_kode='$kode_absen' order by absen_jam asc limit 1");
@@ -236,16 +301,28 @@ function peg_absen_v2($peg_id,$tgl_absen,$kode_absen) {
 	$conn_absen->close();
 }
 
-function peg_absen_v3($peg_id,$tgl_absen,$kode_absen) {
+function peg_absen_v3($peg_id,$tgl_absen,$kode_absen,$peg_jabatan) {
 	// kode 0:masuk, 1:pulang, 2:keluar, 3:kembali, 4:masuk lembur, 5:plg lembur
-	
+	$hari_libur = date("w",strtotime($tgl_absen));
 	$db_absen = new db();
 	$conn_absen = $db_absen -> connect();
 	if ($kode_absen==0) {
-		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and hour(absen_jam) between 5 and 11 order by absen_jam asc limit 1");
+		if ($peg_jabatan==3) {
+			//honorer
+			$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_kode='0' order by absen_jam asc limit 1");
+		}
+		else {
+			//pegawai
+			$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and hour(absen_jam) between 5 and 11 order by absen_jam asc limit 1");
+		}
 	}
 	elseif ($kode_absen==1) {
-		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and hour(absen_jam) between 15 and 23 order by absen_jam desc limit 1");
+		if ($peg_jabatan==3) {
+			$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_kode='1' order by absen_jam desc limit 1");
+		}
+		else {
+			$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and hour(absen_jam) between 15 and 23 order by absen_jam desc limit 1");
+		}
 	}
 	elseif ($kode_absen==2) {
 		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and absen_kode='2' order by absen_jam asc limit 1");
@@ -254,7 +331,7 @@ function peg_absen_v3($peg_id,$tgl_absen,$kode_absen) {
 		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and absen_kode='3' order by absen_jam desc limit 1");
 	}
 	elseif ($kode_absen==4) {
-
+		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and absen_kode='4' order by absen_jam desc limit 1");
 	}
 	else {
 		$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and absen_kode='$kode_absen' order by absen_jam asc limit 1");
@@ -266,46 +343,68 @@ function peg_absen_v3($peg_id,$tgl_absen,$kode_absen) {
 		$w_absen=strtotime($jam_absen);
 		$waktu_absen_list=array("absen_telat"=>0);
 		if ($kode_absen==0) {
-			$pagi = strtotime("07:31:00");
-			if ($w_absen>$pagi) {
-				//telat merah
-				$waktu_absen_list["absen_telat"]=1;
-				$selisih= $w_absen - $pagi;
-				$selisih=$selisih + 60;
-				if ($selisih>59) {
-					$menit=floor($selisih/60);
-					if ($menit>59) {
-						$jam=floor($menit/60);
-						$menit_sisa=$menit-($jam*60);
-					}
-					else {
-						$jam=0;
-						$menit_sisa=$menit;
-						//$jam_telat=sprintf("%02s", $menit_sisa).':'.sprintf("%02s", $detik);
-					}
-					$jam_telat=sprintf("%02s", $jam).':'.sprintf("%02s", $menit_sisa);
-				}
-				else {
-					//$menit_sisa=1;
-					//$jam=0;
-					$menit_sisa=floor($selisih/60);
-					$jam_telat='00:'.sprintf("%02s", $menit_sisa);
-				}
-				$jam_absen=substr($jam_absen,0,5);
-				$waktu_absen_list["absen_selisih"]=$jam_telat;
-				$waktu_absen_list["absen_teks"]='<span class="label label-danger">'.$jam_absen.'</span>';
-			}
-			else {
-				//bner hijau
-				//$waktu_absen='<span class="bg-success">'.$waktu_absen.'</span>';
-				$jam_absen=substr($jam_absen,0,5);
+			//cek hari sabtu / minggu
+			if ($peg_jabatan<3 && ( $hari_libur==0 || $hari_libur==6)) {
 				$waktu_absen_list["absen_telat"]=0;
 				$waktu_absen_list["absen_selisih"]=0;
-				$waktu_absen_list["absen_teks"]=$jam_absen;
+				$waktu_absen_list["absen_teks"]='-';
 			}
-		 
+			else {
+				if ($peg_jabatan==3) {
+					$jam_absen=substr($jam_absen,0,5);
+					$waktu_absen_list["absen_telat"]=0;
+					$waktu_absen_list["absen_selisih"]=0;
+					$waktu_absen_list["absen_teks"]=$jam_absen;
+				}
+				else {
+				$pagi = strtotime("07:31:00");
+				if ($w_absen>$pagi) {
+					//telat merah
+					$waktu_absen_list["absen_telat"]=1;
+					$selisih= $w_absen - $pagi;
+					$selisih=$selisih + 60;
+					if ($selisih>59) {
+						$menit=floor($selisih/60);
+						if ($menit>59) {
+							$jam=floor($menit/60);
+							$menit_sisa=$menit-($jam*60);
+						}
+						else {
+							$jam=0;
+							$menit_sisa=$menit;
+							//$jam_telat=sprintf("%02s", $menit_sisa).':'.sprintf("%02s", $detik);
+						}
+						$jam_telat=sprintf("%02s", $jam).':'.sprintf("%02s", $menit_sisa);
+					}
+					else {
+						//$menit_sisa=1;
+						//$jam=0;
+						$menit_sisa=floor($selisih/60);
+						$jam_telat='00:'.sprintf("%02s", $menit_sisa);
+					}
+					$jam_absen=substr($jam_absen,0,5);
+					$waktu_absen_list["absen_selisih"]=$jam_telat;
+					$waktu_absen_list["absen_teks"]='<span class="label label-danger">'.$jam_absen.'</span>';
+				}
+				else {
+					//bner hijau
+					//$waktu_absen='<span class="bg-success">'.$waktu_absen.'</span>';
+					$jam_absen=substr($jam_absen,0,5);
+					$waktu_absen_list["absen_telat"]=0;
+					$waktu_absen_list["absen_selisih"]=0;
+					$waktu_absen_list["absen_teks"]=$jam_absen;
+				}
+				}
+		 	}
 		}
 		elseif ($kode_absen==1) {
+			//cek hari sabtu / minggu
+			if ($peg_jabatan<3 && ( $hari_libur==0 || $hari_libur==6)) {
+				$waktu_absen_list["absen_telat"]=0;
+				$waktu_absen_list["absen_selisih"]=0;
+				$waktu_absen_list["absen_teks"]='-';
+			}
+			else {
 			$sore = strtotime('16:00:00');
 			$jam_absen=substr($jam_absen,0,5);
 			if ($w_absen<$sore) {
@@ -323,7 +422,7 @@ function peg_absen_v3($peg_id,$tgl_absen,$kode_absen) {
 				$waktu_absen_list["absen_selisih"]=0;
 				$waktu_absen_list["absen_teks"]=$jam_absen;
 			}
-			
+			}
 		}
 		else {
 			$jam_absen=substr($jam_absen,0,5);
@@ -717,4 +816,9 @@ function get_web_page($url_curl)
           $header['content'] = $content;
           return $header;
   }
+function list_rekap_absen($peg_id,$tgl_awal,$tgl_akhir,$detil=false) {
+  $db_absen = new $db();
+  $conn_absen = $db_absen -> connect();
+  $conn_absen->close();
+}
 ?>

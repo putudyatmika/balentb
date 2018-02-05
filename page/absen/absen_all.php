@@ -22,6 +22,8 @@ else {
  		<th>Masuk Istirahat</th>
  		<th>Pulang</th>
  		<th>Pulang Cepat</th>
+ 		<th>Lembur Masuk</th>
+ 		<th>Lembur Pulang</th>
  	</tr>
  </thead>
  <tbody>
@@ -31,16 +33,18 @@ else {
 			$i=1;
 			$max_peg=$r_peg["peg_total"];
 			for ($i=1;$i<=$max_peg;$i++) {
-				$a_masuk=peg_absen_v3($r_peg["item"][$i]["peg_id"],$sdate,0);
+				$a_masuk=peg_absen_v3($r_peg["item"][$i]["peg_id"],$sdate,0,$r_peg["item"][$i]["peg_jabatan"]);
 				if ($a_masuk["absen_telat"]==1) {
 					$waktu_telat=$a_masuk["absen_selisih"];
 				}
 				else {
 					$waktu_telat='';
 				}
-				$a_pulang=peg_absen_v3($r_peg["item"][$i]["peg_id"],$sdate,1);
-				$a_keluar=peg_absen_v3($r_peg["item"][$i]["peg_id"],$sdate,2);
-				$a_kembali=peg_absen_v3($r_peg["item"][$i]["peg_id"],$sdate,3);
+				$a_pulang=peg_absen_v3($r_peg["item"][$i]["peg_id"],$sdate,1,$r_peg["item"][$i]["peg_jabatan"]);
+				$a_keluar=peg_absen_v3($r_peg["item"][$i]["peg_id"],$sdate,2,$r_peg["item"][$i]["peg_jabatan"]);
+				$a_kembali=peg_absen_v3($r_peg["item"][$i]["peg_id"],$sdate,3,$r_peg["item"][$i]["peg_jabatan"]);
+				$l_masuk=peg_absen_v3($r_peg["item"][$i]["peg_id"],$sdate,4,$r_peg["item"][$i]["peg_jabatan"]);
+				$l_pulang=peg_absen_v3($r_peg["item"][$i]["peg_id"],$sdate,5,$r_peg["item"][$i]["peg_jabatan"]);
 				echo '
 				<tr>
 					<td>'.$i.'</td>
@@ -52,13 +56,15 @@ else {
 					<td>'.$a_kembali["absen_teks"].'</td>
 					<td>'.$a_pulang["absen_teks"].'</td>
 					<td></td>
+					<td>'.$l_masuk["absen_teks"].'</td>
+					<td>'.$l_pulang["absen_teks"].'</td>
 				</tr>
 				';
 			}
 		}
 	else {
 		echo '<tr>
-		<td colspan="9">Data masing kosong</td>
+		<td colspan="11">Data masing kosong</td>
 		</tr>';
 	}
  	?>

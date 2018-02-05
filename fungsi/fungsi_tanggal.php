@@ -111,4 +111,14 @@ function tgl_periode_ckp($month = '', $year = '') {
 	 $tgl_periode_nya='1 '.$nama_bulan_pendek[$bulan].' - '. $tgl_ .' '. $nama_bulan_pendek[$bulan] .' '. $tahun;
 	 return $tgl_periode_nya;
 }
+function cek_hari_kerja($tgl_hari) {
+	$hari_kerja=date("w",strtotime($tgl_hari));
+	if ($hari_kerja==0 || $hari_kerja==6) {
+		$libur=true;
+	}
+	else {
+		$libur=false;
+	}
+	return $libur;
+}
 ?>
