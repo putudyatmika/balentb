@@ -13,6 +13,8 @@
  		<th>Masuk Istirahat</th>
  		<th>Pulang</th>
  		<th>Pulang Cepat</th>
+ 		<th>Lembur Masuk</th>
+ 		<th>Lembur Pulang</th>
  	</tr>
  </thead>
  <tbody>
@@ -26,13 +28,13 @@
 			if ($r_unit["item"][$i]["unit_eselon"] < 4) {
 				//eselon 2 dan 3 bold
 				echo '<tr>
-			<td colspan="9"><strong>['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</strong></td>
+			<td colspan="11"><strong>['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</strong></td>
 			</tr>';
 			}
 			else {
 				
 				echo '<tr>
-			<td colspan="9">['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</td>
+			<td colspan="11">['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</td>
 			</tr>';
 			}
 			$r_peg=list_pegawai_unitkerja($r_unit["item"][$i]["unit_kode"],true);
@@ -50,6 +52,8 @@
 					$a_pulang=peg_absen_v2($r_peg["item"][$j]["peg_id"],$sdate,1);
 					$a_keluar=peg_absen_v2($r_peg["item"][$j]["peg_id"],$sdate,2);
 					$a_kembali=peg_absen_v2($r_peg["item"][$j]["peg_id"],$sdate,3);
+					$l_masuk=peg_absen_v2($r_peg["item"][$j]["peg_id"],$sdate,4);
+					$l_pulang=peg_absen_v2($r_peg["item"][$j]["peg_id"],$sdate,5);
 
 					if ($r_peg["item"][$j]["peg_jabatan"]==1) {
 						$AbsenAwalNama='
@@ -74,6 +78,8 @@
 					<td>'.$a_kembali["absen_teks"].'</td>
 					<td>'.$a_pulang["absen_teks"].'</td>
 					<td></td>
+					<td>'.$l_masuk["absen_teks"].'</td>
+					<td>'.$l_pulang["absen_teks"].'</td>
 					</tr>
 					';
 				}
@@ -85,7 +91,7 @@
 	}
 	else {
 		echo '<tr>
-		<td colspan="9">Data masing kosong</td>
+		<td colspan="11">Data masing kosong</td>
 		</tr>';
 	}
 

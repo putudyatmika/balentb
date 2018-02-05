@@ -16,6 +16,7 @@ else { $sdate=date("Y-m-d"); }
  	<tr>
  		<th>#</th>
  		<th>ID</th>
+ 		<th>Nick</th>
  		<th>Nama</th>
  		<th>Tgl</th>
  		<th>Jam</th>
@@ -24,13 +25,13 @@ else { $sdate=date("Y-m-d"); }
  		<th>Rekap</th>
  		<th>Flag</th>
  		<th>Ket</th>
- 		<th colspan="3">&nbsp;</th>
+ 		<th colspan="2">&nbsp;</th>
  	</tr>
  </thead>
  <tbody>
  	<?php
  	//$sdate=date('Y-m-d');
- 	$r_absen=log_peg_absen($sdate);
+ 	$r_absen=log_peg_absen(0,$sdate,false);
  	if ($r_absen["error"]==false) {
 			$i=1;
 			$absen_total=$r_absen["absen_total"];
@@ -41,6 +42,7 @@ else { $sdate=date("Y-m-d"); }
 					<td>'.$i.'</td>
 					<td>'.$r_absen["item"][$i]["absen_peg_id"].'</td>
 					<td>'.$r_absen["item"][$i]["absen_peg_nama"].'</td>
+					<td>'.$r_absen["item"][$i]["peg_nama"].'</td>
 					<td>'.$r_absen["item"][$i]["absen_tgl"].'</td>
 					<td>'.$r_absen["item"][$i]["absen_jam"].'</td>
 					<td>'.$r_absen["item"][$i]["absen_kode"].'</td>
@@ -48,9 +50,8 @@ else { $sdate=date("Y-m-d"); }
 					<td>'.$r_absen["item"][$i]["absen_rekap"].'</td>
 					<td>'.$r_absen["item"][$i]["absen_flag"].'</td>
 					<td>'.$r_absen["item"][$i]["absen_ket"].'</td>
-					<td><a href="'.$url.'/'.$page.'/'.$act.'/view/'.$r_absen["item"][$i]["absen_id"].'"><i class="fa fa-search text-success" aria-hidden="true"></i></a></td>
-					<td><a href="'.$url.'/'.$page.'/'.$act.'/edit/'.$r_absen["item"][$i]["absen_id"].'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a></td>
-					<td><a href="'.$url.'/'.$page.'/'.$act.'/delete/'.$r_absen["item"][$i]["absen_id"].'" data-confirm="Apakah data ('.$r_absen["item"][$i]["absen_peg_id"].') '.$r_absen["item"][$i]["absen_peg_nama"].' ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></td>
+					<td><a href="'.$url.'/'.$page.'/'.$act.'/log/edit/'.$r_absen["item"][$i]["absen_id"].'"><i class="fa fa-pencil-square text-info" aria-hidden="true"></i></a></td>
+					<td><a href="'.$url.'/'.$page.'/'.$act.'/log/delete/'.$r_absen["item"][$i]["absen_id"].'" data-confirm="Apakah data ('.$r_absen["item"][$i]["absen_peg_id"].') '.$r_absen["item"][$i]["absen_peg_nama"].' ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></td>
 				</tr>
 				';
 			}
@@ -63,3 +64,4 @@ else { $sdate=date("Y-m-d"); }
  	?>
  </tbody>
 </table>
+</div>

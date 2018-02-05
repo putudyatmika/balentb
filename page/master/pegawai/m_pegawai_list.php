@@ -2,7 +2,7 @@
 <div class="table-responsive">
 <table class="table table-hover table-striped table-condensed">
 	<?php 
-	$r_peg=list_pegawai(0,false);
+	$r_peg=list_pegawai(0,false,true);
 
 	if ($r_peg["error"]==false) {
 	?>

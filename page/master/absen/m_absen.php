@@ -34,6 +34,9 @@
 			elseif ($lvl3=='rekap') {
 				include 'page/master/absen/m_absen_rekap.php';
 			}
+			elseif ($lvl3=='log') {
+				include 'page/master/absen/m_log.php';
+			}
 			else {
 				include 'page/master/absen/m_absen_list.php';
 			}
