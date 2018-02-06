@@ -309,7 +309,7 @@ function peg_absen_v3($peg_id,$tgl_absen,$kode_absen,$peg_jabatan) {
 	if ($kode_absen==0) {
 		if ($peg_jabatan==3) {
 			//honorer
-			$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_kode='0' order by absen_jam asc limit 1");
+			$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_kode='0' and absen_tgl='$tgl_absen' order by absen_jam asc limit 1");
 		}
 		else {
 			//pegawai
@@ -318,7 +318,7 @@ function peg_absen_v3($peg_id,$tgl_absen,$kode_absen,$peg_jabatan) {
 	}
 	elseif ($kode_absen==1) {
 		if ($peg_jabatan==3) {
-			$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_kode='1' order by absen_jam desc limit 1");
+			$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_kode='1' and absen_tgl='$tgl_absen' order by absen_jam desc limit 1");
 		}
 		else {
 			$sql_absen = $conn_absen -> query("select absen_jam from peg_absen where absen_peg_id='$peg_id' and absen_tgl='$tgl_absen' and hour(absen_jam) between 15 and 23 order by absen_jam desc limit 1");
@@ -358,7 +358,7 @@ function peg_absen_v3($peg_id,$tgl_absen,$kode_absen,$peg_jabatan) {
 				}
 				else {
 				$pagi = strtotime("07:31:00");
-				if ($w_absen>$pagi) {
+				if ($w_absen>=$pagi) {
 					//telat merah
 					$waktu_absen_list["absen_telat"]=1;
 					$selisih= $w_absen - $pagi;
@@ -496,8 +496,8 @@ function sync_absen($peg_id,$peg_nama,$tgl_absen,$jam_absen,$kode) {
 	$waktu_lokal=date("Y-m-d H:i:s");
 	$db_sync = new db();
 	$conn_sync = $db_sync -> connect();
-	$sql_sync = $conn_sync-> query("insert into peg_absen(absen_peg_id,absen_peg_nama,absen_tgl,absen_jam,absen_kode,absen_sync_tgl,absen_rekap,absen_flag)
-	values('$peg_id','$peg_nama','$tgl_absen','$jam_absen','$kode','$waktu_lokal',0,0)") or die(mysqli_error($conn_sync));
+	$sql_sync = $conn_sync-> query("insert into peg_absen(absen_peg_id,absen_peg_nama,absen_tgl,absen_jam,absen_kode,absen_sync_tgl,absen_rekap,absen_flag,absen_pola,absen_hadir)
+	values('$peg_id','$peg_nama','$tgl_absen','$jam_absen','$kode','$waktu_lokal',0,0,1,1)") or die(mysqli_error($conn_sync));
 	if ($sql_sync) {
 		$status_sync=TRUE;
 	}
@@ -511,8 +511,8 @@ function sync_absen_v2($peg_id,$peg_nama,$tgl_absen,$jam_absen,$kode,$waktu_sync
 	//$waktu_lokal=date("Y-m-d H:i:s");
 	$db_sync = new db();
 	$conn_sync = $db_sync -> connect();
-	$sql_sync = $conn_sync-> query("insert into peg_absen(absen_peg_id,absen_peg_nama,absen_tgl,absen_jam,absen_kode,absen_sync_tgl,absen_rekap,absen_flag)
-	values('$peg_id','$peg_nama','$tgl_absen','$jam_absen','$kode','$waktu_sync_lokal',0,1)") or die(mysqli_error($conn_sync));
+	$sql_sync = $conn_sync-> query("insert into peg_absen(absen_peg_id,absen_peg_nama,absen_tgl,absen_jam,absen_kode,absen_sync_tgl,absen_rekap,absen_flag,absen_pola,absen_hadir)
+	values('$peg_id','$peg_nama','$tgl_absen','$jam_absen','$kode','$waktu_sync_lokal',0,1,1,1)") or die(mysqli_error($conn_sync));
 	if ($sql_sync) {
 		$status_sync=TRUE;
 	}
