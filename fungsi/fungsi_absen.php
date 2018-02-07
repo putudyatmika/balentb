@@ -300,7 +300,60 @@ function peg_absen_v2($peg_id,$tgl_absen,$kode_absen) {
 	return $waktu_absen_list;
 	$conn_absen->close();
 }
-
+function cek_psw($absen_jam,$hariJumat=false) {
+	global $JamPulang,$JamPulangJumat;
+	$jam_pulang=strtotime($absen_jam);
+	$JamPulangBiasa=strtotime($JamPulang);
+	$jam_jumat=strtotime($JamPulangJumat);
+	if ($hariJumat==false) {
+		//hari biasa
+		if ($jam_pulang<=$jam_jumat) {
+			
+		}
+		else {
+			$telat_pulang=0;
+		}
+	}
+	else {
+		//hari jumat
+	}
+	return $telat_pulang;
+}
+function cek_telat($absen_jam) {
+	global $JamMasuk;
+	$absen_jam=strtotime($absen_jam);
+	$jam_masuk=strtotime($JamMasuk);
+	if ($absen_jam > $jam_masuk) {
+		$selisih = $absen_jam - $jam_masuk;
+		if ($selisih>59) {
+			$menit=floor($selisih/60);
+			$jam=floor($menit/60);
+			$menit_sisa=$menit-($jam*60);
+			$jam_telat=sprintf("%02s", $jam).':'.sprintf("%02s", $menit_sisa);
+		if ($menit<=30) {
+			$jam_telat='00:'.sprintf("%02s", $menit);
+			$telat=array("tl"=>1,"waktu"=>$jam_telat);
+		}
+		elseif ($menit>30 and $menit <= 60) {
+			
+			$telat=array("tl"=>2,"waktu"=>$jam_telat);
+		}
+		elseif ($menit>60 and $menit<=90) {
+			$telat=array("tl"=>3,"waktu"=>$jam_telat);
+		}
+		else {
+			$telat=array("tl"=>4,"waktu"=>$jam_telat);
+			}
+		}
+		else {
+			$telat=array("tl"=>0,"waktu"=>0);
+		}
+	}
+	else {
+		$telat=array("tl"=>0,"waktu"=>0);
+	}
+	return $telat;
+}
 function peg_absen_v3($peg_id,$tgl_absen,$kode_absen,$peg_jabatan) {
 	// kode 0:masuk, 1:pulang, 2:keluar, 3:kembali, 4:masuk lembur, 5:plg lembur
 	$hari_libur = date("w",strtotime($tgl_absen));
@@ -733,14 +786,24 @@ function list_pegawai_absen($sdate,$edate,$tglDetil=false) {
 	return $list_pegawai;
 	$conn_pegawai->close();
 }
-function list_pegawai_unitkerja($unit_kode,$detil=false) {
+function list_pegawai_unitkerja($unit_kode,$detil=false,$honor=false) {
 	$db_pegawai = new db();
 	$conn_pegawai = $db_pegawai -> connect();
 	if ($detil==true) {
-		$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where m_pegawai.peg_status='1' and substring(m_pegawai.peg_unitkerja,1,4)=substring('$unit_kode',1,4) order by m_pegawai.peg_unitkerja,m_pegawai.peg_jabatan asc");
+		if ($honor==false) {
+			$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where m_pegawai.peg_status='1' and substring(m_pegawai.peg_unitkerja,1,4)=substring('$unit_kode',1,4) order by m_pegawai.peg_unitkerja,m_pegawai.peg_jabatan asc");
+		}
+		else {
+			$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where m_pegawai.peg_status='1' and substring(m_pegawai.peg_unitkerja,1,4)=substring('$unit_kode',1,4) and m_pegawai.peg_jabatan<3 order by m_pegawai.peg_unitkerja,m_pegawai.peg_jabatan asc");
+		}
 	}
 	else {
-		$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where m_pegawai.peg_status='1' order by m_pegawai.peg_unitkerja,m_pegawai.peg_jabatan asc");
+		if ($honor==false) {
+			$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where m_pegawai.peg_status='1' order by m_pegawai.peg_unitkerja,m_pegawai.peg_jabatan asc");
+		}
+		else {
+			$sql_pegawai = $conn_pegawai -> query("select m_pegawai.*,user_id from m_pegawai left join users on m_pegawai.peg_user_no=users.user_no where m_pegawai.peg_status='1' and m_pegawai.peg_jabatan<3 order by m_pegawai.peg_unitkerja,m_pegawai.peg_jabatan asc");
+		}
 	}
 	$cek_pegawai = $sql_pegawai->num_rows;
 	$list_pegawai=array("error"=>false);
@@ -816,9 +879,35 @@ function get_web_page($url_curl)
           $header['content'] = $content;
           return $header;
   }
-function list_rekap_absen($peg_id,$tgl_awal,$tgl_akhir,$detil=false) {
-  $db_absen = new $db();
+function rekap_harian($peg_id,$absen_tgl) {
+  $db_absen = new db();
   $conn_absen = $db_absen -> connect();
+  $sql_rekap = $conn_absen -> query("select * from rekap_absen_harian where absen_tgl='$absen_tgl' and peg_id='$peg_id' limit 1");
+  $cek_rekap = $sql_rekap->num_rows;
+  $rekap_data=array("error"=>false);
+  if ($cek_rekap>0) {
+  	$rekap_data["error"]=false;
+  	$r=$sql_rekap->fetch_object();
+  	$rekap_data["peg_no"]=$r->peg_no;
+  	$rekap_data["peg_id"]=$r->peg_id;
+  	$rekap_data["peg_nama"]=$r->peg_nama;
+  	$rekap_data["absen_tgl"]=$r->absen_tgl;
+  	$rekap_data["absen_pola"]=$r->absen_pola;
+  	$rekap_data["absen_hadir"]=$r->absen_hadir;
+  	$rekap_data["masuk_id"]=$r->masuk_id;
+  	$rekap_data["jam_masuk"]=$r->jam_masuk;
+  	$rekap_data["pulang_id"]=$r->pulang_id;
+  	$rekap_data["jam_pulang"]=$r->jam_pulang;
+  	$rekap_data["keluar_id"]=$r->keluar_id;
+  	$rekap_data["jam_keluar"]=$r->jam_keluar;
+  	$rekap_data["kembali_id"]=$r->kembali_id;
+  	$rekap_data["jam_kembali"]=$r->jam_kembali;
+}
+  else {
+  	$rekap_data["error"]=true;
+  	$rekap_data["rekap_pesan_error"]="Data tidak tersedia";
+  }
+  return $rekap_data;
   $conn_absen->close();
 }
 ?>
