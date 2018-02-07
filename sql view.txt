@@ -1,0 +1,40 @@
+<?php
+//sql untuk create view
+create view absen_peg_masuk as select absen_id as absen_id, absen_peg_id, absen_peg_nama, absen_tgl, absen_jam as jam_masuk, absen_kode, absen_rekap, absen_flag from pegawai_aktif left join peg_absen on pegawai_aktif.peg_id=peg_absen.absen_peg_id where peg_absen.absen_kode=0 group by peg_absen.absen_peg_id, peg_absen.absen_tgl order by absen_tgl desc, absen_jam asc
+
+drop view absen_peg_masuk;
+create view absen_masuk_peg as select absen_id as masuk_id,pegawai_aktif.peg_id, absen_peg_nama, absen_tgl, absen_jam as jam_masuk, absen_kode, absen_rekap, absen_flag from pegawai_aktif left join peg_absen on pegawai_aktif.peg_id=peg_absen.absen_peg_id where peg_absen.absen_kode=0 group by peg_absen.absen_peg_id, peg_absen.absen_tgl order by absen_tgl desc, absen_jam asc
+
+drop view absen_masuk_peg;
+create view absen_masuk_peg as select absen_id as masuk_id,pegawai_aktif.peg_id, absen_peg_nama, absen_pola, absen_hadir, absen_tgl, absen_jam as jam_masuk, absen_kode,absen_rekap, absen_flag,absen_ket from pegawai_aktif left join peg_absen on pegawai_aktif.peg_id=peg_absen.absen_peg_id where hour(absen_jam) between 5 and 11 or absen_kode=0 group by peg_absen.absen_peg_id, peg_absen.absen_tgl order by absen_tgl desc, absen_jam asc;
+
+drop VIEW absen_masuk_honor;
+create view absen_masuk_honor as select absen_id as msk_id,pegawai_honor.peg_id, absen_peg_nama, absen_pola, absen_hadir,absen_tgl, absen_jam as jam_masuk, absen_kode, absen_rekap, absen_flag from pegawai_honor left join peg_absen on pegawai_honor.peg_id=peg_absen.absen_peg_id where peg_absen.absen_kode=0 group by peg_absen.absen_peg_id, peg_absen.absen_tgl order by absen_tgl desc, absen_jam asc
+
+create view absen_pulang_peg as select absen_id as pulang_id,pegawai_aktif.peg_id, absen_peg_nama, absen_tgl, absen_jam as jam_pulang, absen_kode, absen_rekap, absen_flag from pegawai_aktif left join peg_absen on pegawai_aktif.peg_id=peg_absen.absen_peg_id where peg_absen.absen_kode=1 group by peg_absen.absen_peg_id, peg_absen.absen_tgl order by absen_tgl desc, absen_jam desc
+
+drop view absen_pulang_peg;
+create view absen_pulang_peg as select absen_id as pulang_id,pegawai_aktif.peg_id, absen_peg_nama, absen_tgl, absen_jam as jam_pulang, absen_kode, absen_rekap, absen_flag from pegawai_aktif left join peg_absen on pegawai_aktif.peg_id=peg_absen.absen_peg_id where hour(absen_jam) between 15 and 23 or peg_absen.absen_kode=1 group by peg_absen.absen_peg_id, peg_absen.absen_tgl order by absen_tgl desc, absen_jam desc
+
+drop view absen_pulang_honor;
+create view absen_pulang_honor as select absen_id as plg_id,pegawai_honor.peg_id, absen_peg_nama, absen_tgl, absen_jam as jam_pulang, absen_kode, absen_rekap, absen_flag from pegawai_honor left join peg_absen on pegawai_honor.peg_id=peg_absen.absen_peg_id where peg_absen.absen_kode=1 group by peg_absen.absen_peg_id, peg_absen.absen_tgl order by absen_tgl desc, absen_jam desc
+
+drop view absen_keluar_peg;
+create view absen_keluar_peg as select absen_id as keluar_id,pegawai_aktif.peg_id, absen_peg_nama, absen_tgl, absen_jam as jam_keluar, absen_kode, absen_rekap, absen_flag from pegawai_aktif left join peg_absen on pegawai_aktif.peg_id=peg_absen.absen_peg_id where peg_absen.absen_kode=2 group by peg_absen.absen_peg_id, peg_absen.absen_tgl order by absen_tgl desc, absen_jam asc;
+
+drop view absen_kembali_peg;
+create view absen_kembali_peg as select absen_id as kembali_id,pegawai_aktif.peg_id, absen_peg_nama, absen_tgl, absen_jam as jam_kembali, absen_kode, absen_rekap, absen_flag from pegawai_aktif left join peg_absen on pegawai_aktif.peg_id=peg_absen.absen_peg_id where peg_absen.absen_kode=3 group by peg_absen.absen_peg_id, peg_absen.absen_tgl order by absen_tgl desc, absen_jam desc;
+
+drop view absen_lemburmasuk_peg;
+create view absen_lemburmasuk_peg as select absen_id as lemburmasuk_id,pegawai_aktif.peg_id, absen_peg_nama, absen_tgl, absen_jam as jam_lemburmasuk, absen_kode, absen_rekap, absen_flag from pegawai_aktif left join peg_absen on pegawai_aktif.peg_id=peg_absen.absen_peg_id where peg_absen.absen_kode=4 group by peg_absen.absen_peg_id, peg_absen.absen_tgl order by absen_tgl desc, absen_jam asc
+
+drop view absen_lemburpulang_peg;
+create view absen_lemburpulang_peg as select absen_id as lemburpulang_id,pegawai_aktif.peg_id, absen_peg_nama, absen_tgl, absen_jam as jam_lemburpulang, absen_kode, absen_rekap, absen_flag from pegawai_aktif left join peg_absen on pegawai_aktif.peg_id=peg_absen.absen_peg_id where peg_absen.absen_kode=5 group by peg_absen.absen_peg_id, peg_absen.absen_tgl order by absen_tgl desc, absen_jam desc
+
+drop view rekap_absen_harian;
+create view rekap_absen_harian as select pegawai_aktif.*, absen_masuk_peg.absen_tgl, absen_masuk_peg.absen_pola, absen_masuk_peg.absen_hadir,absen_masuk_peg.masuk_id,absen_masuk_peg.jam_masuk, absen_pulang_peg.pulang_id, absen_pulang_peg.jam_pulang, absen_keluar_peg.keluar_id, absen_keluar_peg.jam_keluar, absen_kembali_peg.kembali_id, absen_kembali_peg.jam_kembali, absen_lemburmasuk_peg.lemburmasuk_id, absen_lemburmasuk_peg.jam_lemburmasuk, absen_lemburpulang_peg.lemburpulang_id, absen_lemburpulang_peg.jam_lemburpulang,absen_masuk_peg.absen_ket from pegawai_aktif left join absen_masuk_peg on pegawai_aktif.peg_id=absen_masuk_peg.peg_id left join absen_pulang_peg on absen_pulang_peg.absen_tgl=absen_masuk_peg.absen_tgl and absen_pulang_peg.peg_id=absen_masuk_peg.peg_id left join absen_keluar_peg on absen_masuk_peg.peg_id=absen_keluar_peg.peg_id and absen_masuk_peg.absen_tgl=absen_keluar_peg.absen_tgl left join absen_kembali_peg on absen_masuk_peg.peg_id=absen_kembali_peg.peg_id and absen_masuk_peg.absen_tgl=absen_kembali_peg.absen_tgl left join absen_lemburmasuk_peg on absen_lemburmasuk_peg.absen_tgl=absen_masuk_peg.absen_tgl and absen_lemburmasuk_peg.peg_id=absen_masuk_peg.peg_id left join absen_lemburpulang_peg on absen_lemburpulang_peg.absen_tgl = absen_masuk_peg.absen_tgl and absen_lemburpulang_peg.peg_id = absen_masuk_peg.peg_id order by absen_tgl desc, jam_masuk asc;
+
+drop view rekap_absen_harian;
+create view rekap_absen_harian as select pegawai_aktif.*, absen_masuk_peg.absen_tgl, absen_masuk_peg.absen_pola, absen_masuk_peg.absen_hadir,absen_masuk_peg.masuk_id,absen_masuk_peg.jam_masuk, absen_pulang_peg.pulang_id, absen_pulang_peg.jam_pulang, absen_keluar_peg.keluar_id, absen_keluar_peg.jam_keluar, absen_kembali_peg.kembali_id, absen_kembali_peg.jam_kembali, absen_masuk_peg.absen_ket from pegawai_aktif left join absen_masuk_peg on pegawai_aktif.peg_id=absen_masuk_peg.peg_id left join absen_pulang_peg on absen_pulang_peg.absen_tgl=absen_masuk_peg.absen_tgl and absen_pulang_peg.peg_id=absen_masuk_peg.peg_id left join absen_keluar_peg on absen_masuk_peg.peg_id=absen_keluar_peg.peg_id and absen_masuk_peg.absen_tgl=absen_keluar_peg.absen_tgl left join absen_kembali_peg on absen_masuk_peg.peg_id=absen_kembali_peg.peg_id and absen_masuk_peg.absen_tgl=absen_kembali_peg.absen_tgl order by absen_tgl desc, jam_masuk asc;
+?>
+?>
