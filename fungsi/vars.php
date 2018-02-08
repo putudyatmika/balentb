@@ -43,7 +43,7 @@ $AbsenPulangPuasa='15:00:00';
 $AbsenPulangJumatPuasa='15:30:00';
 $ip_server_absen='10.52.6.235';
 $KodeMesinAbsen=array(0=>'Masuk',1=>'Pulang',2=>'Keluar',3=>'Kembali',4=>'Masuk Lembur',5=>'Pulang Lembur');
-$JenisHariAbsen=array(0=>"Tanpa Keterangan",1=>"Kerja",2=>"Sakit",3=>"Ijin",4=>"Cuti",5=>"Dinas Luar",6=>"Libur Nasional",7=>"Libur Lainnya");
+$JenisHariAbsen=array(0=>"Tanpa Keterangan",1=>"Kerja",2=>"Sakit",3=>"Ijin",4=>"Cuti",5=>"Dinas Luar",6=>"Pelatihan",7=>"Diklat",8=>"Libur Nasional",9=>"Lainnya");
 $JenisTelatMasuk=array(1=>"TL. 1",2=>"TL. 2",3=>"TL. 3",4=>"TL. 4");
 $JenisPulangCepat=array(1=>"PSW. 1",2=>"PSW. 2",3=>"PSW. 3",4=>"PSW. 4");
 ?>

@@ -34,6 +34,17 @@ else {
  		<th>Pulang</th>
  		<th>#</th>
  		<th>Telat Masuk</th>
+ 		<th class="hidden-print">&nbsp;</th>
+ 	</tr>
+ 	<tr>
+ 		<th>(1)</th>
+ 		<th>(2)</th>
+ 		<th>(3)</th>
+ 		<th>(4)</th>
+ 		<th>(5)</th>
+ 		<th>(6)</th>
+ 		<th>(7)</th>
+ 		<th class="hidden-print">(8)</th>
  	</tr>
  </thead>
  <tbody>
@@ -47,13 +58,13 @@ else {
 			if ($r_unit["item"][$i]["unit_eselon"] < 4) {
 				//eselon 2 dan 3 bold
 				echo '<tr>
-			<td colspan="9"><strong>['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</strong></td>
+			<td colspan="8"><strong>['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</strong></td>
 			</tr>';
 			}
 			else {
 				
 				echo '<tr>
-			<td colspan="9">['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</td>
+			<td colspan="8">['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</td>
 			</tr>';
 			}
 			$r_peg=list_pegawai_unitkerja($r_unit["item"][$i]["unit_kode"],true,true);
@@ -65,13 +76,13 @@ else {
 					if ($r_peg["item"][$j]["peg_jabatan"]==1) {
 						echo '<tr>
 						<th>'.$j.'</th>
-						<th colspan="6">'.$r_peg["item"][$j]["peg_nama"].' / '.get_nama_unit($r_peg["item"][$j]["peg_unitkerja"]).'</th>
+						<th colspan="7">'.$r_peg["item"][$j]["peg_nama"].' / '.get_nama_unit($r_peg["item"][$j]["peg_unitkerja"]).'</th>
 						</tr>';
 					}
 					else {
 						echo '<tr>
 						<td>'.$j.'</td>
-						<td colspan="6">'.$r_peg["item"][$j]["peg_nama"].'</td>
+						<td colspan="7">'.$r_peg["item"][$j]["peg_nama"].'</td>
 						</tr>';
 					}
 
@@ -89,10 +100,11 @@ else {
 						if ($r_rekap["error"]==true) {
 							$hari_libur=date("w",strtotime($k->format("Y-m-d")));
 							if ($hari_libur==0 || $hari_libur==6) {
-								echo '<td colspan="6"><span class="label label-success">Libur</span></td>';
+								echo '<td colspan="7"><span class="label label-success">Libur</span></td>';
 							}
 							else {
-								echo '<td colspan="5"><span class="label label-danger">'.$JenisHariAbsen[0].'</a></td>';
+								echo '<td colspan="5"><span class="label label-danger">'.$JenisHariAbsen[0].'</a></td>
+								<td class="hidden-print"><a href="'.$url.'/'.$page.'/addpeg/'.$r_peg["item"][$j]["peg_id"].'/'.strtotime($k->format("Y-m-d")).'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i></a></td>';
 							}
 						}
 						else {
@@ -125,10 +137,11 @@ else {
 								<td>'.$telat.'</td>
 								<td>'.$jam_pulang.'</td>
 								<td>'.$telat_pulang.'</td>
-								<td>'.$waktu_telat.'</td>';
+								<td>'.$waktu_telat.'</td>
+								<td class="hidden-print">&nbsp;</td>';
 							}
 							else {
-								echo '<td colspan="5"><span class="label label-danger">'.$JenisHariAbsen[$r_rekap["absen_hadir"]].'</span></td>';
+								echo '<td colspan="6"><span class="label label-default">'.$JenisHariAbsen[$r_rekap["absen_hadir"]].' '.$r_rekap["absen_ket"].'</span></td>';
 							}
 						}
 						
