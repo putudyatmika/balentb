@@ -6,7 +6,7 @@ if (isset($_POST['edate'])) { $edate=$_POST['edate']; }
 else { $edate=''; }
 ?>
 <div class="container">
-<div class="row konten">
+<div class="row konten hidden-print">
 	<div class="col-lg-6 col-sm-6">
 		<div class="btn-toolbar" role="toolbar">
 		<div class="btn-group">
@@ -37,7 +37,19 @@ else { $edate=''; }
 	<div class="col-lg-12 col-sm-12">
 	<?php
 		if ($act=="add") {
-
+			include 'page/absen/absen_form.php';
+		}
+		elseif ($act=="addpeg") {
+			include 'page/absen/absen_add_peg.php';
+		}
+		elseif ($act=="savepeg") {
+			include 'page/absen/absen_save_peg.php';
+		}
+		elseif ($act=="editpeg") {
+			include 'page/absen/absen_edit_peg.php';
+		}
+		elseif ($act=="updatepeg") {
+			include 'page/absen/absen_update_peg.php';
 		}
 		elseif ($act=="sync") {
 			include 'page/absen/absen_sync.php';

@@ -121,4 +121,23 @@ function cek_hari_kerja($tgl_hari) {
 	}
 	return $libur;
 }
+function cek_hari_libur($tgl_hari) {
+	$db_hari = new db();
+	$conn_hari = $db_hari -> connect();
+	$sql_hari = $conn_hari -> query("select * from hari_libur where tanggal='$tgl_hari'");
+	$cek_hari = $sql_hari -> num_rows;
+	$data_libur=array("error"=>false);
+	if ($cek_hari>0) {
+		$r=$sql_hari->fetch_object();
+		$data_libur["error"]=false;
+		$data_libur["libur_tgl"]=$r->tanggal;
+		$data_libur["libur_ket"]=$r->ket;
+	}
+	else {
+		$data_libur["error"]=true;
+		$data_libur["pesan_error"]='Data tidak ada';
+	}
+	return $data_libur;
+	$conn_hari -> close();
+}
 ?>

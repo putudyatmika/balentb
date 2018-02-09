@@ -10,7 +10,7 @@ Bulan :
  	<tr>
  		<th>#</th>
  		<th>Nama</th>
- 		<th class="hidden-xs">Jabatan</th>
+ 		<th>Jabatan</th>
  		<th>TL1</th>
  		<th>TL2</th>
  		<th>TL3</th>
@@ -21,9 +21,58 @@ Bulan :
  		<th>PSW4</th>
  		<th>Total Telat</th>
  	</tr>
+ 	<tr>
+ 		<th>(1)</th>
+ 		<th>(2)</th>
+ 		<th>(3)</th>
+ 		<th>(4)</th>
+ 		<th>(5)</th>
+ 		<th>(6)</th>
+ 		<th>(7)</th>
+ 		<th>(8)</th>
+ 		<th>(9)</th>
+ 		<th>(10)</th>
+ 		<th>(11)</th>
+ 		<th>(12)</th>
+ 	</tr>
  </thead>
  <tbody>
- 	
+ <?php
+ $r_peg=list_pegawai_aktif(0,false);
+ if ($r_peg["error"]==false) {
+ 	$i=1;
+	$max_peg=$r_peg["peg_total"];
+	for ($i=1;$i<=$max_peg;$i++) {
+		if ($r_peg["item"][$i]["peg_jabatan"]==1) {
+			$NamaAwal='<th>'.$i.'</th>
+			<th>'.$r_peg["item"][$i]["peg_nama"].'</th><th>'.$JenisJabatan[$r_peg["item"][$i]["peg_jabatan"]].' '.$r_peg["item"][$i]["unit_nama"].'</th>';
+		}
+		else {
+			$NamaAwal='<td>'.$i.'</td>
+			<td>'.$r_peg["item"][$i]["peg_nama"].'</td>
+			<td>'.$JenisJabatan[$r_peg["item"][$i]["peg_jabatan"]].' '.$r_peg["item"][$i]["unit_nama"].'</td>';
+		}
+		echo '
+		<tr>
+			'.$NamaAwal.'
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+		';
+	}
+ }
+ else {
+
+ }
+ ?>
  </tbody>
 
 </table>
