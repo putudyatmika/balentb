@@ -45,6 +45,12 @@ else { $edate=''; }
 		elseif ($act=="savepeg") {
 			include 'page/absen/absen_save_peg.php';
 		}
+		elseif ($act=="editpeg") {
+			include 'page/absen/absen_edit_peg.php';
+		}
+		elseif ($act=="updatepeg") {
+			include 'page/absen/absen_update_peg.php';
+		}
 		elseif ($act=="sync") {
 			include 'page/absen/absen_sync.php';
 		}

@@ -18,8 +18,8 @@ else {
 $date1 = new DateTime($sdate);
 $date2 = new DateTime($edate);
 $diff = $date2->diff($date1)->format("%a");
-if ($diff>14) {
-	echo 'Max 14 hari kalendar';
+if ($diff>7) {
+	echo 'Max 7 hari kalendar';
 }
 else {
 ?>
@@ -92,26 +92,24 @@ else {
 					//tampilkan tanggalnya
 					for($k=$begin; $k <= $end; $k->modify('+1 day')) {
 						//tampilkan absen tanggal semua ip pegawai
-						if (cek_hari_kerja($k->format("Y-m-d"))==false) {
-							//menampilkan hari kerja saja
-							$r_rekap=rekap_harian($r_peg["item"][$j]["peg_id"],$k->format("Y-m-d"));
-							echo '
+						$r_rekap=rekap_harian($r_peg["item"][$j]["peg_id"],$k->format("Y-m-d"));
+						echo '
 							<tr> 
 							<td></td>
 							<td>'.tgl_convert(1,$k->format("Y-m-d")).'</td>';
-							if ($r_rekap["error"]==true) {
-								$hr_libur=cek_hari_libur($k->format("Y-m-d"));
-								if ($hr_libur["error"]==false) {
-									echo '<td colspan="6"><span class="label label-success">'.$hr_libur["libur_ket"].'</a></td>';
-								}
-								else {
-								echo '<td colspan="5"><span class="label label-danger">'.$JenisHariAbsen[0].'</a></td>
-								<td class="hidden-print"><a href="'.$url.'/'.$page.'/addpeg/'.$r_peg["item"][$j]["peg_id"].'/'.strtotime($k->format("Y-m-d")).'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i></a></td>';
-								}
+						if ($r_rekap["error"]==true) {
+							$hari_libur=date("w",strtotime($k->format("Y-m-d")));
+							if ($hari_libur==0 || $hari_libur==6) {
+								echo '<td colspan="7"><span class="label label-success">Libur</span></td>';
 							}
 							else {
-								//ada isiannnya
-								if ($r_rekap["absen_hadir"]==1) {
+								echo '<td colspan="5"><span class="label label-danger">'.$JenisHariAbsen[0].'</a></td>
+								<td class="hidden-print"><a href="'.$url.'/'.$page.'/addpeg/'.$r_peg["item"][$j]["peg_id"].'/'.strtotime($k->format("Y-m-d")).'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i></a></td>';
+							}
+						}
+						else {
+							//ada isiannya
+							if ($r_rekap["absen_hadir"]==1) {
 								$jam_telat=cek_telat($r_rekap["jam_masuk"]);
 								if ($jam_telat["tl"]>0) {
 									//telat
@@ -135,27 +133,21 @@ else {
 									$jam_pulang=date("H:i",strtotime($r_rekap["jam_pulang"]));
 									$telat_pulang='';
 								}
-								echo '<td>'.$jam_masuk.'</td>
-									<td>'.$telat.'</td>
-									<td>'.$jam_pulang.'</td>
-									<td>'.$telat_pulang.'</td>
-									<td>'.$waktu_telat.'</td>
-									<td class="hidden-print">&nbsp;</td>';
-								}
-								else {
-									echo '<td colspan="5"><span class="label label-default">'.$JenisHariAbsen[$r_rekap["absen_hadir"]].' '.$r_rekap["absen_ket"].'</span></td>
-									<td class="hidden-print"><a href="'.$url.'/'.$page.'/editpeg/'.$r_peg["item"][$j]["peg_id"].'/'.strtotime($k->format("Y-m-d")).'"><i class="fa fa-pencil-square text-primary" aria-hidden="true"></i></a></td>';
-								}
+							echo '<td>'.$jam_masuk.'</td>
+								<td>'.$telat.'</td>
+								<td>'.$jam_pulang.'</td>
+								<td>'.$telat_pulang.'</td>
+								<td>'.$waktu_telat.'</td>
+								<td class="hidden-print">&nbsp;</td>';
 							}
-							echo '</tr>';
-
-
-						}
-					
+							else {
+								echo '<td colspan="6"><span class="label label-default">'.$JenisHariAbsen[$r_rekap["absen_hadir"]].' '.$r_rekap["absen_ket"].'</span></td>';
+							}
 						}
 						
+					echo '</tr>';
 					}
-				
+				}
 			}
 			else {
 				echo '<tr><td colspan="7">Data pegawai masih kosong</td></tr>';
