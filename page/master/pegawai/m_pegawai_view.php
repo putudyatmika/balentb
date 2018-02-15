@@ -19,6 +19,10 @@ if ($r_peg["error"]==false) {
 			<dl class="dl-horizontal">
 				<dt>ID</dt>
 				<dd><?php echo $r_peg["item"][1]["peg_id"];?></dd>
+				<dt>NIP Lama</dt>
+				<dd><?php echo $r_peg["item"][1]["peg_nip_lama"];?></dd>
+				<dt>NIP</dt>
+				<dd><?php echo $r_peg["item"][1]["peg_nip"];?></dd>
 				<dt>Nama Lengkap</dt>
 				<dd><?php echo $r_peg["item"][1]["peg_nama"];?></dd>
 				<dt>Jenis Kelamin</dt>
