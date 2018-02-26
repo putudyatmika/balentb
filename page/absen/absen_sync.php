@@ -66,22 +66,24 @@ else {
 	  if ($r_peg["error"]==false) {
 	  	$peg_nama_rill=$r_peg["peg_nama"];
 	  	$peg_jabatan_rill=$JenisJabatan[$r_peg["peg_jabatan"]].' '.$r_peg["unit_nama"];
+	  	$peg_jabatan=$r_peg["peg_jabatan"];
 	  }
 	  else {
 	  	$peg_nama_rill=$peg_nama;
 	  	$peg_jabatan_rill='-';
+	  	$peg_jabatan=0;
 	  }
 
 	  if (cek_absen_sync($peg_id,$tgl_absen,$jam_absen,$kode)==TRUE) {
-		  $status_sync='tidak disimpan';
+		  $status_sync='<span class="label label-danger">Tidak disimpan</span>';
 	  }
 	  else {
 		  //simpan
-		  if (sync_absen($peg_id,$peg_nama,$tgl_absen,$jam_absen,$kode)==TRUE) {
-			  $status_sync='tersimpan';
+		  if (sync_absen($peg_id,$peg_nama,$tgl_absen,$jam_absen,$kode,$peg_jabatan)==TRUE) {
+			  $status_sync='<span class="label label-success">Tersimpan</span>';
 		  }
 		  else {
-			  $status_sync='error';
+			  $status_sync='<span class="label label-danger">error</span>';
 		  }
 	  }
 	  echo '<tr>

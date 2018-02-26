@@ -58,7 +58,7 @@ else { $sdate=date("Y-m-d"); }
 		}
 	else {
 		echo '<tr>
-		<td colspan="13">Data masing kosong</td>
+		<td colspan="13">Data masih kosong</td>
 		</tr>';
 	}
  	?>

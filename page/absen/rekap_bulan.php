@@ -52,21 +52,22 @@ Bulan :
 			<td>'.$r_peg["item"][$i]["peg_nama"].'</td>
 			<td>'.$JenisJabatan[$r_peg["item"][$i]["peg_jabatan"]].' '.$r_peg["item"][$i]["unit_nama"].'</td>';
 		}
+		
 		echo '
-		<tr>
-			'.$NamaAwal.'
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-		';
+			<tr>
+				'.$NamaAwal.'
+				<td>'.$tl1.'</td>
+				<td>'.$tl2.'</td>
+				<td>'.$tl3.'</td>
+				<td>'.$tl4.'</td>
+				<td>'.$psw1.'</td>
+				<td>'.$psw2.'</td>
+				<td>'.$psw3.'</td>
+				<td>'.$psw4.'</td>
+				<td>'.$telat_menit.'</td>
+			</tr>
+			';
+			
 	}
  }
  else {

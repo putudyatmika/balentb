@@ -8,7 +8,7 @@
 	<meta name="language" content="id,en" />
    <link rel="shortcut icon" href="<?php echo $url; ?>/img/bps.ico">
 
-   <title>Monitoring Kegiatan BPS Provinsi NTB (balentb)</title>
+   <title>Sistem Monitoring Kegiatan BPS Provinsi NTB</title>
 
     <!-- Bootstrap core CSS -->
     <!--<link href="css/normalize.css" rel="stylesheet">-->

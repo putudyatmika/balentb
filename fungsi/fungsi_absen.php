@@ -41,6 +41,73 @@ function update_log_absen($absen_id,$absen_kode,$absen_ket) {
 	return $status_sync;
 	$db_sync->close();
 }
+function update_absen_tl_tw($absen_id,$absen_tgl,$absen_jam,$absen_kode) {
+	$waktu_lokal=date("Y-m-d H:i:s");
+	$db_sync = new db();
+	$conn_absen = $db_sync -> connect();
+	
+	if ($absen_kode==0) {
+		$hsl_cek_telat=cek_telat($absen_jam);
+		$tl=$hsl_cek_telat["tl"];
+		$psw=0;
+	}
+	elseif ($absen_kode==1) {
+		$tl=0;
+		$jumat_tidak=date("w",strtotime($absen_tgl));
+		if ($jumat_tidak==5) { $hariJumat=true; }
+		else { $hariJumat=false; }	
+		$cek_absen_plg=cek_psw($absen_jam,$hariJumat);
+		$psw=$cek_absen_plg["psw"];
+	}
+	else {
+		$tl=0;
+		$psw=0;
+	}
+	$sql_update_tl_psw= $conn_absen->query("update peg_absen set absen_tl='$tl', absen_psw='$psw', absen_sync_tgl='$waktu_lokal' where absen_id='$absen_id'") or die(mysqli_error($conn_absen));
+	if ($sql_update_tl_psw) { $status_update=true; }
+	else { $status_update=false; }
+	return $status_update;
+	$conn_absen-> close();
+}
+function update_log_absen_tlpsw($tgl_awal,$tgl_akhir) {
+	$waktu_lokal=date("Y-m-d H:i:s");
+	$db_sync = new db();
+	$conn_absen = $db_sync -> connect();
+	$sql_absen = $conn_absen -> query("select peg_absen.*, m_pegawai.peg_nama, m_pegawai.peg_jabatan, m_pegawai.peg_status from peg_absen left join m_pegawai on peg_absen.absen_peg_id=m_pegawai.peg_id where absen_tgl>='$tgl_awal' and absen_tgl<='$tgl_akhir' order by absen_tgl desc,absen_jam asc") or die(mysqli_error($conn_absen));
+	$cek_absen = $sql_absen->num_rows;
+	$list_absen=array("error"=>false);
+	if ($cek_absen>0) {
+		$list_absen["error"]=false;
+		$list_absen["absen_total"]=$cek_absen;
+		$i=1;
+		while ($r=$sql_absen->fetch_object()) {
+			$list_absen["item"][$i]=array(
+				"absen_id"=>$r->absen_id,
+				"absen_peg_id"=>$r->absen_peg_id,
+				"absen_peg_nama"=>$r->absen_peg_nama,
+				"peg_nama"=>$r->peg_nama,
+				"absen_tgl"=>$r->absen_tgl,
+				"absen_jam"=>$r->absen_jam,
+				"absen_tl"=>$r->absen_tl,
+				"absen_psw"=>$r->absen_psw,
+				"absen_kode"=>$r->absen_kode,
+				"absen_sync_tgl"=>$r->absen_sync_tgl,
+				"absen_rekap"=>$r->absen_rekap,
+				"absen_flag"=>$r->absen_flag,
+				"absen_ket"=>$r->absen_ket,
+				"peg_jabatan"=>$r->peg_jabatan,
+				"peg_status"=>$r->peg_status
+			);
+			$i++;
+		}
+	}
+	else {
+		$list_absen["error"]=true;
+		$list_absen["pesan_error"]='Data masih kosong';
+	}
+	return $list_absen;
+	$db_sync->close();
+}
 
 function log_peg_absen($absen_id,$absen_tgl,$detil=false) {
 	$db_absen = new db();
@@ -65,6 +132,8 @@ function log_peg_absen($absen_id,$absen_tgl,$detil=false) {
 				"peg_nama"=>$r->peg_nama,
 				"absen_tgl"=>$r->absen_tgl,
 				"absen_jam"=>$r->absen_jam,
+				"absen_tl"=>$r->absen_tl,
+				"absen_psw"=>$r->absen_psw,
 				"absen_kode"=>$r->absen_kode,
 				"absen_sync_tgl"=>$r->absen_sync_tgl,
 				"absen_rekap"=>$r->absen_rekap,
@@ -187,9 +256,60 @@ function input_generate_rekap($peg_id,$tgl_absen,$pola_absen) {
 function cek_generate_rekap($peg_id,$tgl_absen) {
 	$db_absen = new db();
 	$conn_absen = $db_absen -> connect();
-	$sql_absen= $conn_absen->query("select * from rekap_absen where peg_id='$peg_id' and tgl='$tgl_absen'") or die(mysqli_error($conn_sync));
+	$sql_absen= $conn_absen->query("select * from rekap_absen where peg_id='$peg_id' and tgl='$tgl_absen'") or die(mysqli_error($conn_absen));
 	$cek_absen=$sql_absen->num_rows;
 	if ($cek_absen>0) {
+		$status_rekap=true;
+	}
+	else {
+		$status_rekap=false;
+	}
+	return $status_rekap;
+	$conn_absen->close();
+}
+function cek_gen_rekap_peg($peg_id,$tgl_absen) {
+	$db_absen = new db();
+	$conn_absen = $db_absen -> connect();
+	$sql_absen= $conn_absen->query("select * from rekap_tl_psw where peg_id='$peg_id' and rekap_tgl='$tgl_absen'") or die(mysqli_error($conn_absen));
+	$cek_absen=$sql_absen->num_rows;
+	if ($cek_absen>0) {
+		$status_rekap=true;
+	}
+	else {
+		$status_rekap=false;
+	}
+	return $status_rekap;
+	$conn_absen->close();
+}
+function input_gen_rekap_peg($peg_id,$tgl_absen) {
+	$db_absen = new db();
+	$conn_absen = $db_absen -> connect();
+	$sql_absen= $conn_absen->query("insert into rekap_tl_psw (peg_id,rekap_tgl) values('$peg_id','$tgl_absen')") or die(mysqli_error($conn_absen));
+	if ($sql_absen) {
+		$status_rekap=true;
+	}
+	else {
+		$status_rekap=false;
+	}
+	return $status_rekap;
+	$conn_absen->close();
+}
+function update_rekap_peg($peg_id,$absen_tgl,$absen_hadir,$tl,$psw,$total_menit) {
+	$db_absen = new db();
+	$conn_absen = $db_absen -> connect();
+	if ($tl==0) { $tl1=0; $tl2=0; $tl3=0;$tl4=0; }
+	elseif ($tl==1) { $tl1=1; $tl2=0; $tl3=0;$tl4=0; }
+	elseif ($tl==2) { $tl1=0; $tl2=1; $tl3=0;$tl4=0; }
+	elseif ($tl==3) { $tl1=0; $tl2=0; $tl3=1;$tl4=0; }
+	elseif ($tl==4) { $tl1=0; $tl2=0; $tl3=0;$tl4=1; }
+	if ($psw==0) { $psw1=0; $psw2=0; $psw3=0; $psw4=0; }
+	elseif ($psw==1) { $psw1=1; $psw2=0; $psw3=0; $psw4=0; }
+	elseif ($psw==2) { $psw1=0; $psw2=2; $psw3=0; $psw4=0; }
+	elseif ($psw==3) { $psw1=0; $psw2=0; $psw3=3; $psw4=0; }
+	elseif ($psw==4) { $psw1=0; $psw2=0; $psw3=0; $psw4=1; }
+
+	$sql_absen= $conn_absen->query("update rekap_tl_psw set rekap_hadir='$absen_hadir', tl1='$tl1', tl2='$tl2', tl3='$tl3', tl4='$tl4', psw1='$psw1', psw2='$psw2', psw3='$psw3', psw4='$psw4', total_telat_menit='$total_menit' where peg_id='$peg_id' and  rekap_tgl='$absen_tgl'") or die(mysqli_error($conn_absen));
+	if ($sql_absen) {
 		$status_rekap=true;
 	}
 	else {
@@ -304,21 +424,56 @@ function peg_absen_v2($peg_id,$tgl_absen,$kode_absen) {
 }
 function cek_psw($absen_jam,$hariJumat=false) {
 	global $JamPulang,$JamPulangJumat;
-	$jam_pulang=strtotime($absen_jam);
+	$wkt_absen_plg=strtotime($absen_jam);
 	$JamPulangBiasa=strtotime($JamPulang);
-	$jam_jumat=strtotime($JamPulangJumat);
+	$JamJumatPulang=strtotime($JamPulangJumat);
 	if ($hariJumat==false) {
 		//hari biasa
-		if ($jam_pulang<=$jam_jumat) {
-			
+		$selisih_plg=$wkt_absen_plg-$JamPulangBiasa;
+		if ($wkt_absen_plg<=$JamPulangBiasa) {
+				$menit_plg = floor($selisih_plg/60);
+			if ($menit_plg<=0 and $menit_plg >=-30) {
+				$psw=1;
+			}
+			elseif ($menit_plg>=-60 and $menit_plg<-30) {
+				$psw=2;
+			}
+			elseif ($menit_plg>=-90 and $menit_plg<-60) {
+				$psw=3;
+			}
+			else {
+				$psw=4;
+			}
 		}
 		else {
-			$telat_pulang=0;
+			$menit_plg = floor($selisih_plg/60);
+			$psw=0;
 		}
 	}
 	else {
 		//hari jumat
+		$selisih_plg=$wkt_absen_plg-$JamJumatPulang;
+		if ($wkt_absen_plg<=$JamJumatPulang) {
+			$menit_plg = floor($selisih_plg/60);
+			if ($menit_plg<=0 and $menit_plg >=-30) {
+				$psw=1;
+			}
+			elseif ($menit_plg>=-60 and $menit_plg<-30) {
+				$psw=2;
+			}
+			elseif ($menit_plg>=-90 and $menit_plg<-60) {
+				$psw=3;
+			}
+			else {
+				$psw=4;
+			}
+		}
+		else {
+			$menit_plg = floor($selisih_plg/60);
+			$psw=0;
+		}
 	}
+	$telat_pulang=array("psw"=>$psw,"waktu"=>$menit_plg);
 	return $telat_pulang;
 }
 function cek_telat($absen_jam) {
@@ -547,12 +702,29 @@ function peg_absen($peg_id,$tgl_absen,$kode_absen) {
 	return $waktu_absen;
 	$conn_absen->close();
 }
-function sync_absen($peg_id,$peg_nama,$tgl_absen,$jam_absen,$kode) {
+function sync_absen($peg_id,$peg_nama,$tgl_absen,$jam_absen,$kode,$peg_jabatan) {
 	$waktu_lokal=date("Y-m-d H:i:s");
+	if ($kode==0 and $peg_jabatan<=2) {
+		$hsl_cek_telat=cek_telat($jam_absen);
+		$tl=$hsl_cek_telat["tl"];
+		$psw=0;
+	}
+	elseif ($kode==1 and $peg_jabatan<=2) {
+		$tl=0;
+		$jumat_tidak=date("w",strtotime($tgl_absen));
+		if ($jumat_tidak==5) { $hariJumat=true; }
+		else { $hariJumat=false; }	
+		$cek_absen_plg=cek_psw($jam_absen,$hariJumat);
+		$psw=$cek_absen_plg["psw"];
+	}
+	else {
+		$tl=0;
+		$psw=0;
+	}
 	$db_sync = new db();
 	$conn_sync = $db_sync -> connect();
-	$sql_sync = $conn_sync-> query("insert into peg_absen(absen_peg_id,absen_peg_nama,absen_tgl,absen_jam,absen_kode,absen_sync_tgl,absen_rekap,absen_flag,absen_pola,absen_hadir)
-	values('$peg_id','$peg_nama','$tgl_absen','$jam_absen','$kode','$waktu_lokal',0,0,1,1)") or die(mysqli_error($conn_sync));
+	$sql_sync = $conn_sync-> query("insert into peg_absen(absen_peg_id,absen_peg_nama,absen_tgl,absen_jam,absen_tl,absen_psw,absen_kode,absen_sync_tgl,absen_rekap,absen_flag,absen_pola,absen_hadir)
+	values('$peg_id','$peg_nama','$tgl_absen','$jam_absen',$tl,$psw,'$kode','$waktu_lokal',0,0,1,1)") or die(mysqli_error($conn_sync));
 	if ($sql_sync) {
 		$status_sync=TRUE;
 	}
@@ -1015,25 +1187,122 @@ function rekap_harian($peg_id,$absen_tgl) {
 }
   else {
   	$rekap_data["error"]=true;
-  	$rekap_data["rekap_pesan_error"]="Data tidak tersedia";
+  	$rekap_data["pesan_error"]="Data tidak tersedia";
   }
   return $rekap_data;
   $conn_absen->close();
 }
-function rekap_bulanan($peg_id,$tgl_awal,$tgl_akhir,$bulan=false) {
+function list_rekap_bulan_peg($peg_id,$bln_absen,$thn_absen) {
+	$db_absen = new db();
+  	$conn_absen = $db_absen -> connect();
+  	$sql_rekap = $conn_absen->query("select rekap_tl_psw.*, peg_nama,peg_unitkerja from rekap_tl_psw inner join m_pegawai on rekap_tl_psw.peg_id=m_pegawai.peg_id where rekap_tl_psw.peg_id='$peg_id' and month(rekap_tgl)='$bln_absen' and year(rekap_tgl)='$thn_absen' order by rekap_tgl asc");
+  	$cek_rekap= $sql_rekap->num_rows;
+  	$list_rekap=array("error"=>false);
+  	if ($cek_rekap>0) {
+  		$list_rekap["error"]=false;
+  		$list_rekap["total_rekap"]=$cek_rekap;
+  		$i=1;
+  		while ($r=$sql_rekap->fetch_object()) {
+  			$list_rekap["item"][$i]=array(
+  				"rekap_id"=>$r->rekap_id,
+  				"peg_id"=>$r->peg_id,
+  				"rekap_tgl"=>$r->rekap_tgl,
+  				"rekap_hadir"=>$r->rekap_hadir,
+  				"tl1"=>$r->tl1,
+  				"tl2"=>$r->tl2,
+  				"tl3"=>$r->tl3,
+  				"tl4"=>$r->tl4,
+  				"psw1"=>$r->psw1,
+  				"psw2"=>$r->psw2,
+  				"psw3"=>$r->psw3,
+  				"psw4"=>$r->psw4,
+  				"total_telat_menit"=>$r->total_telat_menit,
+  				"peg_nama"=>$r->peg_nama,
+  				"peg_unitkerja"=>$r->peg_unitkerja
+  			);
+  			$i++;
+  		}
+
+  	}
+  	else {
+  		$list_rekap["error"]=true;
+  		$list_rekap["pesan_error"]="Data tidak tersedia";
+  	}
+  	return $list_rekap;
+  	$conn_absen->close();
+}
+function rekap_bulan_peg_biasa($peg_id,$tgl_absen) {
   global $JamMasuk, $JamPulang, $JamPulangJumat;
   $db_absen = new db();
   $conn_absen = $db_absen -> connect();
-  if ($bulan==false) {
-  	//lihat bulannya aja
-  	$sql_rekap = $conn_absen -> query("select *, time_format(timediff(jam_masuk,'07:30:00'),'%H:%i') as waktu_telat from absen_masuk_peg where peg_id='$peg_id'");
+  $hari_kerja=date("w",strtotime($tgl_absen));
+  if ($hari_kerja==5) {
+  	//hari jumat
+  	$waktu_pulang=$JamPulangJumat;
   }
   else {
-  	//durasi tanggal
+  	$waktu_pulang=$JamPulang;
   }
-  
+  $sql_rekap = $conn_absen -> query("select * from rekap_absen_harian where peg_id='$peg_id' and absen_tgl='$tgl_absen'") or die(mysqli_error($conn_absen));
   $cek_rekap = $sql_rekap->num_rows;
   $rekap_data=array("error"=>false);
+  if ($cek_rekap>0) {
+  		$r=$sql_rekap->fetch_object();
+  		if ($r->detik_telat_masuk_biasa>59 and $r->absen_hadir==1) {
+  				$menit=floor($r->detik_telat_masuk_biasa/60);
+  				if ($menit<=30) {
+  					$tl=1;
+  				}
+  				elseif ($menit>30 and $menit<=60) {
+  					$tl=2;
+  				}
+  				elseif ($menit>60 and $menit<=90) {
+  					$tl=3;
+  				}
+  				elseif ($menit>90) {
+  					$tl=4;
+  				  }
+  				$telat_menit=$menit;
+
+  		}
+		else {
+			$telat_menit=0;
+			$tl=0;
+		}
+	$rekap_data["telat_masuk_menit"]=$telat_menit;
+	$rekap_data["tl"]=$tl;	
+	 if ($r->detik_cepat_pulang_biasa==null and $r->detik_telat_masuk_biasa!=null) {
+	 	$psw=4;
+	 	$telat_pulang_menit=-480;
+	 }
+	 elseif ($r->detik_cepat_pulang_biasa<59) {
+		$menit_pulang=ceil($r->detik_cepat_pulang_biasa/60);
+		if ($menit_pulang>=-30) {
+			$psw=1;
+		}
+		elseif ($menit_pulang<-30 and $menit_pulang>=-60) {
+			$psw=2;
+		}
+		elseif ($menit_pulang<-60 and $menit_pulang>=-90) {
+			$psw=3;
+		}
+		else {
+			$psw=4;
+		}
+		$telat_pulang_menit=$menit_pulang;
+	}
+	else {
+		$telat_pulang_menit=0;
+		$psw=0;
+	}
+	$rekap_data["pulang_cepat_menit"]=$telat_pulang_menit;
+	$rekap_data["psw"]=$psw;
+	$rekap_data["rekap_hadir"]=$r->absen_hadir;
+  }
+  else {
+  	$rekap_data["error"]=true;
+  	$rekap_data["pesan_error"]="Data tidak tersedia";
+  }
   return $rekap_data;
   $conn_absen->close();
 }
