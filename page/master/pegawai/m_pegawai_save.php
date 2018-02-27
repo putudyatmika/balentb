@@ -3,6 +3,8 @@
 if ($_POST['submit_pegawai']) {
 
 	$peg_id =$_POST['peg_id'];
+	$peg_nip =$_POST['peg_nip'];
+	$peg_nip_lama =$_POST['peg_nip_lama'];
 	$peg_nama = $_POST['peg_nama'];
 	$peg_jk = $_POST['peg_jk'];
 	$peg_user_no = $_POST['peg_user_no'];
@@ -18,7 +20,7 @@ if ($_POST['submit_pegawai']) {
 	else {
 		if ($peg_user_no!="") {
 			//save_pegawai_absen($peg_id,$peg_nama,$peg_jk,$peg_user_no,$peg_unitkerja,$peg_status,$peg_jabatan,$user_created)
-			$result_absen=save_pegawai_absen($peg_id,$peg_nama,$peg_jk,$peg_user_no,$peg_unitkerja,$peg_status,$peg_jabatan,$user_created);
+			$result_absen=save_pegawai_absen($peg_id,$peg_nama,$peg_jk,$peg_user_no,$peg_unitkerja,$peg_status,$peg_jabatan,$user_created,$peg_nip_lama,$peg_nip);
 			if ($result_absen) {
 				echo "Berhasil di simpan database absen pegawai";
 			}
@@ -29,7 +31,7 @@ if ($_POST['submit_pegawai']) {
 		}
 		else {
 			//simpan tanpa peg_user_no
-			$result_absen_dua=save_pegawai_absen($peg_id,$peg_nama,$peg_jk,0,$peg_unitkerja,$peg_status,$peg_jabatan,$user_created);
+			$result_absen_dua=save_pegawai_absen($peg_id,$peg_nama,$peg_jk,0,$peg_unitkerja,$peg_status,$peg_jabatan,$user_created,$peg_nip_lama,$peg_nip);
 			if ($result_absen_dua) {
 				echo 'Berhasil di simpan database absen pegawai';
 			}

@@ -18,8 +18,8 @@ else {
 $date1 = new DateTime($sdate);
 $date2 = new DateTime($edate);
 $diff = $date2->diff($date1)->format("%a");
-if ($diff>14) {
-	echo 'Max 14 hari kalendar';
+if ($diff>31) {
+	echo 'Max 31 hari kalendar';
 }
 else {
 ?>
@@ -31,9 +31,10 @@ else {
  		<th>Nama</th>
  		<th>Masuk</th>
  		<th>#</th>
+ 		<th>Telat Masuk</th>
  		<th>Pulang</th>
  		<th>#</th>
- 		<th>Telat Masuk</th>
+ 		<th>Cepat Pulang</th>
  		<th class="hidden-print">&nbsp;</th>
  	</tr>
  	<tr>
@@ -44,7 +45,8 @@ else {
  		<th>(5)</th>
  		<th>(6)</th>
  		<th>(7)</th>
- 		<th class="hidden-print">(8)</th>
+ 		<th>(8)</th>
+ 		<th class="hidden-print">(9)</th>
  	</tr>
  </thead>
  <tbody>
@@ -58,13 +60,13 @@ else {
 			if ($r_unit["item"][$i]["unit_eselon"] < 4) {
 				//eselon 2 dan 3 bold
 				echo '<tr>
-			<td colspan="8"><strong>['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</strong></td>
+			<td colspan="9"><strong>['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</strong></td>
 			</tr>';
 			}
 			else {
 				
 				echo '<tr>
-			<td colspan="8">['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</td>
+			<td colspan="9">['.$r_unit["item"][$i]["unit_kode"].'] '.$r_unit["item"][$i]["unit_nama"].'</td>
 			</tr>';
 			}
 			$r_peg=list_pegawai_unitkerja($r_unit["item"][$i]["unit_kode"],true,true);
@@ -76,13 +78,13 @@ else {
 					if ($r_peg["item"][$j]["peg_jabatan"]==1) {
 						echo '<tr>
 						<th>'.$j.'</th>
-						<th colspan="7">'.$r_peg["item"][$j]["peg_nama"].' / '.get_nama_unit($r_peg["item"][$j]["peg_unitkerja"]).'</th>
+						<th colspan="8">'.$r_peg["item"][$j]["peg_nama"].' / '.get_nama_unit($r_peg["item"][$j]["peg_unitkerja"]).'</th>
 						</tr>';
 					}
 					else {
 						echo '<tr>
 						<td>'.$j.'</td>
-						<td colspan="7">'.$r_peg["item"][$j]["peg_nama"].'</td>
+						<td colspan="8">'.$r_peg["item"][$j]["peg_nama"].'</td>
 						</tr>';
 					}
 
@@ -105,7 +107,9 @@ else {
 									echo '<td colspan="6"><span class="label label-success">'.$hr_libur["libur_ket"].'</a></td>';
 								}
 								else {
-								echo '<td colspan="5"><span class="label label-danger">'.$JenisHariAbsen[0].'</a></td>
+								echo '<td><span class="label label-danger">'.$JenisHariAbsen[0].'</a></td>
+								<td><span class="label label-primary">'.$JenisTelatMasuk[4].'</a></td>
+								<td colspan="4"></td>
 								<td class="hidden-print"><a href="'.$url.'/'.$page.'/addpeg/'.$r_peg["item"][$j]["peg_id"].'/'.strtotime($k->format("Y-m-d")).'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i></a></td>';
 								}
 							}
@@ -116,7 +120,10 @@ else {
 								if ($jam_telat["tl"]>0) {
 									//telat
 									$tl=$jam_telat["tl"];
-									$telat='<span class="label label-info">'.$JenisTelatMasuk[$tl].'</span>';
+									if ($tl==1) { $telat='<span class="label label-warning">'.$JenisTelatMasuk[$tl].'</span>';}
+									elseif ($tl==2) { $telat='<span class="label label-info">'.$JenisTelatMasuk[$tl].'</span>';}
+									elseif ($tl==3){ $telat='<span class="label label-primary">'.$JenisTelatMasuk[$tl].'</span>';}
+									else { $telat='<span class="label label-danger">'.$JenisTelatMasuk[$tl].'</span>';}
 									$jam_masuk='<span class="label label-danger">'.date("H:i",strtotime($r_rekap["jam_masuk"])).'</span>';
 									$waktu_telat='<span class="label label-danger">'.date("H:i",strtotime($jam_telat["waktu"])).'</span>';
 								}
@@ -137,13 +144,14 @@ else {
 								}
 								echo '<td>'.$jam_masuk.'</td>
 									<td>'.$telat.'</td>
+									<td>'.$waktu_telat.'</td>
 									<td>'.$jam_pulang.'</td>
 									<td>'.$telat_pulang.'</td>
-									<td>'.$waktu_telat.'</td>
+									<td></td>
 									<td class="hidden-print">&nbsp;</td>';
 								}
 								else {
-									echo '<td colspan="5"><span class="label label-default">'.$JenisHariAbsen[$r_rekap["absen_hadir"]].' '.$r_rekap["absen_ket"].'</span></td>
+									echo '<td colspan="6"><span class="label label-default">'.$JenisHariAbsen[$r_rekap["absen_hadir"]].' '.$r_rekap["absen_ket"].'</span></td>
 									<td class="hidden-print"><a href="'.$url.'/'.$page.'/editpeg/'.$r_peg["item"][$j]["peg_id"].'/'.strtotime($k->format("Y-m-d")).'"><i class="fa fa-pencil-square text-primary" aria-hidden="true"></i></a></td>';
 								}
 							}
@@ -158,13 +166,13 @@ else {
 				
 			}
 			else {
-				echo '<tr><td colspan="7">Data pegawai masih kosong</td></tr>';
+				echo '<tr><td colspan="9">Data pegawai masih kosong</td></tr>';
 			}
 		}
 	}
 	else {
 		echo '<tr>
-		<td colspan="7">Data masing kosong</td>
+		<td colspan="9">Data masing kosong</td>
 		</tr>';
 	}
 	?>

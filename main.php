@@ -18,6 +18,9 @@ elseif ($page=="laporan") {
 elseif (($page=="absen") && ($_SESSION['sesi_provkab'] == 1)) {
 		include 'page/absen/m_absen.php';
 	}
+elseif (($page=="aktivitas") && ($_SESSION['sesi_provkab'] == 1)) {
+		include 'page/aktivitas/m_aktivitas.php';
+	}
 elseif ($page=="logout") {
 	include 'page/login/logout.php';
 }

@@ -4,6 +4,8 @@
 	$r_peg=list_pegawai($peg_no,true);
 	if ($r_peg["error"]==false) {
 		$peg_id=$r_peg["item"][1]["peg_id"];
+		$peg_nip=$r_peg["item"][1]["peg_nip"];
+		$peg_nip_lama=$r_peg["item"][1]["peg_nip_lama"];
 		$peg_nama=$r_peg["item"][1]["peg_nama"];
 		$peg_jk=$r_peg["item"][1]["peg_jk"];
 		$user_no=$r_peg["item"][1]["user_no"];
@@ -30,6 +32,26 @@
 					<div class="input-group margin-bottom-sm">
 				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
 					<input type="text" name="peg_nama" class="form-control" value="<?php echo $peg_nama;?>" placeholder="nama lengkap tanpa gelar" />
+				 </div>
+				</div>
+		</div>
+		<div class="form-group">
+			<label for="peg_nip_lama" class="col-sm-3 control-label">NIP Lama</label>
+
+				<div class="col-lg-7 col-sm-7">
+					<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+					<input type="text" name="peg_nip_lama" class="form-control" value="<?php echo $peg_nip_lama;?>" placeholder="NIP Lama" />
+				 </div>
+				</div>
+		</div>
+		<div class="form-group">
+			<label for="peg_nip" class="col-sm-3 control-label">NIP</label>
+
+				<div class="col-lg-7 col-sm-7">
+					<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+					<input type="text" name="peg_nip" class="form-control" value="<?php echo $peg_nip;?>" placeholder="NIP Pegawai" />
 				 </div>
 				</div>
 		</div>

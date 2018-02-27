@@ -22,6 +22,26 @@
 				</div>
 		</div>
 		<div class="form-group">
+			<label for="peg_nip_lama" class="col-sm-3 control-label">NIP Lama</label>
+
+				<div class="col-lg-7 col-sm-7">
+					<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+					<input type="text" name="peg_nip_lama" class="form-control" placeholder="NIP Lama" />
+				 </div>
+				</div>
+		</div>
+		<div class="form-group">
+			<label for="peg_nip" class="col-sm-3 control-label">NIP</label>
+
+				<div class="col-lg-7 col-sm-7">
+					<div class="input-group margin-bottom-sm">
+				<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+					<input type="text" name="peg_nip" class="form-control" placeholder="NIP Pegawai" />
+				 </div>
+				</div>
+		</div>
+		<div class="form-group">
 			<label for="peg_jk" class="col-sm-3 control-label">Jenis Kelamin</label>
 				<div class="col-sm-4">
 					<div class="input-group margin-bottom-sm">

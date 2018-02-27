@@ -103,6 +103,7 @@ echo '<br />data_date : '. $data_date;
 				
 				if ($hasil_upload) {
 					echo '<br />'. $i .' ';
+					set_flag_data($r_absen["item"][$i]["absen_id"]);
 				}
 				else {
 					echo '<br />'. $i .' Error';

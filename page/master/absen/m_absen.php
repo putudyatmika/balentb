@@ -3,9 +3,11 @@
 			<div class="btn-group">
 				<a href="<?php echo $url; ?>/master/absen/add/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-plus"></span></a>
 				<a href="<?php echo $url; ?>/master/absen/pola/" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-th"></span> Pola</a>
-				<a href="<?php echo $url; ?>/master/absen/rekap/" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-th"></span> Generate Rekap</a>
+				<a href="<?php echo $url; ?>/master/absen/rekap/" class="btn btn-info btn-sm"><span class="glyphicon glyphicon-th"></span> Generate Rekap</a>
+				<a href="<?php echo $url; ?>/master/absen/rekapbulan/" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-th"></span> View TL-PSW</a>
 				<a href="<?php echo $url; ?>/master/absen/" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-th"></span> Log Absen</a>
-				
+				<a href="<?php echo $url; ?>/master/absen/libur/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-th"></span> Hari Libur</a>
+				<a href="<?php echo $url; ?>/master/absen/updatetlpsw/" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-th"></span> UpdateTLPSW</a>
 			</div>
 		</div>
 		
@@ -32,10 +34,16 @@
 				include 'page/master/absen/m_absen_delete.php';
 			}
 			elseif ($lvl3=='rekap') {
-				include 'page/master/absen/m_absen_rekap.php';
+				include 'page/master/absen/m_absen_rekapabsen.php';
+			}
+			elseif ($lvl3=='rekapbulan') {
+				include 'page/master/absen/m_absen_rekapbulan.php';
 			}
 			elseif ($lvl3=='log') {
 				include 'page/master/absen/m_log.php';
+			}
+			elseif ($lvl3=='updatetlpsw') {
+				include 'page/master/absen/m_absen_update_tlpsw.php';
 			}
 			else {
 				include 'page/master/absen/m_absen_list.php';

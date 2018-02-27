@@ -3,6 +3,8 @@
 if ($_POST['submit_pegawai']) {
 	$peg_no =$_POST['peg_no'];
 	$peg_id =$_POST['peg_id'];
+	$peg_nip_lama = trim($_POST['peg_nip_lama']);
+	$peg_nip = trim($_POST['peg_nip']);
 	$peg_nama = $_POST['peg_nama'];
 	$peg_jk = $_POST['peg_jk'];
 	$peg_user_no = $_POST['peg_user_no'];
@@ -17,7 +19,7 @@ if ($_POST['submit_pegawai']) {
 	}
 	else {
 			//simpan tanpa peg_user_no
-			$update_absen=update_pegawai_absen($peg_no,$peg_id,$peg_nama,$peg_jk,$peg_user_no,$peg_unitkerja,$peg_jabatan,$peg_status,$user_update);
+			$update_absen=update_pegawai_absen($peg_no,$peg_id,$peg_nama,$peg_jk,$peg_user_no,$peg_unitkerja,$peg_jabatan,$peg_status,$user_update,$peg_nip_lama,$peg_nip);
 			if ($update_absen) {
 				echo 'Berhasil di update';
 			}

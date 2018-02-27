@@ -8,7 +8,7 @@
 	<meta name="language" content="id,en" />
    <link rel="shortcut icon" href="<?php echo $url; ?>/img/bps.ico">
 
-   <title>Monitoring Kegiatan BPS Provinsi NTB (balentb)</title>
+   <title>Sistem Monitoring Kegiatan BPS Provinsi NTB</title>
 
     <!-- Bootstrap core CSS -->
     <!--<link href="css/normalize.css" rel="stylesheet">-->
@@ -43,6 +43,7 @@
         <li><a href="<?php echo $url; ?>/unitkerja/"><i class="fa fa-trophy" aria-hidden="true"></i> UNITKERJA</a></li>
        	<li><a href="<?php echo $url; ?>/laporan/"><i class="fa fa-line-chart" aria-hidden="true"></i> LAPORAN</a></li>
          <?php if ($_SESSION['sesi_provkab']==1) { ?><li><a href="<?php echo $url; ?>/absen/"><i class="fa fa-id-card-o" aria-hidden="true"></i> ABSEN</a></li><?php } ?>
+         <?php if ($_SESSION['sesi_provkab']==1) { ?><li><a href="<?php echo $url; ?>/aktivitas/"><i class="fa fa-calendar" aria-hidden="true"></i> AKTIVITAS</a></li><?php } ?>
     <?php if ($_SESSION['sesi_level']>=4) { ?><li><a href="<?php echo $url; ?>/master/"><i class="fa fa-cog" aria-hidden="true"></i> MASTER</a></li><?php } ?>
 		<li class="dropdown">
               <a href="<?php echo $url; ?>/users/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle" aria-hidden="true"></i> USERS (<?php echo $_SESSION['sesi_user_id']; ?>) <span class="caret"></span></a>
