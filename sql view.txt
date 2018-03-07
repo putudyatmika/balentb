@@ -1,5 +1,7 @@
 <?php
 //sql untuk create view
+create view pegawai_all_aktif as select m_pegawai.*, unit_nama from m_pegawai left join unitkerja on m_pegawai.peg_unitkerja=unitkerja.unit_kode where m_pegawai.peg_status=1 order by m_pegawai.peg_unitkerja asc
+
 create view absen_peg_masuk as select absen_id as absen_id, absen_peg_id, absen_peg_nama, absen_tgl, absen_jam as jam_masuk, absen_kode, absen_rekap, absen_flag from pegawai_aktif left join peg_absen on pegawai_aktif.peg_id=peg_absen.absen_peg_id where peg_absen.absen_kode=0 group by peg_absen.absen_peg_id, peg_absen.absen_tgl order by absen_tgl desc, absen_jam asc
 
 drop view absen_peg_masuk;

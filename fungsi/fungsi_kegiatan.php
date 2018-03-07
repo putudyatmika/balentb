@@ -126,9 +126,9 @@ function get_detil_kegiatan($keg_id,$keg_d_unitkerja,$jenis_keg) {
 	$conn_keg = $db_keg->connect();
 	$sql_d_keg = $conn_keg -> query("select * from keg_detil where keg_id='$keg_id' and keg_d_unitkerja='$keg_d_unitkerja' and keg_d_jenis='$jenis_keg' order by keg_d_tgl asc");
 	$cek=$sql_d_keg->num_rows;
-	$d_keg='';
-	$d_jml='';
-	$link='';
+	$d_keg=0;
+	$d_jml=0;
+	$link=0;
 	$link_laci='';
 	if ($cek>0) {
 		if ($jenis_keg==1) $edit_d='editkirim';
@@ -212,10 +212,10 @@ function get_nilai_kegiatan($keg_id,$keg_unitkerja) {
 	$sql_d_keg = $conn_keg -> query("select * from keg_detil where keg_id='$keg_id' and keg_d_unitkerja='$keg_unitkerja' and keg_d_jenis='2' order by keg_d_tgl asc");
 	$cek=$sql_d_keg->num_rows;
 	if ($cek>0) {
-		$keg_nilai='';
-		$nilai_waktu='';
-		$nilai_volume='';
-		$nilai_vol='';
+		$keg_nilai=0;
+		$nilai_waktu=0;
+		$nilai_volume=0;
+		$nilai_vol=0;
 		$batas_waktu=get_tgl_kegiatan($keg_id);
 		$kabkota_target=get_keg_kabkota_target($keg_id,$keg_unitkerja);
 		

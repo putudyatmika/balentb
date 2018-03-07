@@ -511,6 +511,47 @@ function cek_telat($absen_jam) {
 	}
 	return $telat;
 }
+function list_pegawai_all_aktif($peg_id,$detil=false) {
+	$db_pegawai = new db();
+	$conn_pegawai = $db_pegawai -> connect();
+	if ($detil==false) {
+		//semua
+		$sql_pegawai= $conn_pegawai -> query("select * from pegawai_all_aktif");
+	}
+	else {
+		//satu pegawai saja
+		$sql_pegawai= $conn_pegawai -> query("select * from pegawai_all_aktif where peg_id='$peg_id'");
+	}
+	$cek_pegawai = $sql_pegawai->num_rows;
+	$list_pegawai=array("error"=>false);
+	if ($cek_pegawai>0) {
+		$list_pegawai["error"]=false;
+		$list_pegawai["peg_total"]=$cek_pegawai;
+		$i=1;
+		while ($r=$sql_pegawai->fetch_object()) {
+			$list_pegawai["item"][$i]=array(
+				"peg_no"=>$r->peg_no,
+				"peg_id"=>$r->peg_id,
+				"peg_nip_lama"=>$r->peg_nip_lama,
+				"peg_nip"=>$r->peg_nip,
+				"peg_nama"=>$r->peg_nama,
+				"peg_jk"=>$r->peg_jk,
+				"peg_status"=>$r->peg_status,
+				"user_no"=>$r->peg_user_no,
+				"peg_unitkerja"=>$r->peg_unitkerja,
+				"peg_jabatan"=>$r->peg_jabatan,
+				"unit_nama"=>$r->unit_nama
+			);
+			$i++;
+		}
+	}
+	else {
+		$list_pegawai["error"]=true;
+		$list_pegawai["pesan_error"]="data pegawai kosong";
+	}
+	return $list_pegawai;
+	$conn_pegawai->close();
+}
 function peg_absen_v3($peg_id,$tgl_absen,$kode_absen,$peg_jabatan) {
 	// kode 0:masuk, 1:pulang, 2:keluar, 3:kembali, 4:masuk lembur, 5:plg lembur
 	$hari_libur = date("w",strtotime($tgl_absen));

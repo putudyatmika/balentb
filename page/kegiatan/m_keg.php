@@ -17,6 +17,18 @@ elseif ($act=="") { $btn_keg="active";$btn_bid='';$btn_add=''; } ?>
 	if ($act=="add" and $_SESSION['sesi_level'] > 2) {
 		include 'page/kegiatan/keg_form.php';
 	}
+	elseif ($act=="addinfo" and $_SESSION['sesi_level'] > 2) {
+		include 'page/kegiatan/keg_info_form.php';
+	}
+	elseif ($act=="saveinfo" and $_SESSION['sesi_level'] > 2) {
+			include 'page/kegiatan/keg_info_save.php';
+		}
+	elseif ($act=="editinfo" and $_SESSION['sesi_level'] > 2) {
+		include 'page/kegiatan/keg_info_form_edit.php';
+	}
+	elseif ($act=="deleteinfo" and $_SESSION['sesi_level'] > 2) {
+		include 'page/kegiatan/keg_info_delete.php';
+	}
 	elseif ($act=="save" and $_SESSION['sesi_level'] > 2) {
 			include 'page/kegiatan/keg_save.php';
 		}

@@ -7,6 +7,16 @@ $cek=$sql_view->num_rows;
 if ($cek>0) {
  $r=$sql_view -> fetch_object();
  $tgl_mulai=$r->keg_start;
+ if ($r->keg_info=="") {
+ 	$keg_info=': Belum ada ';
+ 	$add_info='<p>&nbsp; <a href="'.$url.'/'.$page.'/addinfo/'.$r->keg_id.'"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a></p>';
+ }
+ else {
+ 	$keg_info=$r->keg_info;
+ 	$add_info='<p>&nbsp; <a href="'.$url.'/'.$page.'/editinfo/'.$r->keg_id.'"><i class="fa fa-pencil-square text-success" aria-hidden="true"></i></a> 
+ 	<a href="'.$url.'/'.$page.'/deleteinfo/'.$r->keg_id.'" data-confirm="Apakah info lanjutan ('.$r->keg_id.') '.$r->keg_nama.' ini akan di hapus?"><i class="fa fa-trash-o text-danger" aria-hidden="true"></i></a></p>';
+ }
+
  echo '
 <div class="table-responsive margin10px">
 <table class="table table-hover table-striped table-condensed">
@@ -40,7 +50,14 @@ if ($cek>0) {
 	<tr>
 		<td class="text-right"><strong>SPJ</strong></td>
 		<td>: '.$StatusSPJ[$r->keg_spj].'</td>
-	</tr>';
+	</tr>
+	<tr>
+		<td class="text-right"><strong>Info Lanjutan</strong></td>
+		<td>'.html_entity_decode($keg_info);
+	if ($_SESSION['sesi_level'] > 2) {  echo $add_info; }
+	echo '</td>
+	</tr>
+	';
 if ($_SESSION['sesi_level'] > 3) {
   echo '
   <tr>
