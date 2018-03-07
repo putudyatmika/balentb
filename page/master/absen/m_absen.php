@@ -7,6 +7,7 @@
 				<a href="<?php echo $url; ?>/master/absen/rekapbulan/" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-th"></span> View TL-PSW</a>
 				<a href="<?php echo $url; ?>/master/absen/" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-th"></span> Log Absen</a>
 				<a href="<?php echo $url; ?>/master/absen/libur/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-th"></span> Hari Libur</a>
+				<a href="<?php echo $url; ?>/master/absen/kalendar/" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-th"></span> Kalendar Tahunan</a>
 				<a href="<?php echo $url; ?>/master/absen/updatetlpsw/" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-th"></span> UpdateTLPSW</a>
 			</div>
 		</div>
@@ -44,6 +45,12 @@
 			}
 			elseif ($lvl3=='updatetlpsw') {
 				include 'page/master/absen/m_absen_update_tlpsw.php';
+			}
+			elseif ($lvl3=='kalendar') {
+				include 'page/master/absen/m_kalendar.php';
+			}
+			elseif ($lvl3=='pola') {
+				include 'page/master/absen/m_pola.php';
 			}
 			else {
 				include 'page/master/absen/m_absen_list.php';
