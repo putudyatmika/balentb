@@ -137,7 +137,12 @@ while ($k=$sql_kabkota_target->fetch_object()) {
 			$terima_data='<a href="'.$url.'/'.$page.'/terima/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a>';
 			}
 			else { //level operator provinsi hanya kirim saja
-				$terima_data='<a href="'.$url.'/'.$page.'/terima/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a>';
+				if ($d_keg_kirim[0]!='') {
+					$terima_data='<a href="'.$url.'/'.$page.'/terima/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a>';
+				}
+				else {
+					$terima_data='';
+				}
 				$kirim_data='';
 			}
 		}

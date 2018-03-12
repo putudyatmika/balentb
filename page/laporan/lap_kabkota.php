@@ -95,7 +95,7 @@ if ($unit_kode=='') { //semua kabkotaa
 	if ($bulan_kegiatan=='') {
 	for ($i=1;$i<=12;$i++) {
 		//$sql_list_kabkota= $conn -> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$i' and year(kegiatan.keg_end)='$tahun_kegiatan' group by keg_t_unitkerja order by point_total desc, keg_t_unitkerja asc");
-		$sql_list_kabkota= $conn -> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total, avg(keg_target.keg_t_point) as point_rata from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$i' and year(kegiatan.keg_end)='$tahun_kegiatan' group by keg_t_unitkerja order by point_rata desc, keg_t_unitkerja asc");
+		$sql_list_kabkota= $conn -> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total, avg(keg_target.keg_t_point) as point_rata from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$i' and year(kegiatan.keg_end)='$tahun_kegiatan' and keg_target.keg_t_target>0 group by keg_t_unitkerja order by point_rata desc, keg_t_unitkerja asc");
 		$cek_kabkota=$sql_list_kabkota->num_rows;
 		if ($cek_kabkota>0) {			
 			$j=1; //untuk buat kolom grafik
@@ -191,7 +191,7 @@ $(function () {
 		}
 	}
 	else { //hanya 1 bulan saja
-		$sql_list_kabkota= $conn -> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total, avg(keg_target.keg_t_point) as point_rata from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$bulan_kegiatan' and year(kegiatan.keg_end)='$tahun_kegiatan' group by keg_t_unitkerja order by point_rata desc, keg_t_unitkerja asc");
+		$sql_list_kabkota= $conn -> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total, avg(keg_target.keg_t_point) as point_rata from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$bulan_kegiatan' and year(kegiatan.keg_end)='$tahun_kegiatan' and keg_target.keg_t_target>0 group by keg_t_unitkerja order by point_rata desc, keg_t_unitkerja asc");
 		$cek_kabkota=$sql_list_kabkota->num_rows;
 		if ($cek_kabkota>0) {
 			$j=1; //untuk buat kolom grafik

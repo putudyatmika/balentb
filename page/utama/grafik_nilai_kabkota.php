@@ -3,7 +3,7 @@
 	$conn = $db -> connect();
 	$bulan_kegiatan=date('n');
 	$tahun_kegiatan=$TahunDefault;
-	$sql_list_kabkota= $conn -> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total, avg(keg_target.keg_t_point) as point_rata from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$bulan_kegiatan' and year(kegiatan.keg_end)='$tahun_kegiatan' group by keg_t_unitkerja order by point_rata desc, keg_t_unitkerja asc");
+	$sql_list_kabkota= $conn -> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total, avg(keg_target.keg_t_point) as point_rata from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$bulan_kegiatan' and year(kegiatan.keg_end)='$tahun_kegiatan' and keg_target.keg_t_target>0 group by keg_t_unitkerja order by point_rata desc, keg_t_unitkerja asc");
 		$cek_kabkota=$sql_list_kabkota->num_rows;
 		
 			$j=1; //untuk buat kolom grafik

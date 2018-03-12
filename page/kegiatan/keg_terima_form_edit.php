@@ -101,7 +101,7 @@ if ($cek>0) {
    }
    else {
       echo '<div class="margin10px"><div class="alert alert-danger" role="alert"><i class="fa fa-exclamation-circle fa-2x" aria-hidden="true"></i> User <strong>'.$_SESSION['sesi_user_id'].'</strong> tidak bisa mengakses menu ini</div></div>';
-      echo '<a class="btn btn-success" href="'.$url.'/'.$page.'/view/'.$kk->keg_id.'"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>';
+      //echo '<a class="btn btn-success" href="'.$url.'/'.$page.'/view/'.$kk->keg_id.'"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>';
    }
    
 }

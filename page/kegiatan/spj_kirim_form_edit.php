@@ -84,5 +84,5 @@ if ($cek>0) {
 else {
   echo 'Data kegiatan tidak tersedia<br />';
 }
-echo '<a href="'.$url.'/'.$page.'/view/'.$kk->keg_id.'">Kembali</a>';
+echo '<a href="'.$url.'/'.$page.'/view/'.$kk->keg_id.'" class="btn btn-success"><i class="fa fa-chevron-left" aria-hidden="true"></i> Kembali</a>';
 ?>
