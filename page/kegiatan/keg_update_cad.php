@@ -53,9 +53,22 @@ foreach ($kabkota_target as $key => $value) {
         foreach ($value as $key2 => $value2) {
            $target_spj=$value2;
         }
-        
+        if ($target_spj > 0) {
+          $sql_cek_spj=$conn->query("select * from keg_spj where keg_id='$keg_id' and keg_s_unitkerja='$kabkota_id'") or die(mysqli_error($conn));
+          $cek_spj=$sql_cek_spj->num_rows;
+          if ($cek_spj>0) {
             $sql_keg_spj= $conn-> query("update keg_spj set keg_s_target='$target_spj' where keg_id='$keg_id' and keg_s_unitkerja='$kabkota_id'") or die(mysqli_error($conn));
+          }
+          else {
+            $sql_keg_spj = $conn -> query("insert into keg_spj(keg_id, keg_s_unitkerja, keg_s_target, keg_s_dibuat_oleh, keg_s_dibuat_waktu, keg_s_diupdate_oleh) values('$keg_id', '$kabkota_id', '$target_spj', '$created', '$waktu_lokal', '$created')") or die(mysqli_error($conn));
+          }
         }
+        else {
+          $sql_keg_spj='';
+          $cek_spj='';
+        }
+
+      }
 
   }
 	if ($sql_keg_kabkota) echo '<br />(BERHASIL) Target kegiatan masing-masing kabupaten/kota berhasil diupdate';

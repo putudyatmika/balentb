@@ -28,7 +28,7 @@ $unit_eselon=array(1=>'I',2=>'II',3=>'III',4=>'IV');
 $JenisKegiatan=array(1=>'Bulanan',2=>'Triwulanan',3=>'Semesteran',4=>'Tahunan',5=>'Subround',6=>'AdHoc');
 $JenisDetilKegiatan=array(1=>'Pengiriman',2=>'Penerimaan');
 $TahunDefault=date('Y');
-$StatusSPJ=array(1=>'<span class="label label-success">Ya</span',2=>'<span class="label label-danger">Tidak</span>');
+$StatusSPJ=array(1=>'<span class="label label-success">Ya</span>',2=>'<span class="label label-danger">Tidak</span>');
 //pengaturan absen
 $JamMasuk='07:30:00';
 $JamPulang='16:00:00';

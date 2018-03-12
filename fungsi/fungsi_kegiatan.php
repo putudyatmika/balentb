@@ -127,7 +127,7 @@ function get_detil_kegiatan($keg_id,$keg_d_unitkerja,$jenis_keg) {
 	$sql_d_keg = $conn_keg -> query("select * from keg_detil where keg_id='$keg_id' and keg_d_unitkerja='$keg_d_unitkerja' and keg_d_jenis='$jenis_keg' order by keg_d_tgl asc");
 	$cek=$sql_d_keg->num_rows;
 	$d_keg='';
-	$d_jml='';
+	$d_jml=0;
 	$link='';
 	$link_laci='';
 	if ($cek>0) {
@@ -212,10 +212,10 @@ function get_nilai_kegiatan($keg_id,$keg_unitkerja) {
 	$sql_d_keg = $conn_keg -> query("select * from keg_detil where keg_id='$keg_id' and keg_d_unitkerja='$keg_unitkerja' and keg_d_jenis='2' order by keg_d_tgl asc");
 	$cek=$sql_d_keg->num_rows;
 	if ($cek>0) {
-		$keg_nilai='';
-		$nilai_waktu='';
-		$nilai_volume='';
-		$nilai_vol='';
+		$keg_nilai=0;
+		$nilai_waktu=0;
+		$nilai_volume=0;
+		$nilai_vol=0;
 		$batas_waktu=get_tgl_kegiatan($keg_id);
 		$kabkota_target=get_keg_kabkota_target($keg_id,$keg_unitkerja);
 		
@@ -258,7 +258,7 @@ function get_detil_spj($keg_id,$spj_d_unitkerja,$jenis_keg) {
 	$sql_d_spj = $conn_spj -> query("select * from spj_detil where keg_id='$keg_id' and spj_d_unitkerja='$spj_d_unitkerja' and spj_d_jenis='$jenis_keg' order by spj_d_tgl asc");
 	$cek=$sql_d_spj->num_rows;
 	$d_keg='';
-	$d_jml='';
+	$d_jml=0;
 	$link='';
 	$link_laci='';
 	if ($cek>0) {
@@ -399,7 +399,7 @@ function get_ranking_kegiatan($keg_bulan,$keg_tahun,$jenis_nilai) {
 	$keg_rangking='';
 	$db_keg = new db();
 	$conn_keg = $db_keg->connect();
-	$sql_keg= $conn_keg	-> query("select keg_t_unitkerja, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total, avg(keg_target.keg_t_point) as point_rata from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$keg_bulan' and year(kegiatan.keg_end)='$keg_tahun' group by keg_t_unitkerja order by point_rata desc, keg_t_unitkerja asc");
+	$sql_keg= $conn_keg	-> query("select keg_t_unitkerja, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total, avg(keg_target.keg_t_point) as point_rata from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$keg_bulan' and year(kegiatan.keg_end)='$keg_tahun' and keg_target.keg_t_target>0 group by keg_t_unitkerja order by point_rata desc, keg_t_unitkerja asc");
 	$cek_keg=$sql_keg->num_rows;
 	if ($cek_keg>0) {
 		$data_rangking[]='';
@@ -432,7 +432,7 @@ function get_ranking_kabkota($keg_bulan,$keg_tahun) {
 	$kabkota_rangking='';
 	$db_keg = new db();
 	$conn_keg = $db_keg->connect();
-	$sql_keg= $conn_keg	-> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total, avg(keg_target.keg_t_point) as point_rata from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$keg_bulan' and year(kegiatan.keg_end)='$keg_tahun' group by keg_t_unitkerja order by point_rata desc, keg_t_unitkerja asc");
+	$sql_keg= $conn_keg	-> query("select keg_t_unitkerja, count(*) as keg_jml, sum(keg_target.keg_t_target) as keg_jml_target, sum(keg_target.keg_t_point_waktu) as point_waktu, sum(keg_target.keg_t_point_jumlah) as point_jumlah, sum(keg_target.keg_t_point) as point_total, avg(keg_target.keg_t_point) as point_rata from keg_target,kegiatan where kegiatan.keg_id=keg_target.keg_id and month(kegiatan.keg_end)='$keg_bulan' and year(kegiatan.keg_end)='$keg_tahun' and keg_target.keg_t_target>0 group by keg_t_unitkerja order by point_rata desc, keg_t_unitkerja asc");
 	$cek_keg=$sql_keg->num_rows;
 	if ($cek_keg>0) {
 		$data_kabkota[]='';

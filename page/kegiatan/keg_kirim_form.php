@@ -109,5 +109,5 @@ else {
 else {
 	echo 'Level user tidak bisa mengakses menu ini <br />';
 }
-echo '<a href="'.$url.'/'.$page.'/view/'.$kk->keg_id.'">Kembali</a>';
+echo '<a href="'.$url.'/'.$page.'/view/'.$kk->keg_id.'" class="btn btn-success"><i class="fa fa-angle-left" aria-hidden="true"></i> Kembali</a>';
 ?>

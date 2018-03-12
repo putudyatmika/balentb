@@ -81,7 +81,7 @@ $(function () {
 	<?php
 	if ($bulan_kegiatan=='') {
 		for ($i=1;$i<=12;$i++) {
-			$sql_kabkota=$conn->query("select * from keg_target, kegiatan where keg_target.keg_id=kegiatan.keg_id and keg_target.keg_t_unitkerja='$unit_kode' and year(kegiatan.keg_end)='$tahun_kegiatan' and month(kegiatan.keg_end)='$i' order by keg_end asc") or die(mysqli_error($conn));
+			$sql_kabkota=$conn->query("select * from keg_target, kegiatan where keg_target.keg_id=kegiatan.keg_id and keg_target.keg_t_unitkerja='$unit_kode' and year(kegiatan.keg_end)='$tahun_kegiatan' and month(kegiatan.keg_end)='$i' and keg_t_target>0 order by keg_end asc") or die(mysqli_error($conn));
 			$cek_keg=$sql_kabkota->num_rows;
 			if ($cek_keg>0) {
 				$j=1;
