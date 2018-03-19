@@ -5,7 +5,7 @@
 	while ($r=$sql_es3_prov->fetch_object()) {
 		$data_bidang[]=$r->unit_nama;
 		$kode_bidang=$r->unit_kode;
-		$sql_keg_bid= $conn->query("select kegiatan.keg_unitkerja, unitkerja.unit_nama, unitkerja.unit_parent, COUNT(*) as jumlah from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode and unitkerja.unit_parent='".$kode_bidang."' and month(kegiatan.keg_end)='".date('n')."' group by unitkerja.unit_parent") or die(mysqli_error($conn));
+		$sql_keg_bid= $conn->query("select kegiatan.keg_unitkerja, unitkerja.unit_nama, unitkerja.unit_parent, COUNT(*) as jumlah from kegiatan inner join unitkerja on kegiatan.keg_unitkerja=unitkerja.unit_kode and unitkerja.unit_parent='".$kode_bidang."' and month(kegiatan.keg_end)='".date('n')."' and year(kegiatan.keg_end)='$TahunDefault' group by unitkerja.unit_parent") or die(mysqli_error($conn));
 		$cek_bidang=$sql_keg_bid->num_rows;
 		if ($cek_bidang>0) {
 			$b=$sql_keg_bid->fetch_object();
