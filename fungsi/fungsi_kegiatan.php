@@ -448,5 +448,30 @@ function get_ranking_kabkota($keg_bulan,$keg_tahun) {
 	return $kabkota_rangking;
 	$conn_keg->close();
 }
-
+function progress_kegiatan($keg_id) {
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$sql_kegiatan = $conn_keg -> query("select keg_id,keg_d_jenis,sum(keg_d_jumlah) as jumlah from keg_detil where keg_id='$keg_id' group by keg_d_jenis order by keg_d_jenis asc") or die(mysqli_error($conn_keg));
+	$cek=$sql_kegiatan->num_rows;
+	$data_keg=array("error"=>false);
+	if ($cek > 0) {
+		$data_keg["error"]=false;
+		$data_keg["jenis_total"]=$cek;
+		$i=1;
+		while ($r=$sql_kegiatan->fetch_object()) {
+			$data_keg["item"][$i]=array(
+				"keg_id"=>$r->keg_id,
+				"jenis_id"=>$r->keg_d_jenis,
+				"jenis_jumlah"=>$r->jumlah
+			);
+			$i++;
+		}
+	}
+	else {
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data tidak tersedia';
+	}
+	return $data_keg;
+	$conn_keg->close();
+}
 ?>

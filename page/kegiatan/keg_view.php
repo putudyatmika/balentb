@@ -133,7 +133,7 @@ while ($k=$sql_kabkota_target->fetch_object()) {
 	if (($_SESSION['sesi_level'] > 1) and ($tgl_mulai <= $tanggal_hari_ini)) {
 		if ($_SESSION['sesi_level'] > 2) {
 			if ($_SESSION['sesi_level'] > 3) { //level admin dan superadmin
-			$kirim_data='<a href="'.$url.'/'.$page.'/kirim/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i>';
+			$kirim_data='<a href="'.$url.'/'.$page.'/kirim/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-primary" aria-hidden="true"></i></a>';
 			$terima_data='<a href="'.$url.'/'.$page.'/terima/'.$k->keg_id.'/'.$k->keg_t_unitkerja.'"><i class="fa fa-plus-square text-success" aria-hidden="true"></i></a>';
 			}
 			else { //level operator provinsi hanya kirim saja
