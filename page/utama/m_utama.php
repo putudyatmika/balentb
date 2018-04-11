@@ -1,7 +1,7 @@
 <div class="container">
 <div class="row konten">
 	<div class="col-lg-12">
-	<h3>Sistem Monitoring Pekerjaan BPS Provinsi NTB</h3>
+	<h3>Sistem Monitoring Kegiatan Online BPS Provinsi NTB</h3>
 	
 	 </div>
 </div>
