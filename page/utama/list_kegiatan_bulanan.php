@@ -69,7 +69,7 @@ if ($cek_list>0) {
 	    '.$progress_kirim.'%</div>';
 	    }
 	    else {
-	    	$pro_kirim='<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'.$progress_kirim.'" aria-valuemin="0" aria-valuemax="100" style="width: 3em;">
+	    	$pro_kirim='<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'.$progress_kirim.'" aria-valuemin="0" aria-valuemax="100" style="min-width: 5em;">
 	    '.$progress_kirim.'%</div>';
 	    }
 
@@ -94,7 +94,7 @@ if ($cek_list>0) {
 	    '.$progress_terima.'%</div>';
 	    }
 	    else {
-	    	$pro_terima='<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'.$progress_terima.'" aria-valuemin="0" aria-valuemax="100" style="width: 3em;">
+	    	$pro_terima='<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'.$progress_terima.'" aria-valuemin="0" aria-valuemax="100" style="lin-width: 5em;">
 	    '.$progress_terima.'%</div>';
 	    }
 		echo ' 

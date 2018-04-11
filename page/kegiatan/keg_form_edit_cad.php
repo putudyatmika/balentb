@@ -150,40 +150,58 @@ if ($cek>0) {
 			</div>
 		</div>
 		<?php
-            $r_target=list_target_keg_spj_kabkota($keg_id);
-            if ($r_target["error"]==false) {
-                $bnyk_unit=$r_target["target_total"];
-                for ($u=1;$u<=$bnyk_unit;$u++) {
-                	echo '
-						<div class="form-group">
-							<label for="keg_target_lobar" class="col-sm-4 control-label">'.$r_target["item"][$u]["target_unitnama"].'</label>
-								<div class="col-sm-2">
-									<div class="input-group margin-bottom-sm">
-								<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-								<input type="text" name="keg_kabkota['.$r_target["item"][$u]["target_unitkerja"].'][]" class="form-control" value="'.$r_target["item"][$u]["target_jumlah"].'" placeholder="..." />
-								</div>
-								</div>
-						</div>';
-					if ($e->keg_spj==1) {
-						echo '
-							<div class="form-group">
-								<label for="keg_target_spj" class="col-sm-4 control-label"> SPJ '.$r_target["item"][$u]["target_unitnama"].'</label>
-									<div class="col-sm-2">
-										<div class="input-group margin-bottom-sm">
-											<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
-											<input type="text" name="keg_target_spj['.$r_target["item"][$u]["target_unitkerja"].'][]" class="form-control" value="'.$r_target["item"][$u]["spj_jumlah"].'" placeholder="..." />
-										</div>
-									</div>
-							</div>';
-					}
-                }
-            }
-                            ?>
-            <div class="form-group">
-            	<div class="col-sm-offset-2 col-sm-6">
-                             <div class="alert alert-danger">Kegiatan yang target kosong diisikan angka 0 (nol)</div>
-                </div>
-            </div>
+		//$ada_spj=$e->keg_spj;
+		$db_kabkota = new db();
+		$conn_kabkota = $db_kabkota -> connect();
+		$sql_kabkota = $conn_kabkota->query("select * from unitkerja,keg_target where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_target.keg_id='$keg_id' order by unitkerja.unit_kode asc") or die(mysqli_error($conn));
+		
+		$i=1;
+		while ($k = $sql_kabkota ->fetch_object()) {
+			echo '
+			<div class="form-group">
+				<label for="keg_target_lobar" class="col-sm-4 control-label">'.$k->unit_nama.'</label>
+					<div class="col-sm-2">
+						<div class="input-group margin-bottom-sm">
+					<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+					<input type="text" name="keg_kabkota['.$k->unit_kode.'][]" class="form-control" value="'.$k->keg_t_target.'" placeholder="Target Kegiatan" />
+					</div>
+					</div>
+			</div>';
+			if ($e->keg_spj==1) {
+				$spj_target_kabkota=get_spj_kabkota_target($keg_id,$k->keg_t_unitkerja);
+				/*
+				if ($spj_target_kabkota>0) {
+					$spj_s_target=$spj_target_kabkota;
+				}
+				else {
+					$spj_s_target='';
+				}
+				*/
+				echo '
+			<div class="form-group">
+				<label for="keg_target_spj" class="col-sm-4 control-label"> SPJ '.$k->unit_nama.'</label>
+					<div class="col-sm-2">
+						<div class="input-group margin-bottom-sm">
+							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+							<input type="text" name="keg_target_spj['.$k->unit_kode.'][]" class="form-control" value="'.$spj_target_kabkota.'" placeholder="Target SPJ" />
+						</div>
+					</div>
+			</div>';
+			}
+			else {
+				echo '
+			<div class="form-group spjkabkota">
+				<label for="keg_target_spj" class="col-sm-4 control-label"> SPJ '.$k->unit_nama.'</label>
+					<div class="col-sm-2">
+						<div class="input-group margin-bottom-sm">
+							<span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+							<input type="text" name="keg_target_spj['.$k->unit_kode.'][]" class="form-control" placeholder="Target SPJ" />
+						</div>
+					</div>
+			</div>';
+			}
+			$i++;
+		}	?>
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-8">
 			  <button type="submit" id="submit_keg" name="submit_keg" value="update" class="btn btn-primary">UPDATE</button>

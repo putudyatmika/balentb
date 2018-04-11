@@ -40,7 +40,20 @@ foreach ($kabkota_target as $key => $value) {
     //echo $i.' Isi target kabkota : '.$value2 .'<br />';
 	$target_kabkota=$value2;
 	}
-   $sql_keg_kabkota = $conn -> query("update keg_target set keg_t_target='$target_kabkota', keg_t_diupdate_oleh='$created' where keg_id='$keg_id' and keg_t_unitkerja='$kabkota_id'") or die(mysqli_error($conn));
+   $sql_cek_target = $conn -> query("select * from keg_target where keg_id='$keg_id' and keg_t_unitkerja='$kabkota_id'");
+   $cek_target = $sql_cek_target -> num_rows;
+   if ($cek_target>0) {
+      //target sudah ada
+      $sql_keg_kabkota = $conn -> query("update keg_target set keg_t_target='$target_kabkota', keg_t_diupdate_oleh='$created' where keg_id='$keg_id' and keg_t_unitkerja='$kabkota_id'") or die(mysqli_error($conn));
+   }
+   else {
+     //target belum ada
+      if ($target_kabkota<=0) {
+          $target_kabkota=0;
+      }
+      $sql_keg_kabkota = $conn -> query("insert into keg_target(keg_id, keg_t_unitkerja, keg_t_target, keg_t_dibuat_oleh, keg_t_dibuat_waktu, keg_t_diupdate_oleh) values('$keg_id', '$kabkota_id', '$target_kabkota', '$created', '$waktu_lokal', '$created')") or die(mysqli_error($conn));
+   }
+   
    //echo $kabkota_id .' '. $target_kabkota .' '. $keg_id .'<br />';
    }
   if ($keg_spj==1) {
@@ -53,8 +66,21 @@ foreach ($kabkota_target as $key => $value) {
         foreach ($value as $key2 => $value2) {
            $target_spj=$value2;
         }
-        
-            $sql_keg_spj= $conn-> query("update keg_spj set keg_s_target='$target_spj' where keg_id='$keg_id' and keg_s_unitkerja='$kabkota_id'") or die(mysqli_error($conn));
+            //cek dulu target spj
+            $sql_cek_spj = $conn -> query("select * from keg_spj where keg_id='$keg_id' and keg_s_unitkerja='$kabkota_id'") or die(mysqli_error($conn));
+            $cek_spj_target = $sql_cek_spj -> num_rows;
+            if ($cek_spj_target > 0) {
+               //sudah ada target spj
+                $sql_keg_spj= $conn-> query("update keg_spj set keg_s_target='$target_spj' where keg_id='$keg_id' and keg_s_unitkerja='$kabkota_id'") or die(mysqli_error($conn));
+            }
+            else {
+                //belum ada target spj
+                if ($target_spj<=0) {
+                   $target_spj=0;
+                }
+                $sql_keg_spj = $conn -> query("insert into keg_spj(keg_id, keg_s_unitkerja, keg_s_target, keg_s_dibuat_oleh, keg_s_dibuat_waktu, keg_s_diupdate_oleh) values('$keg_id', '$kabkota_id', '$target_spj', '$created', '$waktu_lokal', '$created')") or die(mysqli_error($conn));
+            }
+            
         }
 
   }

@@ -474,4 +474,50 @@ function progress_kegiatan($keg_id) {
 	return $data_keg;
 	$conn_keg->close();
 }
+
+function list_target_keg_spj_kabkota($keg_id) {
+	$db_keg = new db();
+	$conn_keg = $db_keg -> connect();
+	$sql_target= $conn_keg -> query("select unit.unit_kode, unit.unit_nama, unit.unit_parent, keg_unit.*, keg_spj.* from (select * from unitkerja where unit_jenis='2') as unit left join (select * from keg_target where keg_id='$keg_id') as keg_unit on unit.unit_kode=keg_unit.keg_t_unitkerja LEFT join keg_spj on keg_spj.keg_id=keg_unit.keg_id and keg_spj.keg_s_unitkerja=unit.unit_kode order by unit.unit_kode asc") or die(mysqli_error($conn_keg));
+	$cek=$sql_target->num_rows;
+	$data_keg=array("error"=>false);
+	if ($cek>0) {
+		$data_keg["error"]=false;
+		$data_keg["target_total"]=$cek;
+		$i=1;
+		while ($r=$sql_target->fetch_object()) {
+			$data_keg["item"][$i]=array(
+				"keg_id"=>$r->keg_id,
+				"target_id"=>$r->keg_t_id,
+				"target_unitkerja"=>$r->unit_kode,
+				"target_unitnama"=>$r->unit_nama,
+				"target_unitparent"=>$r->unit_parent,
+				"target_jumlah"=>$r->keg_t_target,
+				"target_dibuat_oleh"=>$r->keg_t_dibuat_oleh,
+				"target_dibuat_waktu"=>$r->keg_t_dibuat_waktu,
+				"target_diupdate_oleh"=>$r->keg_t_diupdate_oleh,
+				"target_diupdate_waktu"=>$r->keg_t_diupdate_waktu,
+				"target_poin_waktu"=>$r->keg_t_point_waktu,
+				"target_poin_jumlah"=>$r->keg_t_point_jumlah,
+				"target_poin_total"=>$r->keg_t_point,
+				"spj_id"=>$r->keg_s_id,
+				"spj_jumlah"=>$r->keg_s_target,
+				"spj_dibuat_oleh"=>$r->keg_s_dibuat_oleh,
+				"spj_dibuat_waktu"=>$r->keg_s_dibuat_waktu,
+				"spj_diupdate_oleh"=>$r->keg_s_diupdate_oleh,
+				"spj_diupdate_waktu"=>$r->keg_s_diupdate_waktu,
+				"spj_poin_waktu"=>$r->keg_s_point_waktu,
+				"spj_poin_jumlah"=>$r->keg_s_point_jumlah,
+				"spj_poin_total"=>$r->keg_s_point,
+			);
+			$i++;
+		}
+	}
+	else {
+		$data_keg["error"]=true;
+		$data_keg["pesan_error"]='Data tidak tersedia';
+	}
+	return $data_keg;
+	$conn_keg->close();
+}
 ?>
