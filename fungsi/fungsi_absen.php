@@ -1347,4 +1347,32 @@ function rekap_bulan_peg_biasa($peg_id,$tgl_absen) {
   return $rekap_data;
   $conn_absen->close();
 }
+function gen_id_char($length) {
+    global $code_gen ;
+    $kata='abcdefghijklmnopqrstuvwxyz';
+     $code_gen = ''; 
+     for ($i = 0; $i < $length; $i++) { 
+         $pos = rand(0, strlen($kata)-1); 
+         $code_gen .= $kata{$pos}; 
+         
+         } 
+     return $code_gen; 
+}
+function rekap_peg_hari($peg_id,$sdate,$edate,$satuhari=false) {
+
+} 
+function save_pola_absen($pola_kode,$pola_nama,$pola_hari,$pola_masuk,$pola_pulang) {
+	$db_pola = new db();
+	$conn_pola = $db_pola->connect();
+	$sql_pola = $conn_pola -> query("insert into pola_kerja(pola_kode,pola_nama,pola_hari,pola_masuk,pola_pulang) values('$pola_kode','$pola_nama','$pola_hari','$pola_masuk','$pola_pulang')") or die(mysqli_error($conn_pola));
+
+	if ($sql_pola) {
+		$status_pola=true;
+	}
+	else {
+		$status_pola=false;
+	}
+	return $status_pola;
+	$conn_pola -> close();
+}
 ?>
