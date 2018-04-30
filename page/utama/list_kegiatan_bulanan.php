@@ -52,8 +52,8 @@ if ($cek_list>0) {
     		$pro_kirim='<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'.$progress_kirim.'" aria-valuemin="0" aria-valuemax="100" style="min-width: 3em;">
 	    '.$progress_kirim.'%</div>';
     	}
-	    elseif ($progress_kirim>90) {
-	    	$pro_kirim='<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$progress_kirim.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$progress_kirim.'%;">
+	    elseif ($progress_kirim>95) {
+	    	$pro_kirim='<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$progress_kirim.'" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
 	    '.$progress_kirim.'%</div>';
 	    }
 	    elseif ($progress_kirim>85) { 
@@ -77,8 +77,8 @@ if ($cek_list>0) {
     		$pro_terima='<div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="'.$progress_terima.'" aria-valuemin="0" aria-valuemax="100" style="min-width: 3em;">
 	    '.$progress_terima.'%</div>';
     	}
-	    elseif ($progress_terima>90) {
-	    	$pro_terima='<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$progress_terima.'" aria-valuemin="0" aria-valuemax="100" style="width: '.$progress_terima.'%;">
+	    elseif ($progress_terima>95) {
+	    	$pro_terima='<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="'.$progress_terima.'" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
 	    '.$progress_terima.'%</div>';
 	    }
 	    elseif ($progress_terima>85) {

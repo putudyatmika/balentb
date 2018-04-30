@@ -1,3 +1,7 @@
+v1.5.0
+perbaikan pada ranking pemeringkatan kabkota
+berdasarkan nilai rata-rata, nilai total, dan waktu pengiriman
+
 Fungsi-fungsi balentb
 Kegiatan
 get_id_kegiatan($NamaKegiatan,$waktu_save,$pembuat) -> keg_id

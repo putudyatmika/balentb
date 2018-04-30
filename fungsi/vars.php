@@ -7,7 +7,7 @@ Tgl 1 Desember 2016
 */
 //variabel-variabel
 
-$ver_app='1.4.0';
+$ver_app='1.5.0';
 $ver_db='1.4.0';
 date_default_timezone_set('Asia/Makassar');
 //variabel-variabel

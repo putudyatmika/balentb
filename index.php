@@ -55,7 +55,7 @@ require('page/pengunjung/pengunjung-code.php');
 require ('header.php');
 require ('main.php');
 require ('footer.php');
-//untuk melihat url nya
+//untuk melihat url nya hanya untuk user mika
 if (isset($_SESSION['sesi_user_id']) and $_SESSION['sesi_user_id']=='mika') {
 echo '
 	Segmen1 : '. $segmen1.' <br />
