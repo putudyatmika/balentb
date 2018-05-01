@@ -11,9 +11,17 @@ if ($_SESSION['sesi_level'] > 1) {
 $db_view = new db();
 $conn_view = $db_view -> connect();
 $sql_view = $conn_view -> query("select * from keg_target,unitkerja where keg_target.keg_t_unitkerja=unitkerja.unit_kode and keg_id='$keg_id' and keg_t_unitkerja='$keg_d_unitkerja'");
+$sql_target_kirim = $conn_view -> query("select kegiatan.keg_id,keg_nama,keg_detil.keg_d_unitkerja, unitkerja.unit_nama, keg_total_target, sum(keg_detil.keg_d_jumlah) as jumlah_kirim from kegiatan left join keg_detil on kegiatan.keg_id=keg_detil.keg_id left join unitkerja on keg_detil.keg_d_unitkerja=unitkerja.unit_kode where kegiatan.keg_id='$keg_id' and keg_detil.keg_d_jenis='1' and keg_detil.keg_d_unitkerja='$keg_d_unitkerja'") or die(mysqli_error($conn_view));
 $cek=$sql_view->num_rows;
 if ($cek>0) {
    $kk=$sql_view->fetch_object();
+   $t=$sql_target_kirim->fetch_object();
+   if ($t->jumlah_kirim==NULL) {
+      $total_kirim=0;
+   }
+   else {
+      $total_kirim=$t->jumlah_kirim;
+   }
    ?>
    <legend>Konfirmasi Pengiriman</legend>
    		<form id="formKirimTarget" name="formKirimTarget" action="<?php echo $url.'/'.$page;?>/savekirim/"  method="post" class="form-horizontal well" role="form">
@@ -38,10 +46,22 @@ if ($cek>0) {
    		</div>
 			<div class="form-group">
    			<label for="keg_t_target" class="col-sm-2 control-label">Target</label>
-   				<div class="col-sm-6">
-   					<?php echo $kk->keg_t_target; ?>
-   				</div>
+   				<div class="col-sm-2">
+                  <div class="input-group margin-bottom-sm">
+               <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+               <input type="text" class="form-control"  value="<?php echo $kk->keg_t_target; ?>" disabled="" />
+               </div>
+               </div>
    		</div>
+         <div class="form-group">
+            <label for="keg_t_target" class="col-sm-2 control-label">Sudah terkirim</label>
+               <div class="col-sm-2">
+                  <div class="input-group margin-bottom-sm">
+               <span class="input-group-addon"><i class="fa fa-tag fa-fw"></i></span>
+               <input type="text" class="form-control"  value="<?php echo $total_kirim; ?>" disabled="" />
+               </div>
+               </div>
+         </div>
    		<div class="form-group">
    			<label for="keg_d_tgl" class="col-sm-2 control-label">Tanggal pengiriman</label>
    				<div class="col-sm-3" id="tgl_mulai_keg">
